@@ -1,0 +1,327 @@
+/* ==========================================================================
+   GEEKY CLEAN TECHNOLOGY - CYBERPUNK HIGH-TECH DESIGN SYSTEM
+   San Diego Next-Gen Mobile & Remote IT Services
+   ========================================================================== */
+
+:root {
+  /* Cyberpunk Dark Palette */
+  --bg-deep: #05070E;
+  --bg-surface: #0B0F1C;
+  --bg-card: rgba(13, 20, 36, 0.85);
+  --bg-card-hover: rgba(18, 28, 50, 0.95);
+  --bg-elevated: #11182B;
+
+  /* Neon Accents */
+  --neon-cyan: #00F0FF;
+  --neon-cyan-glow: rgba(0, 240, 255, 0.35);
+  --neon-pink: #FF007F;
+  --neon-pink-glow: rgba(255, 0, 127, 0.35);
+  --neon-violet: #A855F7;
+  --neon-violet-glow: rgba(168, 85, 247, 0.35);
+  --neon-green: #00FF66;
+
+  /* Gradient Overlays */
+  --cyan-pink-gradient: linear-gradient(135deg, #00F0FF 0%, #A855F7 50%, #FF007F 100%);
+  --cyan-glow-gradient: linear-gradient(135deg, rgba(0, 240, 255, 0.15) 0%, rgba(255, 0, 127, 0.15) 100%);
+
+  /* Text Colors */
+  --text-main: #F1F5F9;
+  --text-muted: #94A3B8;
+  --text-dim: #64748B;
+  --text-cyan: #00F0FF;
+  --text-pink: #FF77BC;
+
+  /* Cyberpunk Borders */
+  --border-subtle: rgba(0, 240, 255, 0.18);
+  --border-strong: rgba(0, 240, 255, 0.45);
+  --border-pink: rgba(255, 0, 127, 0.4);
+  --border-glass: rgba(255, 255, 255, 0.08);
+
+  /* Fonts */
+  --font-display: 'Orbitron', -apple-system, sans-serif;
+  --font-tech: 'Space Grotesk', sans-serif;
+  --font-mono: 'Fira Code', monospace;
+  --font-sans: 'Plus Jakarta Sans', sans-serif;
+
+  /* Structural Tokens */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-pill: 9999px;
+
+  --shadow-cyan: 0 0 25px rgba(0, 240, 255, 0.3);
+  --shadow-pink: 0 0 25px rgba(255, 0, 127, 0.3);
+  --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 240, 255, 0.08);
+
+  --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Light Theme Cyber-Grid Variant */
+[data-theme="light"] {
+  --bg-deep: #F4F7FC;
+  --bg-surface: #FFFFFF;
+  --bg-card: rgba(255, 255, 255, 0.9);
+  --bg-card-hover: #FFFFFF;
+  --bg-elevated: #E2E8F0;
+
+  --neon-cyan: #007799;
+  --neon-cyan-glow: rgba(0, 119, 153, 0.2);
+  --neon-pink: #D0006F;
+  --neon-pink-glow: rgba(208, 0, 111, 0.2);
+  --neon-violet: #7E22CE;
+
+  --text-main: #0F172A;
+  --text-muted: #475569;
+  --text-dim: #64748B;
+  --text-cyan: #007799;
+  --text-pink: #C00060;
+
+  --border-subtle: rgba(0, 119, 153, 0.25);
+  --border-strong: rgba(0, 119, 153, 0.5);
+  --border-pink: rgba(208, 0, 111, 0.4);
+}
+
+/* Reset & Global Base */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: var(--font-sans);
+  background-color: var(--bg-deep);
+  color: var(--text-main);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  overflow-x: hidden;
+  background-color: var(--bg-deep);
+  min-height: 100vh;
+  /* Faint Cyberpunk Grid Overlay */
+  background-image: 
+    linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Typography Helpers */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  color: var(--text-main);
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+}
+
+.font-tech {
+  font-family: var(--font-tech);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Cyber Neon Text Effect */
+.neon-text-cyan {
+  color: var(--neon-cyan);
+  text-shadow: 0 0 12px rgba(0, 240, 255, 0.5), 0 0 25px rgba(0, 240, 255, 0.2);
+}
+
+.neon-text-pink {
+  color: var(--neon-pink);
+  text-shadow: 0 0 12px rgba(255, 0, 127, 0.5), 0 0 25px rgba(255, 0, 127, 0.2);
+}
+
+.neon-gradient-text {
+  background: var(--cyan-pink-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+  text-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+}
+
+/* Neon Glassmorphism Card */
+.glass-panel {
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  transition: var(--transition-smooth);
+}
+
+.glass-panel:hover {
+  border-color: var(--border-strong);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 240, 255, 0.2);
+  transform: translateY(-3px);
+}
+
+/* Container */
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Cyberpunk Neon Glow Buttons */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #00F0FF 0%, #0099FF 100%);
+  color: #05070E;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 14px 28px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--neon-cyan);
+  cursor: pointer;
+  box-shadow: var(--shadow-cyan);
+  transition: var(--transition-smooth);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #FF007F 0%, #A855F7 100%);
+  border-color: var(--neon-pink);
+  color: #FFFFFF;
+  box-shadow: var(--shadow-pink);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: rgba(0, 240, 255, 0.05);
+  color: var(--neon-cyan);
+  font-family: var(--font-tech);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  padding: 14px 28px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-strong);
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: var(--transition-smooth);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 0, 127, 0.12);
+  border-color: var(--neon-pink);
+  color: var(--neon-pink);
+  box-shadow: 0 0 20px rgba(255, 0, 127, 0.35);
+  transform: translateY(-2px);
+}
+
+/* Cyber Pill / Tech Badge */
+.vip-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 240, 255, 0.08);
+  border: 1px solid var(--border-strong);
+  padding: 6px 16px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--neon-cyan);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.15);
+}
+
+.vip-badge .dot {
+  width: 7px;
+  height: 7px;
+  background-color: var(--neon-cyan);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--neon-cyan);
+  animation: pulse-dot 1.8s infinite ease-in-out;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(1); opacity: 1; box-shadow: 0 0 10px var(--neon-cyan); }
+  50% { transform: scale(1.5); opacity: 0.5; box-shadow: 0 0 20px var(--neon-pink); }
+}
+
+/* Scroll Animations */
+@keyframes slideUpFade {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-up {
+  animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Respect Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 7, 14, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: slideUpFade 0.3s ease;
+}
+
+.modal-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  max-width: 650px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 240, 255, 0.2);
+  padding: 36px;
+  position: relative;
+}
+
+/* Custom Cyber Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-deep);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--bg-elevated);
+  border-radius: 4px;
+  border: 1px solid var(--border-subtle);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--neon-cyan);
+  box-shadow: 0 0 10px var(--neon-cyan);
+}
