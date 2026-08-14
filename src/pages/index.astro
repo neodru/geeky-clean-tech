@@ -1,0 +1,365 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+
+import Hero from '~/components/widgets/Hero.astro';
+import Features from '~/components/widgets/Features.astro';
+import Features2 from '~/components/widgets/Features2.astro';
+import Content from '~/components/widgets/Content.astro';
+import Pricing from '~/components/widgets/Pricing.astro';
+import Testimonials from '~/components/widgets/Testimonials.astro';
+import FAQs from '~/components/widgets/FAQs.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+
+const metadata = {
+  title: 'Geeky Clean Technology | White-Glove IT Services & Fractional CTO',
+  ignoreTitleTemplate: true,
+  description: 'Premium on-location & remote technology services for individuals and small businesses — repair, cybersecurity, AI integration, and fractional CTO strategy.',
+};
+---
+
+<Layout metadata={metadata}>
+  
+  <!-- Hero Widget -->
+  <div class="relative">
+    <div class="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20 pointer-events-none" style="background-image: url('/src/assets/images/cyber-grid-texture.png');"></div>
+    <Hero
+      id="hero"
+      actions={[
+        {
+          variant: 'primary',
+          text: 'Request Service',
+          href: '#contact',
+          class: 'shadow-[0_0_15px_rgba(34,211,238,0.5)] border-primary hover:shadow-[0_0_25px_rgba(34,211,238,0.8)]',
+        },
+        { text: 'Book a Consultation', href: '#contact' },
+      ]}
+      image={{ src: '~/assets/images/hero-repair.png', alt: 'Technician repairing laptop in a premium domestic setting' }}
+    >
+      <Fragment slot="title">
+        <span class="font-heading text-white tracking-wide">Geeky Clean Technology</span>
+      </Fragment>
+
+      <Fragment slot="subtitle">
+        <span class="block text-2xl font-heading text-primary mb-4 text-glow">Elite Technology. Concierge Delivered.</span>
+        <span class="text-lg text-muted max-w-3xl mx-auto block">
+          White-glove, on-location and remote technology service for individuals and small businesses — expertise, discretion, and precision.
+        </span>
+        <div class="mt-8 text-sm uppercase tracking-widest text-accent flex flex-wrap justify-center gap-4 opacity-80">
+          <span>On-location</span>
+          <span class="hidden sm:inline">•</span>
+          <span>Remote</span>
+          <span class="hidden sm:inline">•</span>
+          <span>NDA available</span>
+          <span class="hidden sm:inline">•</span>
+          <span>Warranty-backed</span>
+        </div>
+      </Fragment>
+      
+      <Fragment slot="bg">
+        <div class="absolute inset-0 bg-gradient-to-r from-[#0A0A0F] to-transparent"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-[#0A0A0F] to-transparent"></div>
+      </Fragment>
+    </Hero>
+  </div>
+
+  <!-- Services Widget -->
+  <Features2
+    id="services"
+    title="Our Services"
+    tagline="WHAT WE DO"
+    classes={{
+      container: 'relative z-10',
+      panel: 'glass-card glass-card-hover p-6 text-left',
+      icon: 'text-primary w-10 h-10 mb-4',
+    }}
+    items={[
+      {
+        title: 'IT Concierge (for Individuals)',
+        description: 'Personal, patient, white-glove tech help for your home and devices, on your schedule.',
+        icon: 'tabler:user-star',
+      },
+      {
+        title: 'Fractional / Part-Time CTO',
+        description: 'Enterprise-grade technology strategy and leadership without the full-time overhead.',
+        icon: 'tabler:building-skyscraper',
+      },
+      {
+        title: 'Remote Support',
+        description: 'Secure, instant remote assistance to resolve issues from anywhere.',
+        icon: 'tabler:headset',
+      },
+      {
+        title: 'Cybersecurity & Incident Response',
+        description: 'Protection against scams, phishing, and breaches — plus rapid response when it counts.',
+        icon: 'tabler:shield-lock',
+      },
+      {
+        title: 'Computer Maintenance & Repair',
+        description: 'Expert diagnostics and repair for Apple and PC hardware.',
+        icon: 'tabler:tool',
+      },
+      {
+        title: 'Web Design & Development',
+        description: 'Modern, high-performing websites and web apps built to convert.',
+        icon: 'tabler:browser',
+      },
+      {
+        title: 'AI Integration',
+        description: 'Automate workflows and unlock new efficiencies with tailored AI solutions.',
+        icon: 'tabler:robot',
+      },
+      {
+        title: 'Data Backup & Recovery',
+        description: 'Keep priceless memories, documents, and business data safe and recoverable.',
+        icon: 'tabler:database',
+      },
+      {
+        title: 'Cloud & Email Migration',
+        description: 'Seamless setup and migration to Google Workspace / Microsoft 365.',
+        icon: 'tabler:cloud-upload',
+      },
+      {
+        title: 'Home & Office Network / Wi-Fi',
+        description: 'Fast, reliable, secure connectivity throughout your space.',
+        icon: 'tabler:wifi',
+      },
+      {
+        title: 'Smart Home & IoT Setup',
+        description: 'Automate and simplify your living or working environment.',
+        icon: 'tabler:home-bolt',
+      },
+      {
+        title: 'IT Training & Digital Literacy',
+        description: 'Patient, personalized coaching so you (or your team) feel confident.',
+        icon: 'tabler:school',
+      },
+    ]}
+  />
+
+  <!-- Why Us Widget -->
+  <Features
+    id="why-us"
+    tagline="The White-Glove Difference"
+    title="Why Choose Us"
+    classes={{
+      container: 'max-w-5xl mx-auto',
+      panel: 'glass-card p-6 text-center',
+      icon: 'text-secondary w-12 h-12 mb-4 mx-auto',
+    }}
+    items={[
+      {
+        title: '100% Mobile & Remote',
+        description: 'We come to you, or solve it instantly over the web. No carrying heavy desktops to a store.',
+        icon: 'tabler:car',
+      },
+      {
+        title: 'Confidentiality First',
+        description: 'Total discretion with your data. NDAs available for high-profile and corporate clients.',
+        icon: 'tabler:lock',
+      },
+      {
+        title: 'Comprehensive Warranty',
+        description: 'We stand by our work. If it is not right, we make it right.',
+        icon: 'tabler:certificate',
+      },
+      {
+        title: 'Broad Expertise',
+        description: 'From simple printer setups to complex enterprise cloud migrations, we handle it all.',
+        icon: 'tabler:brain',
+      },
+      {
+        title: 'Transparent Pricing',
+        description: 'Straightforward, no-surprise pricing. You will always know the cost before we begin.',
+        icon: 'tabler:receipt-2',
+      },
+    ]}
+  />
+
+  <!-- About Widget -->
+  <Content
+    id="about"
+    isReversed
+    tagline="About Us"
+    title="Your Technology Partner"
+    image={{
+      src: '~/assets/images/about-workbench.png',
+      alt: 'Technician at a sleek workbench in a dark studio',
+    }}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-heading text-white mb-4">Expertise meets Discretion</h3>
+      <p class="text-muted text-lg mb-4">
+        We are an on-location and remote white-glove technology partner serving discerning individuals and small businesses nationally.
+      </p>
+      <p class="text-muted text-lg">
+        By blending deep technical expertise with a concierge-level experience, we ensure your technology works for you—with absolute precision and confidentiality.
+      </p>
+    </Fragment>
+  </Content>
+
+  <!-- Pricing Widget -->
+  <Pricing
+    id="pricing"
+    title="Transparent Engagement"
+    subtitle="Clear, straightforward pricing for our premium services."
+    classes={{
+      panel: 'glass-card border-accent/20 hover:border-accent/50',
+    }}
+    prices={[
+      {
+        title: 'Individuals',
+        subtitle: 'Personal IT Concierge',
+        price: 100,
+        period: 'Diagnostic Fee',
+        items: [
+          { description: 'We come to your home' },
+          { description: 'Fully applied toward repair/service cost if you proceed' },
+          { description: 'Patient, jargon-free explanations' },
+        ],
+        callToAction: {
+          target: '_blank',
+          text: 'Request Service',
+          href: '#contact',
+          variant: 'primary',
+          class: 'w-full shadow-[0_0_15px_rgba(34,211,238,0.3)]',
+        },
+      },
+      {
+        title: 'Business / Fractional CTO',
+        subtitle: 'Enterprise-grade leadership',
+        price: 175,
+        period: 'per hour',
+        items: [
+          { description: 'Diagnostics, Strategy & Roadmapping ($175/hr)' },
+          { description: 'Implementation & Technician Time ($155/hr)' },
+          { description: 'Priority response & SLA options' },
+        ],
+        callToAction: {
+          target: '_blank',
+          text: 'Book Consultation',
+          href: '#contact',
+          variant: 'primary',
+          class: 'w-full shadow-[0_0_15px_rgba(34,211,238,0.3)]',
+        },
+        hasRibbon: true,
+        ribbonTitle: 'Popular',
+      },
+    ]}
+  />
+
+  <!-- Testimonials Widget -->
+  <Testimonials
+    id="testimonials"
+    title="Client Experiences"
+    subtitle="Don't just take our word for it."
+    classes={{
+      panel: 'glass-card',
+    }}
+    testimonials={[
+      {
+        testimonial: "The technician arrived exactly on time, diagnosed the issue with my home network swiftly, and explained everything without jargon. The professionalism was exceptional.",
+        name: "Private Client",
+        job: "La Jolla",
+      },
+      {
+        testimonial: "White-glove setup of my new devices was seamless and entirely confidential.",
+        name: "Executive",
+        job: "Del Mar",
+      },
+      {
+        testimonial: "Partnering with them as our fractional CTO transformed our operations… a true competitive advantage.",
+        name: "Managing Partner",
+        job: "Law Firm",
+      },
+      {
+        testimonial: "Their ability to align technology with our business growth goals has been invaluable.",
+        name: "Founder",
+        job: "Consulting Agency",
+      },
+    ]}
+  />
+
+  <!-- FAQs Widget -->
+  <FAQs
+    id="faq"
+    title="Frequently Asked Questions"
+    classes={{
+      container: 'max-w-4xl mx-auto',
+    }}
+    items={[
+      {
+        title: 'How does the on-location / remote model work?',
+        description: 'For physical repairs or network setups, we come directly to your home or office. For software issues or urgent help, we can securely connect to your computer remotely to resolve the issue instantly.',
+      },
+      {
+        title: 'Do you serve clients nationally?',
+        description: 'Yes! While our on-location concierge services are based in specific regions, our remote support and fractional CTO strategies are available to clients nationwide.',
+      },
+      {
+        title: 'How does the $100 diagnostic fee work?',
+        description: 'We charge a $100 diagnostic fee to assess your issue and determine the best solution. If you choose to proceed with our recommended service or repair, that $100 is fully applied to your final bill.',
+      },
+      {
+        title: 'What is your policy on data privacy and NDAs?',
+        description: 'Confidentiality is our highest priority. We never share your data, and we regularly operate under strict Non-Disclosure Agreements (NDAs) for our high-profile, executive, and corporate clients.',
+      },
+      {
+        title: 'What exactly is a Fractional CTO?',
+        description: 'A Fractional CTO provides your business with the strategic oversight, tech roadmapping, and leadership of a Chief Technology Officer, but on a part-time or project basis, saving you the cost of a full-time executive salary.',
+      },
+      {
+        title: 'Do you offer day-to-day managed support?',
+        description: 'Absolutely. We offer ongoing managed IT support for small businesses to ensure your team is always productive and your systems are monitored and secure.',
+      },
+      {
+        title: 'How does hourly billing work for businesses?',
+        description: 'High-level strategy and diagnostics are billed at $175/hour. Once the roadmap is set, the actual implementation and standard technician labor are billed at a reduced rate of $155/hour.',
+      },
+      {
+        title: 'Can you help with digital transformation and AI?',
+        description: 'Yes. We specialize in bringing small businesses into the modern era by automating workflows, integrating AI tools, and optimizing cloud architectures to improve your bottom line.',
+      },
+    ]}
+  />
+
+  <!-- CallToAction Widget -->
+  <CallToAction
+    id="contact"
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Request Service',
+        href: 'mailto:support@geekycleantechnology.com',
+        icon: 'tabler:mail',
+        class: 'shadow-[0_0_15px_rgba(34,211,238,0.5)] border-primary',
+      },
+    ]}
+  >
+    <Fragment slot="title">
+      <span class="text-glow text-primary">Let's get your technology handled.</span>
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      <div class="max-w-2xl mx-auto mt-6 glass-card p-8 text-left">
+        <form class="flex flex-col gap-4">
+          <!-- TODO: Connect form to backend service -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <input type="text" placeholder="Name" class="w-full bg-page-dark border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" />
+            <input type="email" placeholder="Email" class="w-full bg-page-dark border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" />
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <input type="tel" placeholder="Phone" class="w-full bg-page-dark border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" />
+            <select class="w-full bg-page-dark border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors appearance-none">
+              <option value="" disabled selected>Service interested in</option>
+              <option value="individuals">Personal IT Support</option>
+              <option value="business">Business / Fractional CTO</option>
+            </select>
+          </div>
+          <textarea placeholder="Message" rows="4" class="w-full bg-page-dark border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"></textarea>
+          <button type="button" class="btn btn-primary w-full mt-2 shadow-[0_0_15px_rgba(34,211,238,0.3)]">Submit Request</button>
+        </form>
+      </div>
+    </Fragment>
+  </CallToAction>
+
+</Layout>
