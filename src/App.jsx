@@ -1,52 +1,47 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import './App.css';
 import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import InteractiveWizard from './components/InteractiveWizard';
-import Services from './components/Services';
-import WhyChooseUs from './components/WhyChooseUs';
-import SanDiegoLocations from './components/SanDiegoLocations';
-import MembershipTiers from './components/MembershipTiers';
-import Testimonials from './components/Testimonials';
-import FaqSection from './components/FaqSection';
 import Footer from './components/Footer';
+import LandingView from './components/LandingView';
+import IndividualsPath from './components/IndividualsPath';
+import BusinessesPath from './components/BusinessesPath';
 import BookingModal from './components/BookingModal';
 
 function App() {
-  const [theme, setTheme] = useState('dark');
+  // 'landing', 'individuals', 'businesses'
+  const [activePath, setActivePath] = useState('landing');
   const [bookingOpen, setBookingOpen] = useState(false);
 
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
-  };
-
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <Navbar
-        onOpenBooking={() => setBookingOpen(true)}
-        theme={theme}
-        toggleTheme={toggleTheme}
-      />
+    <div className="app-container">
+      {activePath !== 'landing' && (
+        <Navbar 
+          activePath={activePath} 
+          onPathChange={setActivePath}
+          onOpenBooking={() => setBookingOpen(true)}
+        />
+      )}
       
-      <main style={{ flex: 1 }}>
-        <Hero onOpenBooking={() => setBookingOpen(true)} />
-        <InteractiveWizard onOpenBooking={() => setBookingOpen(true)} />
-        <Services onOpenBooking={() => setBookingOpen(true)} />
-        <WhyChooseUs onOpenBooking={() => setBookingOpen(true)} />
-        <SanDiegoLocations onOpenBooking={() => setBookingOpen(true)} />
-        <MembershipTiers onOpenBooking={() => setBookingOpen(true)} />
-        <Testimonials />
-        <FaqSection />
+      <main>
+        {activePath === 'landing' && (
+          <LandingView onSelectPath={setActivePath} />
+        )}
+        {activePath === 'individuals' && (
+          <IndividualsPath onOpenBooking={() => setBookingOpen(true)} />
+        )}
+        {activePath === 'businesses' && (
+          <BusinessesPath onOpenBooking={() => setBookingOpen(true)} />
+        )}
       </main>
 
-      <Footer onOpenBooking={() => setBookingOpen(true)} />
+      {activePath !== 'landing' && (
+        <Footer onOpenBooking={() => setBookingOpen(true)} />
+      )}
 
       <BookingModal
         isOpen={bookingOpen}
         onClose={() => setBookingOpen(false)}
+        activePath={activePath}
       />
     </div>
   );
