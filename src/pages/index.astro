@@ -15,13 +15,15 @@ const metadata = {
   ignoreTitleTemplate: true,
   description: 'Premium on-location & remote technology services for individuals and small businesses — repair, cybersecurity, AI integration, and fractional CTO strategy.',
 };
+
+import cyberGridTexture from '~/assets/images/cyber-grid-texture.png';
 ---
 
 <Layout metadata={metadata}>
   
   <!-- Hero Widget -->
   <div class="relative">
-    <div class="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20 pointer-events-none" style="background-image: url('/src/assets/images/cyber-grid-texture.png');"></div>
+  <div class="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20 pointer-events-none" style={`background-image: url('${cyberGridTexture.src}');`}></div>
     <Hero
       id="hero"
       actions={[
