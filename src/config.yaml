@@ -1,6 +1,6 @@
 site:
-  name: AstroWind
-  site: 'https://astrowind.vercel.app'
+  name: Geeky Clean Technology
+  site: 'https://geekycleantechnology.com'
   base: '/'
   trailingSlash: false
 
@@ -9,14 +9,14 @@ site:
 # Default SEO metadata
 metadata:
   title:
-    default: AstroWind
-    template: '%s — AstroWind'
-  description: "\U0001F680 Suitable for Startups, Small Business, Sass Websites, Professional Portfolios, Marketing Websites, Landing Pages & Blogs."
+    default: Geeky Clean Technology
+    template: '%s — Geeky Clean Technology'
+  description: 'Premium on-location & remote technology services for individuals and small businesses — repair, cybersecurity, AI integration, and fractional CTO strategy.'
   robots:
     index: true
     follow: true
   openGraph:
-    site_name: AstroWind
+    site_name: Geeky Clean Technology
     images:
       - url: '~/assets/images/default.png'
         width: 1200
