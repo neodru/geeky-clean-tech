@@ -13,17 +13,21 @@ import CallToAction from '~/components/widgets/CallToAction.astro';
 const metadata = {
   title: 'Geeky Clean Technology | White-Glove IT Services & Fractional CTO',
   ignoreTitleTemplate: true,
-  description: 'Premium on-location & remote technology services for individuals and small businesses — repair, cybersecurity, AI integration, and fractional CTO strategy.',
+  description:
+    'Premium on-location & remote technology services for individuals and small businesses — repair, cybersecurity, AI integration, and fractional CTO strategy.',
 };
 
 import cyberGridTexture from '~/assets/images/cyber-grid-texture.png';
 ---
 
 <Layout metadata={metadata}>
-  
   <!-- Hero Widget -->
   <div class="relative">
-  <div class="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20 pointer-events-none" style={`background-image: url('${cyberGridTexture.src}');`}></div>
+    <div
+      class="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20 pointer-events-none"
+      style={`background-image: url('${cyberGridTexture.src}');`}
+    >
+    </div>
     <Hero
       id="hero"
       actions={[
@@ -35,28 +39,32 @@ import cyberGridTexture from '~/assets/images/cyber-grid-texture.png';
         },
         { text: 'Book a Consultation', href: '#contact' },
       ]}
-      image={{ src: '~/assets/images/Dru_hero.png', alt: 'Dru Macasieb', class: 'mx-auto rounded-md w-full object-cover object-center aspect-video' }}
+      image={{
+        src: '~/assets/images/Dru_hero.png',
+        alt: 'Dru Macasieb',
+        class: 'mx-auto rounded-md w-full object-cover object-center aspect-video',
+      }}
     >
       <Fragment slot="title">
         <span class="font-heading text-white tracking-wide">Geeky Clean Technology</span>
       </Fragment>
 
       <Fragment slot="subtitle">
-        <span class="block text-2xl font-heading text-primary mb-4 text-glow">Elite Technology. Concierge Delivered.</span>
+        <span class="block text-2xl font-heading text-primary mb-4 text-glow"
+          >Elite Technology. Concierge Delivered.</span
+        >
         <span class="text-lg text-muted max-w-3xl mx-auto block">
-          White-glove, on-location and remote technology service for individuals and small businesses — expertise, discretion, and precision.
+          White-glove, on-location and remote technology service for individuals and small businesses — expertise,
+          discretion, and precision.
         </span>
-        <div class="mt-8 text-sm uppercase tracking-widest text-accent flex flex-wrap justify-center gap-4 opacity-80">
-          <span>On-location</span>
-          <span class="hidden sm:inline">•</span>
-          <span>Remote</span>
-          <span class="hidden sm:inline">•</span>
-          <span>NDA available</span>
-          <span class="hidden sm:inline">•</span>
+        <div class="flex justify-center flex-wrap gap-4 my-8 opacity-80 text-accent text-sm tracking-widest uppercase">
+          <span>On-location</span><span class="hidden sm:inline">•</span>
+          <span>Remote</span><span class="hidden sm:inline">•</span>
+          <span>NDA available</span><span class="hidden sm:inline">•</span>
           <span>Warranty-backed</span>
         </div>
       </Fragment>
-      
+
       <Fragment slot="bg">
         <div class="absolute inset-0 bg-gradient-to-r from-[#0A0A0F] to-transparent"></div>
         <div class="absolute inset-0 bg-gradient-to-t from-[#0A0A0F] to-transparent"></div>
@@ -191,10 +199,12 @@ import cyberGridTexture from '~/assets/images/cyber-grid-texture.png';
     <Fragment slot="content">
       <h3 class="text-2xl font-heading text-white mb-4">Expertise meets Discretion</h3>
       <p class="text-muted text-lg mb-4">
-        We are an on-location and remote white-glove technology partner serving discerning individuals and small businesses nationally.
+        We are an on-location and remote white-glove technology partner serving discerning individuals and small
+        businesses nationally.
       </p>
       <p class="text-muted text-lg">
-        By blending deep technical expertise with a concierge-level experience, we ensure your technology works for you—with absolute precision and confidentiality.
+        By blending deep technical expertise with a concierge-level experience, we ensure your technology works for
+        you—with absolute precision and confidentiality.
       </p>
     </Fragment>
   </Content>
@@ -266,7 +276,8 @@ import cyberGridTexture from '~/assets/images/cyber-grid-texture.png';
         },
         hasRibbon: true,
         ribbonTitle: '24/7 Emergency',
-        ribbonClass: 'bg-red-600 before:border-t-red-700 before:border-l-red-700 after:border-t-red-700 after:border-r-red-700',
+        ribbonClass:
+          'bg-red-600 before:border-t-red-700 before:border-l-red-700 after:border-t-red-700 after:border-r-red-700',
       },
     ]}
   />
@@ -281,24 +292,26 @@ import cyberGridTexture from '~/assets/images/cyber-grid-texture.png';
     }}
     testimonials={[
       {
-        testimonial: "The technician arrived exactly on time, diagnosed the issue with my home network swiftly, and explained everything without jargon. The professionalism was exceptional.",
-        name: "Private Client",
-        job: "La Jolla",
+        testimonial:
+          'The technician arrived exactly on time, diagnosed the issue with my home network swiftly, and explained everything without jargon. The professionalism was exceptional.',
+        name: 'Private Client',
+        job: 'La Jolla',
       },
       {
-        testimonial: "White-glove setup of my new devices was seamless and entirely confidential.",
-        name: "Executive",
-        job: "Del Mar",
+        testimonial: 'White-glove setup of my new devices was seamless and entirely confidential.',
+        name: 'Executive',
+        job: 'Del Mar',
       },
       {
-        testimonial: "Partnering with them as our fractional CTO transformed our operations… a true competitive advantage.",
-        name: "Managing Partner",
-        job: "Law Firm",
+        testimonial:
+          'Partnering with them as our fractional CTO transformed our operations… a true competitive advantage.',
+        name: 'Managing Partner',
+        job: 'Law Firm',
       },
       {
-        testimonial: "Their ability to align technology with our business growth goals has been invaluable.",
-        name: "Founder",
-        job: "Consulting Agency",
+        testimonial: 'Their ability to align technology with our business growth goals has been invaluable.',
+        name: 'Founder',
+        job: 'Consulting Agency',
       },
     ]}
   />
@@ -313,35 +326,43 @@ import cyberGridTexture from '~/assets/images/cyber-grid-texture.png';
     items={[
       {
         title: 'How does the on-location / remote model work?',
-        description: 'For physical repairs or network setups, we come directly to your home or office. For software issues or urgent help, we can securely connect to your computer remotely to resolve the issue instantly.',
+        description:
+          'For physical repairs or network setups, we come directly to your home or office. For software issues or urgent help, we can securely connect to your computer remotely to resolve the issue instantly.',
       },
       {
         title: 'Do you serve clients nationally?',
-        description: 'Yes! While our on-location concierge services are based in specific regions, our remote support and fractional CTO strategies are available to clients nationwide.',
+        description:
+          'Yes! While our on-location concierge services are based in specific regions, our remote support and fractional CTO strategies are available to clients nationwide.',
       },
       {
         title: 'How does the $100 diagnostic fee work?',
-        description: 'We charge a $100 diagnostic fee to assess your issue and determine the best solution. If you choose to proceed with our recommended service or repair, that $100 is fully applied to your final bill.',
+        description:
+          'We charge a $100 diagnostic fee to assess your issue and determine the best solution. If you choose to proceed with our recommended service or repair, that $100 is fully applied to your final bill.',
       },
       {
         title: 'What is your policy on data privacy and NDAs?',
-        description: 'Confidentiality is our highest priority. We never share your data, and we regularly operate under strict Non-Disclosure Agreements (NDAs) for our high-profile, executive, and corporate clients.',
+        description:
+          'Confidentiality is our highest priority. We never share your data, and we regularly operate under strict Non-Disclosure Agreements (NDAs) for our high-profile, executive, and corporate clients.',
       },
       {
         title: 'What exactly is a Fractional CTO?',
-        description: 'A Fractional CTO provides your business with the strategic oversight, tech roadmapping, and leadership of a Chief Technology Officer, but on a part-time or project basis, saving you the cost of a full-time executive salary.',
+        description:
+          'A Fractional CTO provides your business with the strategic oversight, tech roadmapping, and leadership of a Chief Technology Officer, but on a part-time or project basis, saving you the cost of a full-time executive salary.',
       },
       {
         title: 'Do you offer day-to-day managed support?',
-        description: 'Absolutely. We offer ongoing managed IT support for small businesses to ensure your team is always productive and your systems are monitored and secure.',
+        description:
+          'Absolutely. We offer ongoing managed IT support for small businesses to ensure your team is always productive and your systems are monitored and secure.',
       },
       {
         title: 'How does hourly billing work for businesses?',
-        description: 'High-level strategy and diagnostics are billed at $175/hour. Once the roadmap is set, the actual implementation and standard technician labor are billed at a reduced rate of $155/hour.',
+        description:
+          'High-level strategy and diagnostics are billed at $175/hour. Once the roadmap is set, the actual implementation and standard technician labor are billed at a reduced rate of $155/hour.',
       },
       {
         title: 'Can you help with digital transformation and AI?',
-        description: 'Yes. We specialize in bringing small businesses into the modern era by automating workflows, integrating AI tools, and optimizing cloud architectures to improve your bottom line.',
+        description:
+          'Yes. We specialize in bringing small businesses into the modern era by automating workflows, integrating AI tools, and optimizing cloud architectures to improve your bottom line.',
       },
     ]}
   />
@@ -368,22 +389,41 @@ import cyberGridTexture from '~/assets/images/cyber-grid-texture.png';
         <form class="flex flex-col gap-4">
           <!-- TODO: Connect form to backend service -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <input type="text" placeholder="Name" class="w-full bg-page-dark border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" />
-            <input type="email" placeholder="Email" class="w-full bg-page-dark border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" />
+            <input
+              type="text"
+              placeholder="Name"
+              class="w-full bg-page-dark border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+            />
+            <input
+              type="email"
+              placeholder="Email"
+              class="w-full bg-page-dark border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+            />
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <input type="tel" placeholder="Phone" class="w-full bg-page-dark border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" />
-            <select class="w-full bg-page-dark border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors appearance-none">
+            <input
+              type="tel"
+              placeholder="Phone"
+              class="w-full bg-page-dark border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+            />
+            <select
+              class="w-full bg-page-dark border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors appearance-none"
+            >
               <option value="" disabled selected>Service interested in</option>
               <option value="individuals">Personal IT Support</option>
               <option value="business">Business / Fractional CTO</option>
             </select>
           </div>
-          <textarea placeholder="Message" rows="4" class="w-full bg-page-dark border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"></textarea>
-          <button type="button" class="btn btn-primary w-full mt-2 shadow-[0_0_15px_rgba(34,211,238,0.3)]">Submit Request</button>
+          <textarea
+            placeholder="Message"
+            rows="4"
+            class="w-full bg-page-dark border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+          ></textarea>
+          <button type="button" class="btn btn-primary w-full mt-2 shadow-[0_0_15px_rgba(34,211,238,0.3)]"
+            >Submit Request</button
+          >
         </form>
       </div>
     </Fragment>
   </CallToAction>
-
 </Layout>
