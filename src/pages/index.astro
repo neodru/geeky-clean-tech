@@ -212,10 +212,10 @@ import cyberGridTexture from '~/assets/images/cyber-grid-texture.png';
         title: 'Individuals',
         subtitle: 'Personal IT Concierge',
         price: 100,
-        period: 'Diagnostic Fee',
+        period: 'first hour',
         items: [
           { description: 'We come to your home' },
-          { description: 'Fully applied toward repair/service cost if you proceed' },
+          { description: '$155/hour after the first hour' },
           { description: 'Patient, jargon-free explanations' },
         ],
         callToAction: {
@@ -235,6 +235,7 @@ import cyberGridTexture from '~/assets/images/cyber-grid-texture.png';
           { description: 'Diagnostics, Strategy & Roadmapping ($175/hr)' },
           { description: 'Implementation & Technician Time ($155/hr)' },
           { description: 'Priority response & SLA options' },
+          { description: 'Monthly retainer plans available' },
         ],
         callToAction: {
           target: '_blank',
@@ -245,6 +246,27 @@ import cyberGridTexture from '~/assets/images/cyber-grid-texture.png';
         },
         hasRibbon: true,
         ribbonTitle: 'Popular',
+      },
+      {
+        title: 'Incident Response / After-Hours',
+        subtitle: 'Emergency & Security Incident Support',
+        price: 250,
+        period: 'first hour',
+        items: [
+          { description: '$200/hour after the first hour' },
+          { description: 'A certified technician responds immediately to mitigate the threat or issue' },
+          { description: 'For after-hours emergencies, active security incidents, and critical system failures' },
+          { description: 'Monthly emergency retainer plans available' },
+        ],
+        callToAction: {
+          text: 'Call Now',
+          href: 'tel:+16192899205',
+          variant: 'primary',
+          class: 'w-full shadow-[0_0_15px_rgba(239,68,68,0.4)]',
+        },
+        hasRibbon: true,
+        ribbonTitle: '24/7 Emergency',
+        ribbonClass: 'bg-red-600 before:border-t-red-700 before:border-l-red-700 after:border-t-red-700 after:border-r-red-700',
       },
     ]}
   />
