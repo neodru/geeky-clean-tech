@@ -25,7 +25,8 @@ export const headerData = {
       text: 'Schedule IT Support',
       href: getPermalink('contact'),
       variant: 'primary' as const,
-      class: 'shadow-[0_0_15px_rgba(34,211,238,0.5)] border-primary hover:shadow-[0_0_25px_rgba(34,211,238,0.8)] transition-shadow duration-300',
+      class:
+        'shadow-[0_0_15px_rgba(34,211,238,0.5)] border-primary hover:shadow-[0_0_25px_rgba(34,211,238,0.8)] transition-shadow duration-300',
     },
   ],
 };

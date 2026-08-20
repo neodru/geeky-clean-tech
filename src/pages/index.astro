@@ -11,10 +11,10 @@ import FAQs from '~/components/widgets/FAQs.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
 
 const metadata = {
-  title: 'Geeky Clean Technology | White-Glove IT Services & Fractional CTO',
+  title: 'San Diego IT Support | On-Site & Remote | Geeky Clean Technology',
   ignoreTitleTemplate: true,
   description:
-    'Premium on-location & remote technology services for individuals and small businesses — repair, cybersecurity, AI integration, and fractional CTO strategy.',
+    'Geeky Clean Technology provides on-site and remote IT support for homes, seniors, professionals, and small businesses across San Diego. Computer repair, cybersecurity, networking, and fractional CTO.',
 };
 
 import cyberGridTexture from '~/assets/images/cyber-grid-texture.png';
@@ -33,11 +33,11 @@ import cyberGridTexture from '~/assets/images/cyber-grid-texture.png';
       actions={[
         {
           variant: 'primary',
-          text: 'Request Service',
-          href: '#contact',
+          text: 'Schedule IT Support',
+          href: '/contact',
           class: 'shadow-[0_0_15px_rgba(34,211,238,0.5)] border-primary hover:shadow-[0_0_25px_rgba(34,211,238,0.8)]',
         },
-        { text: 'Book a Consultation', href: '#contact' },
+        { text: 'Business IT Consultation', href: '/business-it-services' },
       ]}
       image={{
         src: '~/assets/images/Dru_hero.png',
@@ -46,16 +46,16 @@ import cyberGridTexture from '~/assets/images/cyber-grid-texture.png';
       }}
     >
       <Fragment slot="title">
-        <span class="font-heading text-white tracking-wide">Geeky Clean Technology</span>
+        <span class="font-heading text-white tracking-wide">San Diego IT Support That Comes to You</span>
       </Fragment>
 
       <Fragment slot="subtitle">
         <span class="block text-2xl font-heading text-primary mb-4 text-glow"
-          >Elite Technology. Concierge Delivered.</span
+          >On-site and remote technology support for homes, professionals, and small businesses.</span
         >
         <span class="text-lg text-muted max-w-3xl mx-auto block">
-          White-glove, on-location and remote technology service for individuals and small businesses — expertise,
-          discretion, and precision.
+          Geeky Clean Technology provides white-glove IT help across San Diego — expertise, discretion, and precision
+          without the walk-in store.
         </span>
         <div class="flex justify-center flex-wrap gap-4 my-8 opacity-80 text-accent text-sm tracking-widest uppercase">
           <span>On-location</span><span class="hidden sm:inline">•</span>
@@ -72,11 +72,49 @@ import cyberGridTexture from '~/assets/images/cyber-grid-texture.png';
     </Hero>
   </div>
 
-  <!-- Services Widget -->
+  <!-- Customer Paths -->
+  <Features2
+    id="customer-paths"
+    title="Which describes you?"
+    tagline="TWO CLEAR PATHS"
+    columns={2}
+    classes={{
+      container: 'relative z-10',
+      panel: 'glass-card glass-card-hover p-8 text-left',
+      icon: 'text-primary w-10 h-10 mb-4',
+    }}
+    items={[
+      {
+        title: 'Home & Personal IT',
+        description:
+          'Computer repair, Wi-Fi, device setup, backups, and patient help for seniors and families in your home.',
+        icon: 'tabler:home',
+        callToAction: {
+          text: 'Home IT Support',
+          href: '/home-it-support',
+          variant: 'link' as const,
+        },
+      },
+      {
+        title: 'Business IT & Cybersecurity',
+        description:
+          'Fractional CTO, managed IT, cloud, email, backups, networking, and security for small businesses.',
+        icon: 'tabler:building-skyscraper',
+        callToAction: {
+          text: 'Business IT Services',
+          href: '/business-it-services',
+          variant: 'link' as const,
+        },
+      },
+    ]}
+  />
+
+  <!-- Core Services -->
   <Features2
     id="services"
-    title="Our Services"
+    title="Core services"
     tagline="WHAT WE DO"
+    columns={3}
     classes={{
       container: 'relative z-10',
       panel: 'glass-card glass-card-hover p-6 text-left',
@@ -84,64 +122,84 @@ import cyberGridTexture from '~/assets/images/cyber-grid-texture.png';
     }}
     items={[
       {
-        title: 'IT Concierge (for Individuals)',
-        description: 'Personal, patient, white-glove tech help for your home and devices, on your schedule.',
-        icon: 'tabler:user-star',
+        title: 'Home IT Support',
+        description: 'On-site and remote help for your home, devices, Wi-Fi, printers, and smart home.',
+        icon: 'tabler:home',
+        callToAction: {
+          text: 'Learn more',
+          href: '/home-it-support',
+          variant: 'link' as const,
+        },
       },
       {
-        title: 'Fractional / Part-Time CTO',
-        description: 'Enterprise-grade technology strategy and leadership without the full-time overhead.',
+        title: 'Senior Tech Support',
+        description: 'Patient, respectful technology help for older adults and their families.',
+        icon: 'tabler:heart-handshake',
+        callToAction: {
+          text: 'Learn more',
+          href: '/senior-tech-support',
+          variant: 'link' as const,
+        },
+      },
+      {
+        title: 'Business IT Services',
+        description: 'Fractional CTO and managed IT services that keep your business running.',
         icon: 'tabler:building-skyscraper',
+        callToAction: {
+          text: 'Learn more',
+          href: '/business-it-services',
+          variant: 'link' as const,
+        },
+      },
+      {
+        title: 'Cybersecurity',
+        description: 'Scam recovery, security audits, MFA, and incident response for homes and businesses.',
+        icon: 'tabler:shield-lock',
+        callToAction: {
+          text: 'Learn more',
+          href: '/cybersecurity',
+          variant: 'link' as const,
+        },
+      },
+      {
+        title: 'Data Recovery & Backup',
+        description: 'Recover photos, documents, and business files. Lab referrals for severe damage.',
+        icon: 'tabler:database',
+        callToAction: {
+          text: 'Learn more',
+          href: '/data-recovery',
+          variant: 'link' as const,
+        },
+      },
+      {
+        title: 'Network Support',
+        description: 'Wi-Fi, mesh, routers, guest networks, and secure business networking.',
+        icon: 'tabler:wifi',
+        callToAction: {
+          text: 'Learn more',
+          href: '/network-support',
+          variant: 'link' as const,
+        },
+      },
+      {
+        title: 'Computer Repair',
+        description: 'Mac and PC diagnostics, upgrades, virus removal, and performance tuning.',
+        icon: 'tabler:tool',
+        callToAction: {
+          text: 'Learn more',
+          href: '/computer-repair',
+          variant: 'link' as const,
+        },
       },
       {
         title: 'Remote Support',
-        description: 'Secure, instant remote assistance to resolve issues from anywhere.',
+        description: 'Same-day secure remote sessions for software, email, and troubleshooting.',
         icon: 'tabler:headset',
-      },
-      {
-        title: 'Cybersecurity & Incident Response',
-        description: 'Protection against scams, phishing, and breaches — plus rapid response when it counts.',
-        icon: 'tabler:shield-lock',
-      },
-      {
-        title: 'Computer Maintenance & Repair',
-        description: 'Expert diagnostics and repair for Apple and PC hardware.',
-        icon: 'tabler:tool',
-      },
-      {
-        title: 'Web Design & Development',
-        description: 'Modern, high-performing websites and web apps built to convert.',
-        icon: 'tabler:browser',
-      },
-      {
-        title: 'AI Integration',
-        description: 'Automate workflows and unlock new efficiencies with tailored AI solutions.',
-        icon: 'tabler:robot',
-      },
-      {
-        title: 'Data Backup & Recovery',
-        description: 'Keep priceless memories, documents, and business data safe and recoverable.',
-        icon: 'tabler:database',
-      },
-      {
-        title: 'Cloud & Email Migration',
-        description: 'Seamless setup and migration to Google Workspace / Microsoft 365.',
-        icon: 'tabler:cloud-upload',
-      },
-      {
-        title: 'Home & Office Network / Wi-Fi',
-        description: 'Fast, reliable, secure connectivity throughout your space.',
-        icon: 'tabler:wifi',
-      },
-      {
-        title: 'Smart Home & IoT Setup',
-        description: 'Automate and simplify your living or working environment.',
-        icon: 'tabler:home-bolt',
-      },
-      {
-        title: 'IT Training & Digital Literacy',
-        description: 'Patient, personalized coaching so you (or your team) feel confident.',
-        icon: 'tabler:school',
+        callToAction: {
+          text: 'Learn more',
+          href: '/remote-support',
+          variant: 'link' as const,
+        },
       },
     ]}
   />
@@ -367,63 +425,51 @@ import cyberGridTexture from '~/assets/images/cyber-grid-texture.png';
     ]}
   />
 
+  <!-- Service Area Widget -->
+  <Features2
+    id="service-area"
+    title="Serving the San Diego area"
+    tagline="SERVICE AREA"
+    columns={1}
+    classes={{ container: 'max-w-3xl mx-auto' }}
+    items={[
+      {
+        title: 'Mobile IT support across San Diego',
+        description:
+          'From Pacific Beach to La Jolla, Point Loma to University City, we come to your home or office. Remote support is available nationwide.',
+        icon: 'tabler:map-pin',
+        callToAction: {
+          text: 'See all service areas',
+          href: '/service-area',
+          variant: 'primary' as const,
+        },
+      },
+    ]}
+  />
+
   <!-- CallToAction Widget -->
   <CallToAction
     id="contact"
+    title="Ready to get your technology handled?"
+    subtitle="Call, text, or email. We respond the same business day and can often schedule same-week support."
     actions={[
       {
         variant: 'primary',
-        text: 'Request Service',
-        href: 'mailto:support@geekycleantechnology.com',
+        text: 'Schedule IT Support',
+        href: '/contact',
         icon: 'tabler:mail',
         class: 'shadow-[0_0_15px_rgba(34,211,238,0.5)] border-primary',
       },
+      {
+        text: 'Call 619-289-9205',
+        href: 'tel:+16192899205',
+        icon: 'tabler:phone',
+      },
+      {
+        text: 'Email Us',
+        href: 'mailto:support@geekycleantechnology.com',
+        icon: 'tabler:mail',
+      },
     ]}
-  >
-    <Fragment slot="title">
-      <span class="text-glow text-primary">Let's get your technology handled.</span>
-    </Fragment>
-
-    <Fragment slot="subtitle">
-      <div class="max-w-2xl mx-auto mt-6 glass-card p-8 text-left">
-        <form class="flex flex-col gap-4">
-          <!-- TODO: Connect form to backend service -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <input
-              type="text"
-              placeholder="Name"
-              class="w-full bg-page-dark border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
-            />
-            <input
-              type="email"
-              placeholder="Email"
-              class="w-full bg-page-dark border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
-            />
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <input
-              type="tel"
-              placeholder="Phone"
-              class="w-full bg-page-dark border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
-            />
-            <select
-              class="w-full bg-page-dark border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors appearance-none"
-            >
-              <option value="" disabled selected>Service interested in</option>
-              <option value="individuals">Personal IT Support</option>
-              <option value="business">Business / Fractional CTO</option>
-            </select>
-          </div>
-          <textarea
-            placeholder="Message"
-            rows="4"
-            class="w-full bg-page-dark border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
-          ></textarea>
-          <button type="button" class="btn btn-primary w-full mt-2 shadow-[0_0_15px_rgba(34,211,238,0.3)]"
-            >Submit Request</button
-          >
-        </form>
-      </div>
-    </Fragment>
-  </CallToAction>
+  />
 </Layout>

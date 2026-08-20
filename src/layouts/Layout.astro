@@ -3,7 +3,7 @@ import '~/assets/styles/tailwind.css';
 
 import { Font } from 'astro:assets';
 
-import { I18N } from 'astrowind:config';
+import { I18N, SITE } from 'astrowind:config';
 
 import CommonMeta from '~/components/common/CommonMeta.astro';
 import Favicons from '~/components/Favicons.astro';
@@ -25,6 +25,42 @@ export interface Props {
 
 const { metadata = {} } = Astro.props;
 const { language, textDirection } = I18N;
+
+const canonical = new URL(Astro.url.pathname, SITE.site).toString();
+
+const structuredData = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': ['LocalBusiness', 'ProfessionalService'],
+      '@id': `${canonical}#business`,
+      name: 'Geeky Clean Technology',
+      url: SITE.site,
+      telephone: '+1-619-289-9205',
+      email: 'support@geekycleantechnology.com',
+      priceRange: '$$',
+      areaServed: {
+        '@type': 'City',
+        name: 'San Diego',
+        address: {
+          '@type': 'PostalAddress',
+          addressLocality: 'San Diego',
+          addressRegion: 'CA',
+          addressCountry: 'US',
+        },
+      },
+      serviceType: ['IT Support', 'Computer Repair', 'Cybersecurity', 'Network Support', 'Data Recovery'],
+    },
+    {
+      '@type': 'Organization',
+      '@id': `${canonical}#organization`,
+      name: 'Geeky Clean Technology',
+      url: SITE.site,
+      logo: new URL('/_astro/favicon.vp_fBu0c.svg', SITE.site).toString(),
+      sameAs: [],
+    },
+  ],
+});
 ---
 
 <!doctype html>
@@ -36,6 +72,7 @@ const { language, textDirection } = I18N;
     <CustomStyles />
     <ApplyColorMode />
     <Metadata {...metadata} />
+    <script type="application/ld+json" set:html={structuredData} is:inline />
     <SiteVerification />
     <Analytics />
 

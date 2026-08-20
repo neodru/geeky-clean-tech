@@ -49,7 +49,13 @@ export default defineConfig({
   ],
 
   integrations: [
-    sitemap(),
+    sitemap({
+      filter: (page) =>
+        !page.includes('/homes/') &&
+        !page.includes('/landing/') &&
+        !page.includes('/_astro/') &&
+        !page.endsWith('/404.html'),
+    }),
     mdx(),
     icon({
       include: {
