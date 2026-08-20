@@ -1,0 +1,111 @@
+---
+import type { GetStaticPaths } from 'astro';
+import Layout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Content from '~/components/widgets/Content.astro';
+import Features2 from '~/components/widgets/Features2.astro';
+import FAQs from '~/components/widgets/FAQs.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import { services } from '~/data/services';
+
+export const getStaticPaths = (() => {
+  return services.map((service) => ({
+    params: { service: service.slug },
+    props: { service },
+  }));
+}) satisfies GetStaticPaths;
+
+const { service } = Astro.props;
+
+const metadata = {
+  title: service.metaTitle,
+  description: service.metaDescription,
+};
+
+const introHtml = Array.isArray(service.intro)
+  ? service.intro.map((p) => `<p class="mb-4">${p}</p>`).join('')
+  : `<p>${service.intro}</p>`;
+---
+
+<Layout metadata={metadata}>
+  <Hero
+    id="hero"
+    tagline={service.tagline}
+    title={service.headline}
+    subtitle={service.subheadline}
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Schedule',
+        href: service.ctaHref,
+        class: 'shadow-[0_0_15px_rgba(34,211,238,0.5)] border-primary hover:shadow-[0_0_25px_rgba(34,211,238,0.8)]',
+      },
+      {
+        text: 'Call',
+        href: 'tel:+16192899205',
+      },
+    ]}
+  />
+
+  <Content id="intro" isReversed>
+    <Fragment slot="content">
+      <h2 class="text-3xl font-heading text-white mb-6">What to expect</h2>
+      <div class="text-muted text-lg" set:html={introHtml} />
+      <div class="mt-8 flex flex-wrap gap-4 opacity-80 text-accent text-sm tracking-widest uppercase">
+        <span>On-location</span><span>•</span>
+        <span>Remote</span><span>•</span>
+        <span>NDA available</span><span>•</span>
+        <span>Warranty-backed</span>
+      </div>
+    </Fragment>
+  </Content>
+
+  <Features2
+    id="features"
+    title={`${service.title} Highlights`}
+    tagline="WHAT WE DO"
+    columns={3}
+    classes={{
+      container: 'relative z-10',
+      panel: 'glass-card glass-card-hover p-6 text-left',
+      icon: 'text-primary w-10 h-10 mb-4',
+    }}
+    items={service.features.map((feature) => ({
+      title: feature.title,
+      description: feature.description,
+      icon: feature.icon,
+    }))}
+  />
+
+  <FAQs
+    id="faq"
+    title="Frequently Asked Questions"
+    classes={{
+      container: 'max-w-4xl mx-auto',
+    }}
+    items={service.faqs.map((faq) => ({
+      title: faq.title,
+      description: faq.description,
+    }))}
+  />
+
+  <CallToAction
+    id="contact"
+    actions={[
+      {
+        variant: 'primary',
+        text: service.ctaText,
+        href: service.ctaHref,
+        icon: 'tabler:mail',
+        class: 'shadow-[0_0_15px_rgba(34,211,238,0.5)] border-primary',
+      },
+      {
+        text: 'Call 619-289-9205',
+        href: 'tel:+16192899205',
+        icon: 'tabler:phone',
+      },
+    ]}
+    title={`Ready for ${service.title.toLowerCase()}?`}
+    subtitle={`Contact Geeky Clean Technology today. Email support@geekycleantechnology.com or call 619-289-9205.`}
+  />
+</Layout>

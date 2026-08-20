@@ -1,0 +1,142 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Content from '~/components/widgets/Content.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import { services } from '~/data/services';
+
+const serviceArea = services.find((service) => service.slug === 'service-area')!;
+
+const metadata = {
+  title: serviceArea.metaTitle,
+  description: serviceArea.metaDescription,
+};
+
+const neighborhoods = [
+  'Bankers Hill',
+  'Bay Park',
+  'Carmel Valley',
+  'Carlsbad',
+  'Chula Vista',
+  'Clairemont',
+  'Coronado',
+  'Del Mar',
+  'El Cajon',
+  'Encinitas',
+  'Escondido',
+  'Hillcrest',
+  'Kensington',
+  'La Jolla',
+  'La Mesa',
+  'Linda Vista',
+  'Lakeside',
+  'Mira Mesa',
+  'Mission Hills',
+  'Mission Valley',
+  'National City',
+  'North Park',
+  'Ocean Beach',
+  'Oceanside',
+  'Pacific Beach',
+  'Point Loma',
+  'Poway',
+  'Ramona',
+  'Rancho Bernardo',
+  'Rancho Peñasquitos',
+  'Santee',
+  'San Marcos',
+  'Scripps Ranch',
+  'Solana Beach',
+  'South Park',
+  'Tierrasanta',
+  'University City',
+  'Vista',
+];
+---
+
+<Layout metadata={metadata}>
+  <Hero
+    id="hero"
+    tagline={serviceArea.tagline}
+    title={serviceArea.headline}
+    subtitle={serviceArea.subheadline}
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Confirm Your Location',
+        href: 'tel:+16192899205',
+        class: 'shadow-[0_0_15px_rgba(34,211,238,0.5)] border-primary hover:shadow-[0_0_25px_rgba(34,211,238,0.8)]',
+      },
+      {
+        text: 'Email Us',
+        href: 'mailto:support@geekycleantechnology.com',
+      },
+    ]}
+  />
+
+  <Content id="coverage">
+    <Fragment slot="content">
+      <h2 class="text-3xl font-heading text-white mb-6">Mobile IT support across San Diego</h2>
+      <p class="text-muted text-lg mb-4">
+        Geeky Clean Technology is a fully mobile technology provider. We do not operate a walk-in storefront—we come
+        directly to your home, office, or property anywhere in the greater San Diego area.
+      </p>
+      <p class="text-muted text-lg mb-4">
+        If you do not see your neighborhood listed, call us at <a
+          href="tel:+16192899205"
+          class="text-primary hover:underline">619-289-9205</a
+        >. We can usually confirm coverage quickly, and remote support is always available nationwide.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-4 opacity-80 text-accent text-sm tracking-widest uppercase">
+        <span>On-location</span><span>•</span>
+        <span>Remote</span><span>•</span>
+        <span>NDA available</span><span>•</span>
+        <span>Warranty-backed</span>
+      </div>
+    </Fragment>
+  </Content>
+
+  <section class="py-12 md:py-16 lg:py-20 relative" id="neighborhoods">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl md:text-4xl font-heading font-bold tracking-tight mb-4 dark:text-gray-200">
+          San Diego neighborhoods we serve
+        </h2>
+        <p class="text-muted text-lg max-w-3xl mx-auto">
+          From coastal communities to inland suburbs, we bring white-glove IT support to your door.
+        </p>
+      </div>
+      <div
+        class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
+      >
+        {
+          neighborhoods.map((neighborhood) => (
+            <div class="glass-card p-4 text-center">
+              <span class="text-white font-medium">{neighborhood}</span>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <CallToAction
+    id="contact"
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Call 619-289-9205',
+        href: 'tel:+16192899205',
+        icon: 'tabler:phone',
+        class: 'shadow-[0_0_15px_rgba(34,211,238,0.5)] border-primary',
+      },
+      {
+        text: 'Email support@geekycleantechnology.com',
+        href: 'mailto:support@geekycleantechnology.com',
+        icon: 'tabler:mail',
+      },
+    ]}
+    title="Ready to schedule service?"
+    subtitle="Call or email today. We will confirm your location and find the fastest way to get your technology handled."
+  />
+</Layout>

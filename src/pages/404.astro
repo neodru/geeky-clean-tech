@@ -1,24 +1,44 @@
 ---
-import Layout from '~/layouts/Layout.astro';
-import { getHomePermalink } from '~/utils/permalinks';
+import Layout from '~/layouts/PageLayout.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import { getHomePermalink, getPermalink } from '~/utils/permalinks';
 
-const title = `Error 404`;
+const title = 'Page Not Found | Geeky Clean Technology';
+const metadata = {
+  title,
+  description:
+    'Sorry, the page you are looking for does not exist. Return to Geeky Clean Technology for San Diego IT support.',
+  robots: { index: false, follow: true },
+};
 ---
 
-<Layout metadata={{ title }}>
+<Layout metadata={metadata}>
   <section class="flex items-center h-full p-16">
     <div class="container flex flex-col items-center justify-center px-5 mx-auto my-8">
-      <div class="max-w-md text-center">
-        <h2 class="mb-8 font-bold text-9xl">
-          <span class="sr-only">Error</span>
+      <div class="max-w-lg text-center">
+        <h1 class="mb-6 font-bold text-8xl md:text-9xl font-heading">
+          <span class="sr-only">Error </span>
           <span class="text-primary">404</span>
-        </h2>
-        <p class="text-3xl font-semibold md:text-3xl">Sorry, we couldn't find this page.</p>
-        <p class="mt-4 mb-8 text-lg text-muted dark:text-slate-400">
-          But don't worry, you can find plenty of other things on our homepage.
+        </h1>
+        <h2 class="text-3xl font-semibold font-heading mb-4">Page not found</h2>
+        <p class="text-lg text-muted dark:text-slate-400 mb-8">
+          The page you are looking for may have moved or no longer exists. You can get back on track from the links
+          below.
         </p>
-        <a rel="noopener noreferrer" href={getHomePermalink()} class="btn ml-4">Back to homepage</a>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href={getHomePermalink()} class="btn btn-primary">Back to homepage</a>
+          <a href={getPermalink('contact')} class="btn btn-secondary">Schedule support</a>
+        </div>
       </div>
     </div>
   </section>
+
+  <CallToAction
+    title="Need IT help in San Diego?"
+    subtitle="We are here for homes, seniors, professionals, and small businesses."
+    actions={[
+      { text: 'Schedule IT Support', href: getPermalink('contact'), variant: 'primary' },
+      { text: 'Call 619-289-9205', href: 'tel:+16192899205', variant: 'secondary' },
+    ]}
+  />
 </Layout>

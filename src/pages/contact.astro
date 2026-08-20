@@ -1,77 +1,161 @@
 ---
-import Layout from '~/layouts/PageLayout.astro';
-import HeroText from '~/components/widgets/HeroText.astro';
-import ContactUs from '~/components/widgets/Contact.astro';
 import Features2 from '~/components/widgets/Features2.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Layout from '~/layouts/PageLayout.astro';
 
 const metadata = {
-  title: 'Contact',
+  title: 'Contact Geeky Clean Technology | Schedule IT Support',
+  description:
+    'Schedule on-site or remote IT support in San Diego. Call, text, or email Geeky Clean Technology for home, senior, business, and cybersecurity help.',
 };
 ---
 
 <Layout metadata={metadata}>
-  <!-- HeroText Widget ******************* -->
-
-  <HeroText tagline="Contact" title="Let's Connect!" />
-
-  <ContactUs
-    id="form"
-    title="Drop us a message today!"
-    subtitle="For quicker answers, explore our FAQs section. You may find the solution you're looking  for right there! If not, our support team is delighted to help you."
-    inputs={[
-      {
-        type: 'text',
-        name: 'name',
-        label: 'Name',
-      },
-      {
-        type: 'email',
-        name: 'email',
-        label: 'Email',
-      },
+  <Hero
+    tagline="Contact"
+    title="Let's get your technology handled"
+    subtitle="Call, text, email, or send us a message. We typically respond the same business day."
+    actions={[
+      { text: 'Call 619-289-9205', href: 'tel:+16192899205', variant: 'primary' },
+      { text: 'Email Us', href: 'mailto:support@geekycleantechnology.com', variant: 'secondary' },
     ]}
-    textarea={{
-      label: 'Message',
-    }}
-    disclaimer={{
-      label:
-        'By submitting this contact form, you acknowledge and agree to the collection of your personal information.',
-    }}
-    description="Our support team typically responds within 24 business hours."
   />
 
-  <!-- Features2 Widget ************** -->
+  <section id="form" class="relative max-w-3xl mx-auto px-4 sm:px-6 py-12 md:py-16">
+    <form
+      action="mailto:support@geekycleantechnology.com?subject=Geeky%20Clean%20Technology%20Inquiry"
+      method="POST"
+      enctype="text/plain"
+      class="glass-card p-6 sm:p-8 space-y-6"
+    >
+      <div>
+        <h2 class="text-2xl font-heading text-white mb-2">Request support</h2>
+        <p class="text-muted text-sm">
+          This will open your email app with your message pre-filled. Please make sure the fields are completed before
+          sending.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label for="name" class="block text-sm font-medium mb-1">Name <span aria-hidden="true">*</span></label>
+          <input
+            type="text"
+            id="name"
+            name="Name"
+            required
+            autocomplete="name"
+            class="w-full bg-page-dark border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+            placeholder="Your name"
+          />
+        </div>
+        <div>
+          <label for="email" class="block text-sm font-medium mb-1">Email <span aria-hidden="true">*</span></label>
+          <input
+            type="email"
+            id="email"
+            name="Email"
+            required
+            autocomplete="email"
+            class="w-full bg-page-dark border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+            placeholder="you@example.com"
+          />
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label for="phone" class="block text-sm font-medium mb-1">Phone</label>
+          <input
+            type="tel"
+            id="phone"
+            name="Phone"
+            autocomplete="tel"
+            class="w-full bg-page-dark border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+            placeholder="(619) 555-0100"
+          />
+        </div>
+        <div>
+          <label for="audience" class="block text-sm font-medium mb-1"
+            >This is for <span aria-hidden="true">*</span></label
+          >
+          <select
+            id="audience"
+            name="Audience"
+            required
+            class="w-full bg-page-dark border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors appearance-none"
+          >
+            <option value="" disabled selected>Select one</option>
+            <option value="Home / Personal">Home / Personal</option>
+            <option value="Senior / Family">Senior / Family</option>
+            <option value="Business">Business</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <label for="service" class="block text-sm font-medium mb-1"
+          >Service needed <span aria-hidden="true">*</span></label
+        >
+        <select
+          id="service"
+          name="Service"
+          required
+          class="w-full bg-page-dark border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors appearance-none"
+        >
+          <option value="" disabled selected>Select a service</option>
+          <option value="Home IT Support">Home IT Support</option>
+          <option value="Senior Tech Support">Senior Tech Support</option>
+          <option value="Business IT Services">Business IT Services</option>
+          <option value="Cybersecurity">Cybersecurity</option>
+          <option value="Data Recovery">Data Recovery</option>
+          <option value="Network Support">Network Support</option>
+          <option value="Computer Repair">Computer Repair</option>
+          <option value="Remote Support">Remote Support</option>
+          <option value="Other / Not sure">Other / Not sure</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="message" class="block text-sm font-medium mb-1"
+          >How can we help? <span aria-hidden="true">*</span></label
+        >
+        <textarea
+          id="message"
+          name="Message"
+          rows="4"
+          required
+          class="w-full bg-page-dark border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+          placeholder="Describe the issue, device, or project..."></textarea>
+      </div>
+
+      <p class="text-sm text-muted">
+        Submitting opens your default email client. If that does not work, you can also call or text
+        <a href="tel:+16192899205" class="text-primary hover:underline">619-289-9205</a>.
+      </p>
+
+      <button type="submit" class="btn btn-primary w-full">Request IT Support</button>
+    </form>
+  </section>
 
   <Features2
-    title="We are here to help!"
+    title="Other ways to reach us"
+    columns={3}
     items={[
       {
-        title: 'General support',
-        description: `Chat with us for inquiries related to account management, website navigation, payment issues, accessing purchased templates or general questions about the website's functionality.`,
-      },
-      {
-        title: 'Contact sales',
-        description:
-          'Chat with us for questions about purchases, customization options, licensing for commercial use, inquiries about specific template, etc.',
-      },
-      {
-        title: 'Technical support',
-        description:
-          'Chat with us when facing issues like template installation, problems editing difficulties, compatibility issues with software or download errors, or other technical challenges related to using the templates.',
-      },
-      {
-        title: 'Phone',
-        description: '+1 (234) 567-890',
-        icon: 'tabler:headset',
+        title: 'Call or Text',
+        description: '<a href="tel:+16192899205" class="text-primary hover:underline">619-289-9205</a>',
+        icon: 'tabler:phone',
       },
       {
         title: 'Email',
-        description: 'contact@support.com',
+        description:
+          '<a href="mailto:support@geekycleantechnology.com" class="text-primary hover:underline">support@geekycleantechnology.com</a>',
         icon: 'tabler:mail',
       },
       {
-        title: 'Location',
-        description: '1234 Lorem Ipsum St, 12345, Miami, EEUU',
+        title: 'Service Area',
+        description: 'On-site appointments throughout San Diego and surrounding communities.',
         icon: 'tabler:map-pin',
       },
     ]}
