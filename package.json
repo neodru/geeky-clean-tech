@@ -33,6 +33,7 @@
     "astro-seo": "^1.1.0",
     "limax": "4.2.3",
     "lodash.merge": "^4.6.2",
+    "sharp": "^0.35.3",
     "unpic": "^4.2.2"
   },
   "devDependencies": {
@@ -60,7 +61,6 @@
     "prettier": "^3.9.6",
     "prettier-plugin-astro": "^0.14.1",
     "reading-time": "^1.5.0",
-    "sharp": "^0.35.3",
     "tailwind-merge": "^3.6.0",
     "tailwindcss": "^4.3.3",
     "typescript": "^5.9.3",
