@@ -15,11 +15,20 @@ const metadata = {
 ---
 
 <Layout metadata={metadata}>
+  <!--
+    IMAGE POLICY GENERATION PROMPT:
+    Editorial commercial photograph for a premium private technology concierge service. An experienced technology consultant seated beside a sophisticated professional client in an elegant modern home office in coastal Southern California, quietly reviewing a laptop and tablet together. Dark charcoal and deep navy interior tones, warm practical lighting, subtle premium materials, calm confidential atmosphere, realistic computers and devices, no visible logos, no text, no holograms, no cyberpunk effects, no exaggerated server rooms, no stock-photo handshake pose. The image should communicate discretion, trust, expertise, patience, and white-glove personal technology service. High-end architectural editorial photography, natural skin texture, realistic lighting, understated composition, horizontal 16:9 framing with negative space suitable for web layout.
+  -->
   <Hero
     id="hero"
     tagline="MONTHLY TECHNOLOGY CONCIERGE"
     title="Your technology person—without hiring one."
     subtitle="Get priority access to Geeky Clean Technology every month for troubleshooting, cybersecurity, device support, AI, productivity, proactive maintenance, and technology consulting."
+    image={{
+      src: '~/assets/images/default.jpg',
+      alt: 'Technology concierge working with a professional client in their home office',
+      class: 'mx-auto rounded-md w-full object-cover object-center aspect-video',
+    }}
     actions={[
       {
         variant: 'primary',
