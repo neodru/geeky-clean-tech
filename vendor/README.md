@@ -78,7 +78,7 @@ This repo is currently a customized AstroWind instance for **Geeky Clean Technol
 
 Key project details:
 
-- **Package name:** `temp-astro`
+- **Package name:** `geeky-clean-tech`
 - **Version:** `1.0.0-beta.65`
 - **Runtime:** Node.js `>=22.22.3`
 - **Site:** `https://geekycleantechnology.com`
