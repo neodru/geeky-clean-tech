@@ -89,6 +89,27 @@ const introHtml = Array.isArray(service.intro)
     }))}
   />
 
+  {
+    service.crossSell && (
+      <CallToAction
+        title={service.crossSell.heading}
+        subtitle={service.crossSell.body}
+        tagline={service.crossSell.eyebrow}
+        actions={[
+          {
+            variant: 'secondary',
+            text: service.crossSell.ctaText,
+            href: service.crossSell.ctaHref,
+          },
+        ]}
+        classes={{
+          container: 'max-w-4xl mx-auto py-8 md:py-12 pt-0 md:pt-0',
+          panel: 'glass-card border-accent/20 hover:border-accent/50 p-6 sm:p-8',
+        }}
+      />
+    )
+  }
+
   <CallToAction
     id="contact"
     actions={[

@@ -1,0 +1,273 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Features2 from '~/components/widgets/Features2.astro';
+import Pricing from '~/components/widgets/Pricing.astro';
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import FAQs from '~/components/widgets/FAQs.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+
+const metadata = {
+  title: 'Monthly IT Support & Technology Concierge | San Diego | Geeky Clean Technology',
+  description:
+    'Monthly technology concierge plans from Geeky Clean Technology provide priority IT support, proactive maintenance, cybersecurity, AI guidance, and personal technology consulting for professionals and households.',
+};
+---
+
+<Layout metadata={metadata}>
+  <Hero
+    id="hero"
+    tagline="MONTHLY TECHNOLOGY CONCIERGE"
+    title="Your technology person—without hiring one."
+    subtitle="Get priority access to Geeky Clean Technology every month for troubleshooting, cybersecurity, device support, AI, productivity, proactive maintenance, and technology consulting."
+    actions={[
+      {
+        variant: 'primary',
+        text: 'View Monthly Plans',
+        href: '#pricing',
+        class: 'shadow-[0_0_15px_rgba(34,211,238,0.5)] border-primary hover:shadow-[0_0_25px_rgba(34,211,238,0.8)]',
+      },
+      {
+        text: 'Schedule a Consultation',
+        href: '/contact',
+      },
+    ]}
+  >
+    <Fragment slot="content">
+      <div
+        class="mt-8 flex flex-wrap justify-center gap-4 opacity-80 text-accent text-sm tracking-widest uppercase intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
+      >
+        <span>On-location</span><span>•</span>
+        <span>Remote</span><span>•</span>
+        <span>Proactive Monitoring</span><span>•</span>
+        <span>NDA available</span><span>•</span>
+        <span>Warranty-backed</span>
+      </div>
+      <p class="mt-6 text-muted text-lg font-medium">Plans start at $435/month.</p>
+    </Fragment>
+  </Hero>
+
+  <Features2
+    title="More than discounted IT hours."
+    subtitle="The lower hourly rate is only part of the value. Monthly Concierge reserves Geeky Clean Technology's capacity for you and creates an ongoing relationship with someone who understands your technology, preferences, and goals."
+    columns={2}
+    classes={{
+      container: 'relative z-10',
+      panel: 'glass-card glass-card-hover p-6 text-left',
+      icon: 'text-primary w-10 h-10 mb-4',
+    }}
+    items={[
+      {
+        title: 'Priority Access',
+        description:
+          'Concierge clients receive preferred scheduling for routine support so help is easier to access when something comes up.',
+        icon: 'tabler:calendar-check',
+      },
+      {
+        title: 'We Know Your Setup',
+        description:
+          'Spend less time explaining your devices, accounts, software, and ongoing projects because we maintain familiarity with your environment.',
+        icon: 'tabler:devices',
+      },
+      {
+        title: 'Proactive Support',
+        description:
+          'Monitoring and routine maintenance help identify updates and selected system issues before they turn into larger service calls.',
+        icon: 'tabler:shield-check',
+      },
+      {
+        title: 'One Technology Partner',
+        description:
+          'Use your included time for troubleshooting, training, cybersecurity, AI, productivity, device setup, or technology consulting—not just computer repair.',
+        icon: 'tabler:user-check',
+      },
+    ]}
+  />
+
+  <Pricing
+    id="plans"
+    tagline="MONTHLY PLANS"
+    title="Choose how much support you want available each month."
+    subtitle="Each plan includes access to Geeky Clean Technology for on-site and remote support, technology guidance, and proactive workstation care. Higher tiers reserve more monthly capacity at a lower effective hourly rate."
+    prices={[
+      {
+        title: 'Essential',
+        subtitle:
+          'For clients who want dependable access for occasional technology support, maintenance, and questions.',
+        price: '435',
+        period: 'per month',
+        items: [
+          { description: '3 hours included per month', icon: 'tabler:clock' },
+          { description: 'On-site and remote IT support' },
+          { description: 'Computer, phone, and tablet assistance' },
+          { description: 'Email and account troubleshooting' },
+          { description: 'Security and privacy assistance' },
+          { description: 'Software and device setup' },
+          { description: 'Proactive workstation monitoring' },
+          { description: 'One-on-one technology guidance' },
+          { description: 'Save $30 compared with standard $155/hr rate', icon: 'tabler:pig-money' },
+        ],
+        callToAction: {
+          text: 'Choose Essential',
+          href: '/contact?service=monthly-concierge&plan=essential',
+        },
+      },
+      {
+        title: 'Executive',
+        subtitle:
+          'For professionals who want an ongoing technology advisor—not simply someone to call after something breaks.',
+        price: '810',
+        period: 'per month',
+        items: [
+          { description: '6 hours included per month', icon: 'tabler:clock' },
+          { description: 'Everything in Essential' },
+          { description: 'Priority scheduling' },
+          { description: 'AI and productivity consulting' },
+          { description: 'Cybersecurity hardening' },
+          { description: 'Advanced account and device management' },
+          { description: 'Digital workflow assistance' },
+          { description: 'Research and technology projects' },
+          { description: 'Quarterly technology review' },
+          { description: 'Save $120 compared with standard $155/hr rate', icon: 'tabler:pig-money' },
+        ],
+        callToAction: {
+          text: 'Choose Executive',
+          href: '/contact?service=monthly-concierge&plan=executive',
+        },
+        hasRibbon: true,
+        ribbonTitle: 'Most Popular',
+      },
+      {
+        title: 'Premier',
+        subtitle:
+          'For clients who want Geeky Clean Technology actively involved in managing and improving their technology.',
+        price: '1,250',
+        period: 'per month',
+        items: [
+          { description: '10 hours included per month', icon: 'tabler:clock' },
+          { description: 'Everything in Executive' },
+          { description: 'Highest routine scheduling priority' },
+          { description: 'Complex technology projects' },
+          { description: 'Website and digital-presence assistance' },
+          { description: 'Technology procurement guidance' },
+          { description: 'Advanced AI workflow implementation' },
+          { description: 'Vendor coordination' },
+          { description: 'Strategic technology planning' },
+          { description: 'Save $300 compared with standard $155/hr rate', icon: 'tabler:pig-money' },
+        ],
+        callToAction: {
+          text: 'Choose Premier',
+          href: '/contact?service=monthly-concierge&plan=premier',
+        },
+      },
+    ]}
+  />
+
+  <WidgetWrapper id="effective-rates" containerClass="max-w-5xl mx-auto pt-0 md:pt-0 pb-12 md:pb-20">
+    <div class="glass-card p-6 md:p-10">
+      <h3 class="text-xl md:text-2xl font-bold mb-8 text-center text-white">Effective Hourly Rate Comparison</h3>
+      <div class="flex flex-col md:flex-row justify-between items-center gap-6 text-center">
+        <div class="w-full md:w-1/4 p-4 border-b md:border-b-0 md:border-r border-white/10">
+          <div class="text-sm text-muted uppercase tracking-wider mb-2">Pay-As-You-Go</div>
+          <div class="text-3xl font-bold text-gray-300">
+            $155<span class="text-lg font-normal text-muted">/hr</span>
+          </div>
+        </div>
+        <div class="w-full md:w-1/4 p-4 border-b md:border-b-0 md:border-r border-white/10">
+          <div class="text-sm text-muted uppercase tracking-wider mb-2">Essential</div>
+          <div class="text-3xl font-bold text-gray-300">
+            $145<span class="text-lg font-normal text-muted">/hr</span>
+          </div>
+        </div>
+        <div class="w-full md:w-1/4 p-4 border-b md:border-b-0 md:border-r border-white/10 relative">
+          <div
+            class="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary/20 text-primary text-[10px] uppercase font-bold tracking-widest py-1 px-3 rounded-full border border-primary/30"
+          >
+            Popular
+          </div>
+          <div class="text-sm text-primary uppercase tracking-wider mb-2">Executive</div>
+          <div class="text-3xl font-bold text-white">$135<span class="text-lg font-normal text-muted">/hr</span></div>
+        </div>
+        <div class="w-full md:w-1/4 p-4">
+          <div class="text-sm text-muted uppercase tracking-wider mb-2">Premier</div>
+          <div class="text-3xl font-bold text-gray-300">
+            $125<span class="text-lg font-normal text-muted">/hr</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </WidgetWrapper>
+
+  <FAQs
+    id="faq"
+    title="Monthly Concierge FAQs"
+    classes={{ container: 'max-w-4xl mx-auto' }}
+    items={[
+      {
+        title: 'What counts toward my monthly hours?',
+        description:
+          'Time spent providing remote or on-site support, troubleshooting, setup, consulting, training, research, configuration, and approved technology project work counts toward the monthly allocation.',
+      },
+      {
+        title: 'Can I use the hours for more than computer repair?',
+        description:
+          'Yes. Concierge time may be used for technology support, cybersecurity, device setup, AI and productivity guidance, digital workflows, training, account assistance, and other agreed technology consulting.',
+      },
+      {
+        title: 'What happens if I use all my included hours?',
+        description:
+          'Additional work can continue with approval and is billed separately. The exact overage rate and scope are confirmed before additional billable work begins.',
+      },
+      {
+        title: 'Do unused hours roll over?',
+        description:
+          'A limited number of unused hours may roll into the following month depending on the selected agreement. Rollover hours expire according to the terms of the service plan so clients can maintain flexibility without accumulating an unlimited balance.',
+      },
+      {
+        title: 'Are hardware, software, subscriptions, or licenses included?',
+        description:
+          "No. Monthly pricing covers Geeky Clean Technology's professional service time and included monitoring services. Hardware, software, subscriptions, licenses, hosting, replacement parts, and third-party services are billed separately when required.",
+      },
+      {
+        title: 'Does the plan include emergency or after-hours incident response?',
+        description:
+          "No. Monthly Technology Concierge is designed for routine support and ongoing technology care. Emergency cybersecurity incidents and after-hours support follow Geeky Clean Technology's separate emergency pricing unless specifically included in a written agreement.",
+      },
+      {
+        title: 'Can support be provided remotely?',
+        description:
+          'Yes. Many software, account, email, and configuration issues can be handled securely through remote support. On-location service is available in the San Diego service area when physical access is needed.',
+      },
+      {
+        title: 'Is this the same as business managed IT?',
+        description:
+          "No. Monthly Technology Concierge is designed primarily for individuals, households, professionals, and executives who want an ongoing personal technology relationship. Businesses that need organization-wide help desk support, infrastructure management, SLAs, compliance support, or fractional CTO services should use Geeky Clean Technology's Business IT Services.",
+      },
+      {
+        title: 'Which plan should I choose?',
+        description:
+          'Essential works well for occasional ongoing help. Executive is designed for clients who regularly use technology support and consulting. Premier is intended for clients who want Geeky Clean Technology more actively involved in technology management and projects. We can help determine the right starting level during a consultation.',
+      },
+    ]}
+  />
+
+  <CallToAction
+    id="contact"
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Schedule a Concierge Consultation',
+        href: '/contact',
+        icon: 'tabler:calendar',
+        class: 'shadow-[0_0_15px_rgba(34,211,238,0.5)] border-primary hover:shadow-[0_0_25px_rgba(34,211,238,0.8)]',
+      },
+      {
+        text: 'Call 619-289-9205',
+        href: 'tel:+16192899205',
+        icon: 'tabler:phone',
+      },
+    ]}
+    title="Stop managing technology one emergency at a time."
+    subtitle="Build an ongoing relationship with a technology professional who already knows your setup and can help keep it working, secure, and useful."
+  />
+</Layout>

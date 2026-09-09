@@ -7,6 +7,7 @@ export const headerData = {
       text: 'Services',
       links: [
         { text: 'Home IT Support', href: getPermalink('home-it-support') },
+        { text: 'Monthly Support', href: getPermalink('monthly-technology-concierge') },
         { text: 'Senior Tech Support', href: getPermalink('senior-tech-support') },
         { text: 'Business IT Services', href: getPermalink('business-it-services') },
         { text: 'Cybersecurity', href: getPermalink('cybersecurity') },
@@ -37,6 +38,7 @@ export const footerData = {
       title: 'Services',
       links: [
         { text: 'Home IT Support', href: getPermalink('home-it-support') },
+        { text: 'Monthly Support', href: getPermalink('monthly-technology-concierge') },
         { text: 'Senior Tech Support', href: getPermalink('senior-tech-support') },
         { text: 'Business IT Services', href: getPermalink('business-it-services') },
         { text: 'Cybersecurity', href: getPermalink('cybersecurity') },

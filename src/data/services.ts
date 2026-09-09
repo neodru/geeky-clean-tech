@@ -9,6 +9,14 @@ export interface ServiceFAQ {
   description: string;
 }
 
+export interface ServiceCrossSell {
+  eyebrow: string;
+  heading: string;
+  body: string;
+  ctaText: string;
+  ctaHref: string;
+}
+
 export interface Service {
   slug: string;
   title: string;
@@ -20,6 +28,7 @@ export interface Service {
   intro: string | string[];
   features: ServiceFeature[];
   faqs: ServiceFAQ[];
+  crossSell?: ServiceCrossSell;
   ctaText: string;
   ctaHref: string;
 }
@@ -91,6 +100,13 @@ export const services: Service[] = [
         description: 'Absolutely. Confidentiality is central to our work, and NDAs are available upon request.',
       },
     ],
+    crossSell: {
+      eyebrow: 'ONGOING SUPPORT',
+      heading: 'Prefer having someone who already knows your technology?',
+      body: 'Monthly Technology Concierge gives you dedicated support time each month for troubleshooting, maintenance, security, training, and technology questions—with lower effective hourly pricing and an ongoing relationship with Geeky Clean Technology.',
+      ctaText: 'View Monthly Concierge Plans',
+      ctaHref: '/monthly-technology-concierge',
+    },
     ctaText: 'Schedule Home IT Support',
     ctaHref: 'mailto:support@geekycleantechnology.com',
   },
@@ -161,6 +177,13 @@ export const services: Service[] = [
           'Yes. We can review messages and calls, secure your accounts, and help report fraud when appropriate.',
       },
     ],
+    crossSell: {
+      eyebrow: 'ONGOING HELP',
+      heading: "Technology support doesn't have to start over every visit.",
+      body: 'Monthly Technology Concierge provides regular support time for questions, training, device maintenance, account security, and remote assistance with one technology professional who gets to know your setup and works at your pace.',
+      ctaText: 'View Monthly Support Options',
+      ctaHref: '/monthly-technology-concierge',
+    },
     ctaText: 'Request Senior Tech Support',
     ctaHref: 'mailto:support@geekycleantechnology.com',
   },
@@ -177,6 +200,7 @@ export const services: Service[] = [
     intro: [
       'Small businesses in San Diego need technology that supports growth, not slows it down. Geeky Clean Technology acts as your part-time CTO and trusted IT partner, helping you plan, implement, and maintain the systems that run your company.',
       'From cloud migrations and cybersecurity to day-to-day help-desk support, we deliver the expertise of a full IT department on a flexible basis.',
+      '<p class="text-sm mt-4 italic opacity-80">Looking for ongoing technology support for one person or household rather than an organization? <a href="/monthly-technology-concierge" class="text-primary hover:underline">Explore Monthly Technology Concierge</a>.</p>',
     ],
     features: [
       {
