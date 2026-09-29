@@ -15,8 +15,13 @@
 /tag/*                                          /  301
 /rss.xml                                        /  301
 /astrowind-template-in-depth                    /  301
+/astrowind-template-in-depth/                   /  301
 /get-started-website-with-astro-tailwind-css    /  301
+/get-started-website-with-astro-tailwind-css/   /  301
 /how-to-customize-astrowind-to-your-brand       /  301
+/how-to-customize-astrowind-to-your-brand/      /  301
 /landing                                        /  301
 /markdown-elements-demo-post                    /  301
+/markdown-elements-demo-post/                   /  301
 /useful-resources-to-create-websites            /  301
+/useful-resources-to-create-websites/           /  301
