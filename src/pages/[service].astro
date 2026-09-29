@@ -9,10 +9,13 @@ import CallToAction from '~/components/widgets/CallToAction.astro';
 import { services } from '~/data/services';
 
 export const getStaticPaths = (() => {
-  return services.map((service) => ({
-    params: { service: service.slug },
-    props: { service },
-  }));
+  // `service-area` reuses this data but has its own page (src/pages/service-area.astro).
+  return services
+    .filter((service) => service.slug !== 'service-area')
+    .map((service) => ({
+      params: { service: service.slug },
+      props: { service },
+    }));
 }) satisfies GetStaticPaths;
 
 const { service } = Astro.props;

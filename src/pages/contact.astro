@@ -8,6 +8,12 @@ const metadata = {
   description:
     'Schedule on-site or remote IT support in San Diego. Call, text, or email Geeky Clean Technology for home, senior, business, and cybersecurity help.',
 };
+
+// Any service that accepts a form POST and answers 2xx works here (Formspree,
+// Web3Forms, a Make/Zapier webhook, or our own function). Without it the form
+// falls back to opening the visitor's email app.
+const endpoint = import.meta.env.PUBLIC_CONTACT_FORM_ENDPOINT;
+const mailtoAction = 'mailto:support@geekycleantechnology.com?subject=Geeky%20Clean%20Technology%20Inquiry';
 ---
 
 <Layout metadata={metadata}>
@@ -22,120 +28,139 @@ const metadata = {
   />
 
   <section id="form" class="relative max-w-3xl mx-auto px-4 sm:px-6 py-12 md:py-16">
-    <form
-      action="mailto:support@geekycleantechnology.com?subject=Geeky%20Clean%20Technology%20Inquiry"
-      method="POST"
-      enctype="text/plain"
-      class="glass-card p-6 sm:p-8 space-y-6"
-    >
-      <div>
-        <h2 class="text-2xl font-heading text-white mb-2">Request support</h2>
-        <p class="text-muted text-sm">
-          This will open your email app with your message pre-filled. Please make sure the fields are completed before
-          sending.
-        </p>
-      </div>
+    <gct-contact-form>
+      <form
+        action={endpoint ?? mailtoAction}
+        method="POST"
+        enctype={endpoint ? undefined : 'text/plain'}
+        data-endpoint={endpoint ? '' : undefined}
+        class="glass-card p-6 sm:p-8 space-y-6"
+      >
+        <div>
+          <h2 class="text-2xl font-heading text-white mb-2">Request support</h2>
+          <p class="text-muted text-sm">
+            {
+              endpoint
+                ? 'Tell us what is going on and we will get back to you, typically the same business day.'
+                : 'This will open your email app with your message pre-filled. Please make sure the fields are completed before sending.'
+            }
+          </p>
+        </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <label for="name" class="block text-sm font-medium mb-1">Name <span aria-hidden="true">*</span></label>
-          <input
-            type="text"
-            id="name"
-            name="Name"
-            required
-            autocomplete="name"
-            class="w-full bg-page-dark border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
-            placeholder="Your name"
-          />
+        <input type="hidden" name="_subject" value="New website inquiry — Geeky Clean Technology" />
+        <input type="hidden" name="source" value="website-contact-form" />
+        <!-- Honeypot: hidden from people, filled in by bots. -->
+        <div class="hidden" aria-hidden="true">
+          <label for="_gotcha">Leave this field empty</label>
+          <input type="text" id="_gotcha" name="_gotcha" tabindex="-1" autocomplete="off" />
         </div>
-        <div>
-          <label for="email" class="block text-sm font-medium mb-1">Email <span aria-hidden="true">*</span></label>
-          <input
-            type="email"
-            id="email"
-            name="Email"
-            required
-            autocomplete="email"
-            class="w-full bg-page-dark border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
-            placeholder="you@example.com"
-          />
-        </div>
-      </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <label for="phone" class="block text-sm font-medium mb-1">Phone</label>
-          <input
-            type="tel"
-            id="phone"
-            name="Phone"
-            autocomplete="tel"
-            class="w-full bg-page-dark border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
-            placeholder="(619) 555-0100"
-          />
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="name" class="block text-sm font-medium mb-1">Name <span aria-hidden="true">*</span></label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              required
+              autocomplete="name"
+              class="w-full bg-page-dark border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+              placeholder="Your name"
+            />
+          </div>
+          <div>
+            <label for="email" class="block text-sm font-medium mb-1">Email <span aria-hidden="true">*</span></label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              autocomplete="email"
+              class="w-full bg-page-dark border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+              placeholder="you@example.com"
+            />
+          </div>
         </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="phone" class="block text-sm font-medium mb-1">Phone</label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              autocomplete="tel"
+              class="w-full bg-page-dark border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+              placeholder="(619) 555-0100"
+            />
+          </div>
+          <div>
+            <label for="audience" class="block text-sm font-medium mb-1"
+              >This is for <span aria-hidden="true">*</span></label
+            >
+            <select
+              id="audience"
+              name="audience"
+              required
+              class="w-full bg-page-dark border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors appearance-none"
+            >
+              <option value="" disabled selected>Select one</option>
+              <option value="Home / Personal">Home / Personal</option>
+              <option value="Senior / Family">Senior / Family</option>
+              <option value="Business">Business</option>
+            </select>
+          </div>
+        </div>
+
         <div>
-          <label for="audience" class="block text-sm font-medium mb-1"
-            >This is for <span aria-hidden="true">*</span></label
+          <label for="service" class="block text-sm font-medium mb-1"
+            >Service needed <span aria-hidden="true">*</span></label
           >
           <select
-            id="audience"
-            name="Audience"
+            id="service"
+            name="service"
             required
             class="w-full bg-page-dark border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors appearance-none"
           >
-            <option value="" disabled selected>Select one</option>
-            <option value="Home / Personal">Home / Personal</option>
-            <option value="Senior / Family">Senior / Family</option>
-            <option value="Business">Business</option>
+            <option value="" disabled selected>Select a service</option>
+            <option value="Home IT Support">Home IT Support</option>
+            <option value="Senior Tech Support">Senior Tech Support</option>
+            <option value="Business IT Services">Business IT Services</option>
+            <option value="Cybersecurity">Cybersecurity</option>
+            <option value="Data Recovery">Data Recovery</option>
+            <option value="Network Support">Network Support</option>
+            <option value="Computer Repair">Computer Repair</option>
+            <option value="Remote Support">Remote Support</option>
+            <option value="Other / Not sure">Other / Not sure</option>
           </select>
         </div>
-      </div>
 
-      <div>
-        <label for="service" class="block text-sm font-medium mb-1"
-          >Service needed <span aria-hidden="true">*</span></label
-        >
-        <select
-          id="service"
-          name="Service"
-          required
-          class="w-full bg-page-dark border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors appearance-none"
-        >
-          <option value="" disabled selected>Select a service</option>
-          <option value="Home IT Support">Home IT Support</option>
-          <option value="Senior Tech Support">Senior Tech Support</option>
-          <option value="Business IT Services">Business IT Services</option>
-          <option value="Cybersecurity">Cybersecurity</option>
-          <option value="Data Recovery">Data Recovery</option>
-          <option value="Network Support">Network Support</option>
-          <option value="Computer Repair">Computer Repair</option>
-          <option value="Remote Support">Remote Support</option>
-          <option value="Other / Not sure">Other / Not sure</option>
-        </select>
-      </div>
+        <div>
+          <label for="message" class="block text-sm font-medium mb-1"
+            >How can we help? <span aria-hidden="true">*</span></label
+          >
+          <textarea
+            id="message"
+            name="message"
+            rows="4"
+            required
+            class="w-full bg-page-dark border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+            placeholder="Describe the issue, device, or project..."></textarea>
+        </div>
 
-      <div>
-        <label for="message" class="block text-sm font-medium mb-1"
-          >How can we help? <span aria-hidden="true">*</span></label
-        >
-        <textarea
-          id="message"
-          name="Message"
-          rows="4"
-          required
-          class="w-full bg-page-dark border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
-          placeholder="Describe the issue, device, or project..."></textarea>
-      </div>
+        <p class="text-sm text-muted">
+          {
+            endpoint
+              ? 'Prefer to talk? Call or text '
+              : 'Submitting opens your default email client. If that does not work, you can also call or text '
+          }<a href="tel:+16192899205" class="text-primary underline underline-offset-2">619-289-9205</a>.
+        </p>
 
-      <p class="text-sm text-muted">
-        Submitting opens your default email client. If that does not work, you can also call or text
-        <a href="tel:+16192899205" class="text-primary hover:underline">619-289-9205</a>.
-      </p>
+        <button type="submit" class="btn btn-primary w-full">Request IT Support</button>
 
-      <button type="submit" class="btn btn-primary w-full">Request IT Support</button>
-    </form>
+        <p data-form-status role="status" aria-live="polite" class="hidden rounded-lg px-4 py-3 text-sm"></p>
+      </form>
+    </gct-contact-form>
   </section>
 
   <Features2
@@ -161,3 +186,70 @@ const metadata = {
     ]}
   />
 </Layout>
+
+<script>
+  const SUCCESS_MESSAGE = 'Thanks! Your request is in. We typically respond the same business day.';
+  const ERROR_MESSAGE =
+    'Sorry, your message could not be sent. Please call or text 619-289-9205, or email support@geekycleantechnology.com.';
+
+  class GctContactForm extends HTMLElement {
+    connectedCallback() {
+      const form = this.querySelector('form');
+      // No endpoint configured: let the browser handle the mailto fallback.
+      if (!form || !form.hasAttribute('data-endpoint')) return;
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        this.submit(form);
+      });
+    }
+
+    private async submit(form: HTMLFormElement) {
+      const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+      const data = new FormData(form);
+
+      // Bots fill the honeypot; pretend it worked so they do not retry.
+      if (data.get('_gotcha')) {
+        form.reset();
+        this.showStatus(form, 'success', SUCCESS_MESSAGE);
+        return;
+      }
+
+      const label = button?.textContent ?? '';
+      if (button) {
+        button.disabled = true;
+        button.textContent = 'Sending…';
+      }
+
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          headers: { Accept: 'application/json' },
+          body: data,
+        });
+        if (!res.ok) throw new Error(`Contact form endpoint returned ${res.status}`);
+        form.reset();
+        this.showStatus(form, 'success', SUCCESS_MESSAGE);
+      } catch (err) {
+        console.error(err);
+        this.showStatus(form, 'error', ERROR_MESSAGE);
+      } finally {
+        if (button) {
+          button.disabled = false;
+          button.textContent = label;
+        }
+      }
+    }
+
+    private showStatus(form: HTMLFormElement, kind: 'success' | 'error', message: string) {
+      const status = form.querySelector<HTMLElement>('[data-form-status]');
+      if (!status) return;
+      status.textContent = message;
+      status.classList.remove('hidden', 'bg-green-500/10', 'text-green-300', 'bg-red-500/10', 'text-red-300');
+      status.classList.add(
+        ...(kind === 'success' ? ['bg-green-500/10', 'text-green-300'] : ['bg-red-500/10', 'text-red-300'])
+      );
+    }
+  }
+
+  customElements.define('gct-contact-form', GctContactForm);
+</script>

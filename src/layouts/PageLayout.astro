@@ -4,6 +4,7 @@ import Header from '~/components/widgets/Header.astro';
 import Footer from '~/components/widgets/Footer.astro';
 
 import { headerData, footerData } from '~/navigation';
+import { isBlogEnabled } from '~/utils/blog';
 
 import type { MetaData } from '~/types';
 
@@ -16,7 +17,7 @@ const { metadata } = Astro.props;
 
 <Layout metadata={metadata}>
   <slot name="header">
-    <Header {...headerData} isSticky showRssFeed showToggleTheme />
+    <Header {...headerData} isSticky showRssFeed={isBlogEnabled} showToggleTheme />
   </slot>
   <main>
     <slot />

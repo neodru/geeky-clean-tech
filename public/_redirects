@@ -1,0 +1,27 @@
+# Cloudflare Pages redirects. Template demo pages that were live and indexed
+# before launch; send visitors (and search engines) somewhere useful.
+
+/pricing                                        /monthly-technology-concierge  301
+/pricing/                                       /monthly-technology-concierge  301
+/homes/*                                        /  301
+/landing/*                                      /  301
+/decapcms/*                                     /  301
+
+# Blog is disabled until the first real post (src/config.yaml -> apps.blog).
+# Remove these rules when it is turned back on.
+/blog                                           /  301
+/blog/*                                         /  301
+/category/*                                     /  301
+/tag/*                                          /  301
+/rss.xml                                        /  301
+/astrowind-template-in-depth                    /  301
+/astrowind-template-in-depth/                   /  301
+/get-started-website-with-astro-tailwind-css    /  301
+/get-started-website-with-astro-tailwind-css/   /  301
+/how-to-customize-astrowind-to-your-brand       /  301
+/how-to-customize-astrowind-to-your-brand/      /  301
+/landing                                        /  301
+/markdown-elements-demo-post                    /  301
+/markdown-elements-demo-post/                   /  301
+/useful-resources-to-create-websites            /  301
+/useful-resources-to-create-websites/           /  301
