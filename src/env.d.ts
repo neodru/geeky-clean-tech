@@ -5,6 +5,8 @@
 /// <reference types="../vendor/integration/types.d.ts" />
 
 interface ImportMetaEnv {
-  /** Form POST endpoint for the contact page; unset falls back to mailto. */
+  /** Overrides the contact form endpoint (defaults to the /api/contact Pages Function). */
   readonly PUBLIC_CONTACT_FORM_ENDPOINT?: string;
+  /** Cloudflare Turnstile site key; the widget is only rendered when set. */
+  readonly PUBLIC_TURNSTILE_SITE_KEY?: string;
 }
