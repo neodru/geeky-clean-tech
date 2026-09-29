@@ -17,17 +17,24 @@ const metadata = {
     'Geeky Clean Technology provides on-site and remote IT support for homes, seniors, professionals, and small businesses across San Diego. Computer repair, cybersecurity, networking, and fractional CTO.',
 };
 
+import { Image } from 'astro:assets';
 import cyberGridTexture from '~/assets/images/cyber-grid-texture.png';
 ---
 
 <Layout metadata={metadata}>
   <!-- Hero Widget -->
   <div class="relative">
-    <div
-      class="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20 pointer-events-none"
-      style={`background-image: url('${cyberGridTexture.src}');`}
-    >
-    </div>
+    <Image
+      src={cyberGridTexture}
+      alt=""
+      aria-hidden="true"
+      widths={[640, 1024]}
+      sizes="100vw"
+      format="webp"
+      quality={50}
+      loading="eager"
+      class="absolute inset-0 w-full h-full object-cover object-center opacity-20 pointer-events-none"
+    />
     <Hero
       id="hero"
       actions={[
@@ -126,7 +133,7 @@ import cyberGridTexture from '~/assets/images/cyber-grid-texture.png';
         description: 'On-site and remote help for your home, devices, Wi-Fi, printers, and smart home.',
         icon: 'tabler:home',
         callToAction: {
-          text: 'Learn more',
+          text: 'Learn more<span class="sr-only"> about Home IT Support</span>',
           href: '/home-it-support',
           variant: 'link' as const,
         },
@@ -136,7 +143,7 @@ import cyberGridTexture from '~/assets/images/cyber-grid-texture.png';
         description: 'Patient, respectful technology help for older adults and their families.',
         icon: 'tabler:heart-handshake',
         callToAction: {
-          text: 'Learn more',
+          text: 'Learn more<span class="sr-only"> about Senior Tech Support</span>',
           href: '/senior-tech-support',
           variant: 'link' as const,
         },
@@ -146,7 +153,7 @@ import cyberGridTexture from '~/assets/images/cyber-grid-texture.png';
         description: 'Fractional CTO and managed IT services that keep your business running.',
         icon: 'tabler:building-skyscraper',
         callToAction: {
-          text: 'Learn more',
+          text: 'Learn more<span class="sr-only"> about Business IT Services</span>',
           href: '/business-it-services',
           variant: 'link' as const,
         },
@@ -156,7 +163,7 @@ import cyberGridTexture from '~/assets/images/cyber-grid-texture.png';
         description: 'Scam recovery, security audits, MFA, and incident response for homes and businesses.',
         icon: 'tabler:shield-lock',
         callToAction: {
-          text: 'Learn more',
+          text: 'Learn more<span class="sr-only"> about Cybersecurity</span>',
           href: '/cybersecurity',
           variant: 'link' as const,
         },
@@ -166,7 +173,7 @@ import cyberGridTexture from '~/assets/images/cyber-grid-texture.png';
         description: 'Recover photos, documents, and business files. Lab referrals for severe damage.',
         icon: 'tabler:database',
         callToAction: {
-          text: 'Learn more',
+          text: 'Learn more<span class="sr-only"> about Data Recovery &amp; Backup</span>',
           href: '/data-recovery',
           variant: 'link' as const,
         },
@@ -176,7 +183,7 @@ import cyberGridTexture from '~/assets/images/cyber-grid-texture.png';
         description: 'Wi-Fi, mesh, routers, guest networks, and secure business networking.',
         icon: 'tabler:wifi',
         callToAction: {
-          text: 'Learn more',
+          text: 'Learn more<span class="sr-only"> about Network Support</span>',
           href: '/network-support',
           variant: 'link' as const,
         },
@@ -186,7 +193,7 @@ import cyberGridTexture from '~/assets/images/cyber-grid-texture.png';
         description: 'Mac and PC diagnostics, upgrades, virus removal, and performance tuning.',
         icon: 'tabler:tool',
         callToAction: {
-          text: 'Learn more',
+          text: 'Learn more<span class="sr-only"> about Computer Repair</span>',
           href: '/computer-repair',
           variant: 'link' as const,
         },
@@ -196,7 +203,7 @@ import cyberGridTexture from '~/assets/images/cyber-grid-texture.png';
         description: 'Same-day secure remote sessions for software, email, and troubleshooting.',
         icon: 'tabler:headset',
         callToAction: {
-          text: 'Learn more',
+          text: 'Learn more<span class="sr-only"> about Remote Support</span>',
           href: '/remote-support',
           variant: 'link' as const,
         },
