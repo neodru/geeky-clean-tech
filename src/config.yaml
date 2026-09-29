@@ -23,8 +23,6 @@ metadata:
         height: 628
     type: website
   twitter:
-    handle: '@arthelokyo'
-    site: '@arthelokyo'
     cardType: summary_large_image
 
 i18n:
@@ -33,7 +31,8 @@ i18n:
 
 apps:
   blog:
-    isEnabled: true
+    # Off until the first real post is published; see public/_redirects.
+    isEnabled: false
     postsPerPage: 6
 
     post:
