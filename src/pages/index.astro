@@ -16,25 +16,12 @@ const metadata = {
   description:
     'Geeky Clean Technology provides on-site and remote IT support for homes, seniors, professionals, and small businesses across San Diego. Computer repair, cybersecurity, networking, and fractional CTO.',
 };
-
-import { Image } from 'astro:assets';
-import cyberGridTexture from '~/assets/images/cyber-grid-texture.png';
 ---
 
 <Layout metadata={metadata}>
   <!-- Hero Widget -->
   <div class="relative">
-    <Image
-      src={cyberGridTexture}
-      alt=""
-      aria-hidden="true"
-      widths={[640, 1024]}
-      sizes="100vw"
-      format="webp"
-      quality={50}
-      loading="eager"
-      class="absolute inset-0 w-full h-full object-cover object-center opacity-20 pointer-events-none"
-    />
+    <div class="cyber-grid absolute inset-0 pointer-events-none" aria-hidden="true"></div>
     <Hero
       id="hero"
       actions={[
@@ -496,3 +483,26 @@ import cyberGridTexture from '~/assets/images/cyber-grid-texture.png';
     ]}
   />
 </Layout>
+
+<style>
+  /*
+   * Hero backdrop: a cyan-to-violet grid with diagonals, drawn in CSS instead of
+   * a texture image. The gradient is the line color; a 128px SVG tile (square
+   * plus both diagonals, with nodes at the corners) masks it into lines, and the
+   * outer radial mask fades the pattern toward the edges.
+   */
+  .cyber-grid {
+    opacity: 0.7;
+    mask-image: radial-gradient(ellipse at center, #000 30%, transparent 85%);
+  }
+
+  .cyber-grid::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(115deg, var(--aw-color-primary), var(--aw-color-secondary));
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128' fill='none' stroke='%23000'%3E%3Cpath d='M0 .5h128M.5 0v128M0 0l128 128M128 0L0 128'/%3E%3Ccircle cx='0' cy='0' r='2.5' fill='%23000'/%3E%3Ccircle cx='128' cy='0' r='2.5' fill='%23000'/%3E%3Ccircle cx='0' cy='128' r='2.5' fill='%23000'/%3E%3Ccircle cx='128' cy='128' r='2.5' fill='%23000'/%3E%3C/svg%3E");
+    mask-size: 128px 128px;
+    mask-position: center;
+  }
+</style>
