@@ -26,6 +26,12 @@ const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroInteg
 export default defineConfig({
   output: 'static',
 
+  // Inline the (small) site stylesheet into each page so first paint doesn't
+  // wait on a separate render-blocking CSS request.
+  build: {
+    inlineStylesheets: 'always',
+  },
+
   // Prefetch links as they enter the viewport for snappier navigations
   // (works together with <ClientRouter />, which enables prefetch by default).
   prefetch: {
@@ -33,15 +39,24 @@ export default defineConfig({
     defaultStrategy: 'viewport',
   },
 
-  // Native Fonts API: self-hosts + subsets + preloads Inter and generates
-  // metric-adjusted fallbacks. Injected via <Font /> in Layout.astro and
-  // consumed through the `--font-inter` CSS variable in CustomStyles.astro.
+  // Native Fonts API: self-hosts + subsets + preloads the site fonts and
+  // generates metric-adjusted fallbacks. Injected via <Font /> in Layout.astro
+  // and consumed through the CSS variables in CustomStyles.astro.
   fonts: [
     {
       provider: fontProviders.fontsource(),
       name: 'Inter',
       cssVariable: '--font-inter',
       weights: ['100 900'],
+      styles: ['normal'],
+      subsets: ['latin'],
+      fallbacks: ['sans-serif'],
+    },
+    {
+      provider: fontProviders.fontsource(),
+      name: 'Space Grotesk',
+      cssVariable: '--font-space-grotesk',
+      weights: ['300 700'],
       styles: ['normal'],
       subsets: ['latin'],
       fallbacks: ['sans-serif'],
