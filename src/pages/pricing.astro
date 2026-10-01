@@ -6,6 +6,7 @@ import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
 import Features2 from '~/components/widgets/Features2.astro';
 import FAQs from '~/components/widgets/FAQs.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
+import ServiceSearch from '~/components/widgets/ServiceSearch.astro';
 import { Icon } from 'astro-icon/components';
 import { HOURLY_RATE, formatHours, formatPrice, priceFor, serviceBundles, serviceCatalog } from '~/data/services';
 
@@ -60,6 +61,9 @@ const plans = [
       </div>
     </Fragment>
   </Hero>
+
+  <!-- Service lookup -->
+  <ServiceSearch />
 
   <!-- Lead packages -->
   <WidgetWrapper id="packages" containerClass="max-w-7xl mx-auto">

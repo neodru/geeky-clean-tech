@@ -1,0 +1,197 @@
+---
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import { formatHours, formatPrice, serviceBundles, serviceCatalog } from '~/data/services';
+import type { SearchItem } from '~/utils/serviceSearch';
+
+export interface Props {
+  id?: string;
+}
+
+const { id = 'find-a-service' } = Astro.props;
+
+// Everything the browser needs to search, built from the Notion-synced catalog.
+const items: SearchItem[] = [
+  ...serviceBundles.map((b) => ({
+    kind: 'package' as const,
+    title: b.title,
+    description: `${b.forWho} Includes: ${b.includes.join(', ')}.`,
+    area: 'Package',
+    duration: `About ${formatHours(b.hours)}`,
+    price: `$${b.price.toLocaleString('en-US')}`,
+    href: `/contact?service=package&plan=${b.id}`,
+  })),
+  ...serviceCatalog.flatMap((area) =>
+    area.services.map((s) => ({
+      kind: 'service' as const,
+      title: s.title,
+      description: s.description,
+      area: area.title,
+      duration: formatHours(s.hours),
+      price: formatPrice(s),
+      href: `#${area.id}`,
+    }))
+  ),
+];
+
+// Escape "<" so catalog text can never close the <script> tag early.
+const itemsJson = JSON.stringify(items).replace(/</g, '\\u003c');
+
+const examples = ['My computer is slow', 'Scam calls', 'New iPhone', 'Hacked email', 'Photos storage full'];
+---
+
+<WidgetWrapper id={id} containerClass="max-w-4xl mx-auto">
+  <gct-service-search>
+    <div class="text-center mb-6">
+      <p class="text-base text-secondary dark:text-blue-200 font-bold tracking-wide uppercase">Find a Service</p>
+      <h2 class="text-3xl md:text-4xl font-bold font-heading mt-2 text-white">What do you need help with?</h2>
+      <p class="mt-4 text-lg text-muted">Describe it in your own words. We'll show the closest match and its price.</p>
+    </div>
+
+    <div class="glass-card p-5 md:p-8" role="search">
+      <label for={`${id}-input`} class="sr-only">Describe what you need help with</label>
+      <div class="relative">
+        <input
+          id={`${id}-input`}
+          type="search"
+          autocomplete="off"
+          enterkeyhint="search"
+          maxlength="120"
+          placeholder="e.g. my computer is slow, scam calls, new iPhone"
+          aria-controls={`${id}-results`}
+          data-search-input
+          class="w-full bg-page-dark border border-white/10 rounded-lg pl-4 pr-4 py-4 text-lg text-white placeholder:text-muted focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+        />
+      </div>
+
+      <div class="mt-4 flex flex-wrap gap-2" aria-label="Example searches">
+        {
+          examples.map((ex) => (
+            <button
+              type="button"
+              data-example={ex}
+              class="text-sm px-3 py-1.5 rounded-full border border-white/15 text-gray-300 hover:border-primary hover:text-primary transition-colors"
+            >
+              {ex}
+            </button>
+          ))
+        }
+      </div>
+
+      <p data-search-status role="status" aria-live="polite" class="mt-6 text-sm text-muted"></p>
+      <ul id={`${id}-results`} data-search-results class="mt-3 space-y-3"></ul>
+
+      <div data-search-empty hidden class="mt-3 rounded-lg border border-white/10 p-5">
+        <p class="font-semibold text-gray-100">We couldn't find a close match.</p>
+        <p class="text-sm text-muted mt-1">
+          Tell us what's going on and we'll recommend the right help, or start with a diagnostic visit ($100 for the
+          first hour).
+        </p>
+        <div class="mt-4 flex flex-wrap gap-3">
+          <a href="/contact" class="btn btn-primary">Describe the problem</a>
+          <a href="tel:+16192899205" class="btn btn-secondary">Call 619-289-9205</a>
+        </div>
+      </div>
+    </div>
+
+    <script is:inline type="application/json" data-search-items set:html={itemsJson} />
+  </gct-service-search>
+</WidgetWrapper>
+
+<script>
+  import { buildIndex, search, type SearchItem, type SearchResult } from '~/utils/serviceSearch';
+
+  class GctServiceSearch extends HTMLElement {
+    private timer?: number;
+
+    connectedCallback() {
+      const input = this.querySelector<HTMLInputElement>('[data-search-input]');
+      const data = this.querySelector('[data-search-items]')?.textContent;
+      if (!input || !data) return;
+      const index = buildIndex(JSON.parse(data) as SearchItem[]);
+
+      const run = () => this.render(input.value, search(index, input.value));
+      input.addEventListener('input', () => {
+        window.clearTimeout(this.timer);
+        this.timer = window.setTimeout(run, 120);
+      });
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          run();
+        }
+      });
+      this.querySelectorAll<HTMLButtonElement>('[data-example]').forEach((btn) =>
+        btn.addEventListener('click', () => {
+          input.value = btn.dataset.example ?? '';
+          run();
+          input.focus();
+        })
+      );
+      // "See it in the menu" links jump to a collapsed category; open it.
+      this.addEventListener('click', (e) => {
+        const link = (e.target as HTMLElement).closest<HTMLAnchorElement>('a[href^="#"]');
+        const target = link && document.getElementById(link.hash.slice(1));
+        if (target instanceof HTMLDetailsElement) target.open = true;
+      });
+    }
+
+    private render(query: string, results: SearchResult[]) {
+      const list = this.querySelector<HTMLUListElement>('[data-search-results]')!;
+      const status = this.querySelector<HTMLElement>('[data-search-status]')!;
+      const empty = this.querySelector<HTMLElement>('[data-search-empty]')!;
+      const hasQuery = query.trim().length > 0;
+
+      list.replaceChildren(...results.map((r, i) => this.card(r.item, i === 0)));
+      empty.hidden = !hasQuery || results.length > 0;
+      status.textContent = !hasQuery
+        ? ''
+        : results.length
+          ? `Closest match: ${results[0].item.title}. ${results.length} result${results.length === 1 ? '' : 's'}.`
+          : 'No close match found.';
+    }
+
+    private card(item: SearchItem, best: boolean): HTMLLIElement {
+      const el = <K extends keyof HTMLElementTagNameMap>(tag: K, className: string, text?: string) => {
+        const node = document.createElement(tag);
+        node.className = className;
+        if (text !== undefined) node.textContent = text;
+        return node;
+      };
+
+      const li = el(
+        'li',
+        `rounded-lg border p-4 md:p-5 ${best ? 'border-primary/60 bg-primary/5' : 'border-white/10'}`
+      );
+      const row = el('div', 'flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-6');
+      const main = el('div', 'flex-1');
+
+      const tags = el('div', 'flex flex-wrap items-center gap-2 mb-1');
+      if (best) tags.append(el('span', 'text-[11px] font-bold uppercase tracking-wider text-primary', 'Best match'));
+      tags.append(el('span', 'text-[11px] uppercase tracking-wider text-muted', item.area));
+      main.append(
+        tags,
+        el('h3', 'text-lg font-semibold text-white', item.title),
+        el('p', 'text-sm text-muted mt-1', item.description)
+      );
+
+      const side = el('div', 'sm:text-right shrink-0 sm:w-36');
+      side.append(
+        el('div', 'text-xl font-bold text-white', item.price),
+        el('div', 'text-xs text-muted', item.duration)
+      );
+      const link = el(
+        'a',
+        'inline-block mt-2 text-sm text-primary underline underline-offset-2',
+        item.kind === 'package' ? 'Book this package' : 'See it in the menu'
+      );
+      link.href = item.href;
+      side.append(link);
+
+      row.append(main, side);
+      li.append(row);
+      return li;
+    }
+  }
+
+  customElements.define('gct-service-search', GctServiceSearch);
+</script>

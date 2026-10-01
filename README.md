@@ -31,6 +31,7 @@ npm run dev        # http://localhost:4321
 | `src/pages/[service].astro`            | Renders one page per entry in `services.ts`                                       |
 | `src/data/catalog.json`                | Service menu, packages, and prices — generated from Notion, do not edit by hand   |
 | `scripts/sync-catalog.mjs`             | Pulls the Notion Service Catalog into `catalog.json`                              |
+| `src/utils/serviceSearch.ts`           | "Find a service" search on `/pricing` (synonyms, typos, ranking)                  |
 | `src/pages/*.astro`                    | Standalone pages: home, about, contact, services, service area, monthly concierge |
 | `src/pages/privacy.md`, `terms.md`     | Legal pages                                                                       |
 | `src/data/post/`                       | Blog posts (Markdown/MDX). The blog is disabled until the first post is added     |
