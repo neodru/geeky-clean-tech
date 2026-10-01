@@ -6,16 +6,19 @@ import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
 import Features2 from '~/components/widgets/Features2.astro';
 import FAQs from '~/components/widgets/FAQs.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
+import { Icon } from 'astro-icon/components';
+import { HOURLY_RATE, formatHours, formatPrice, priceFor, serviceBundles, serviceCatalog } from '~/data/services';
 
 const metadata = {
   title: 'Pricing | San Diego IT Support Rates | Geeky Clean Technology',
   description:
-    'Transparent pricing for Geeky Clean Technology: home IT support from $100 for the first hour, business IT and fractional CTO at $155–$175/hr, emergency response, and monthly concierge plans from $435/month.',
+    'Transparent pricing for Geeky Clean Technology: service packages, a full menu of setup and security services at $155/hr, a $100 diagnostic first hour, business IT and fractional CTO at $155–$175/hr, emergency response, and monthly concierge plans from $435/month.',
 };
 
 // Single source for the rate card so the table and cards stay in sync.
 const rateCard = [
-  { service: 'Personal IT Concierge (homes, seniors, individuals)', first: '$100', after: '$155/hr' },
+  { service: 'Diagnostic & troubleshooting visit (homes, seniors, individuals)', first: '$100', after: '$155/hr' },
+  { service: 'Catalog services (setup, security & training)', first: '$155/hr', after: '$155/hr' },
   { service: 'Business implementation & technician time', first: '$155/hr', after: '$155/hr' },
   { service: 'Business diagnostics, strategy & fractional CTO', first: '$175/hr', after: '$175/hr' },
   { service: 'Emergency, after-hours & security incident response', first: '$250', after: '$200/hr' },
@@ -42,7 +45,7 @@ const plans = [
         href: '/contact',
         class: 'shadow-[0_0_15px_rgba(34,211,238,0.5)] border-primary hover:shadow-[0_0_25px_rgba(34,211,238,0.8)]',
       },
-      { text: 'View Monthly Plans', href: '#monthly' },
+      { text: 'View Packages', href: '#packages' },
     ]}
   >
     <Fragment slot="content">
@@ -55,6 +58,101 @@ const plans = [
     </Fragment>
   </Hero>
 
+  <!-- Lead packages -->
+  <WidgetWrapper id="packages" containerClass="max-w-7xl mx-auto">
+    <div class="text-center mb-10">
+      <p class="text-base text-secondary dark:text-blue-200 font-bold tracking-wide uppercase">Popular Packages</p>
+      <h2 class="text-3xl md:text-4xl font-bold font-heading mt-2 text-white">
+        Start with the help most people ask for.
+      </h2>
+      <p class="mt-4 text-lg text-muted max-w-3xl mx-auto">
+        Each package combines four services into one visit at a set price, so you save time and money.
+      </p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {
+        serviceBundles.map((bundle) => {
+          const listPrice = priceFor(bundle.hours);
+          return (
+            <div class="glass-card glass-card-hover p-6 md:p-8 flex flex-col">
+              <Icon name={bundle.icon} class="text-primary w-10 h-10 mb-4" />
+              <h3 class="text-2xl font-bold text-white">{bundle.title}</h3>
+              <p class="mt-3 text-gray-300 italic">{bundle.tagline}</p>
+              <p class="mt-3 text-muted">{bundle.forWho}</p>
+              <ul class="mt-5 space-y-2 text-gray-200">
+                {bundle.includes.map((item) => (
+                  <li class="flex items-start gap-2">
+                    <Icon name="tabler:check" class="w-5 h-5 mt-0.5 shrink-0 text-primary" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <div class="mt-auto pt-6">
+                <div class="text-4xl font-bold text-white">${bundle.price}</div>
+                <div class="text-sm text-muted">
+                  About {bundle.hours} hours of service · <span class="line-through">${listPrice}</span> if booked
+                  separately
+                </div>
+                <a
+                  href={`/contact?service=package&plan=${bundle.id}`}
+                  class="btn btn-primary w-full mt-5 shadow-[0_0_15px_rgba(34,211,238,0.3)]"
+                >
+                  Book {bundle.title}
+                </a>
+              </div>
+            </div>
+          );
+        })
+      }
+    </div>
+  </WidgetWrapper>
+
+  <!-- Service catalog -->
+  <WidgetWrapper id="services-menu" containerClass="max-w-5xl mx-auto">
+    <div class="text-center mb-8">
+      <p class="text-base text-secondary dark:text-blue-200 font-bold tracking-wide uppercase">Service Menu</p>
+      <h2 class="text-3xl md:text-4xl font-bold font-heading mt-2 text-white">Every service, every price.</h2>
+      <p class="mt-4 text-lg text-muted max-w-3xl mx-auto">
+        Each price is based on how long the job usually takes at ${HOURLY_RATE}/hour. Tap a category to see its
+        services.*
+      </p>
+    </div>
+    <div class="space-y-4">
+      {
+        serviceCatalog.map((area, index) => (
+          <details id={area.id} class="glass-card group" open={index === 0}>
+            <summary class="flex items-center gap-4 p-5 md:p-6 cursor-pointer list-none">
+              <Icon name={area.icon} class="text-primary w-8 h-8 shrink-0" />
+              <span class="flex-1 text-lg md:text-xl font-bold text-white">{area.title}</span>
+              <span class="text-sm text-muted whitespace-nowrap">{area.services.length} services</span>
+              <Icon
+                name="tabler:chevron-down"
+                class="w-5 h-5 text-muted transition-transform group-open:rotate-180 shrink-0"
+              />
+            </summary>
+            <ul class="px-5 md:px-6 pb-5 divide-y divide-white/10">
+              {area.services.map((service) => (
+                <li class="py-4 flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-6">
+                  <div class="flex-1">
+                    <h3 class="font-semibold text-gray-100">{service.title}</h3>
+                    <p class="text-sm text-muted mt-1">{service.description}</p>
+                  </div>
+                  <div class="sm:text-right shrink-0 sm:w-32">
+                    <div class="text-lg font-bold text-white">{formatPrice(service)}</div>
+                    <div class="text-xs text-muted">{formatHours(service.hours)}</div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </details>
+        ))
+      }
+    </div>
+    <p class="mt-6 text-sm text-muted text-center">
+      *Prices are rounded to the nearest dollar. See <a href="#pricing-notes" class="underline">pricing notes</a>.
+    </p>
+  </WidgetWrapper>
+
   <!-- On-demand pricing -->
   <Pricing
     id="on-demand"
@@ -66,14 +164,14 @@ const plans = [
     }}
     prices={[
       {
-        title: 'Home & Personal',
-        subtitle: 'Personal IT Concierge',
+        title: 'Diagnostic & Troubleshooting',
+        subtitle: 'Something is not working?',
         price: 100,
         period: 'first hour',
         items: [
+          { description: '$100 diagnostic fee covers the first hour' },
           { description: '$155/hour after the first hour' },
           { description: 'On-site at your home or remote' },
-          { description: 'Computers, Wi-Fi, devices, backups, and accounts' },
           { description: 'Patient, jargon-free help for seniors and families' },
         ],
         callToAction: {
@@ -241,9 +339,19 @@ const plans = [
     classes={{ container: 'max-w-4xl mx-auto' }}
     items={[
       {
-        title: 'How does the first-hour rate work?',
+        title: 'How does the $100 first hour work?',
         description:
-          'Personal IT Concierge visits start at $100 for the first hour, which covers assessing your issue and getting to work on it. Additional time is billed at $155 per hour, and we confirm the expected cost before going further.',
+          'When something is not working and the cause is unknown, we start with a diagnostic and troubleshooting visit. The first hour is $100 and covers finding the problem and starting the fix. Additional time is billed at $155 per hour, and we confirm the expected cost before going further.',
+      },
+      {
+        title: 'Does the $100 first hour apply to menu services and packages?',
+        description:
+          'No. The $100 first hour applies to diagnostic and troubleshooting visits. Services on the menu and packages are priced as listed, based on $155 per hour.',
+      },
+      {
+        title: 'What if a service takes longer than the listed time?',
+        description:
+          'Listed prices are based on how long a job usually takes. Services marked "from" can vary, such as recovering a hacked account or removing a virus. If more time is needed, we tell you and get your approval before continuing.',
       },
       {
         title: 'Why are there two business rates?',
@@ -292,4 +400,22 @@ const plans = [
     title="Not sure which option fits?"
     subtitle="Tell us what is going on and we will recommend the most cost-effective way to help—hourly, monthly, or a business retainer."
   />
+  <!-- Pricing notes -->
+  <WidgetWrapper id="pricing-notes" containerClass="max-w-4xl mx-auto pt-0 md:pt-0">
+    <div class="text-sm text-muted space-y-2 border-t border-white/10 pt-6">
+      <h2 class="font-semibold text-gray-300 uppercase tracking-wider text-xs">Pricing notes</h2>
+      <p>
+        Service menu prices are calculated from the typical time each job takes at ${HOURLY_RATE}/hour and are rounded
+        to the nearest dollar.
+      </p>
+      <p>
+        Prices marked "from" are starting prices; additional time is billed at ${HOURLY_RATE}/hour with your approval.
+        Hardware, software, subscriptions, licenses, and replacement parts are not included.
+      </p>
+      <p>
+        The $100 first hour applies to diagnostic and troubleshooting visits. Package prices are fixed for the listed
+        services.
+      </p>
+    </div>
+  </WidgetWrapper>
 </Layout>
