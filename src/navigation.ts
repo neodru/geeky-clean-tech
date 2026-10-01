@@ -17,6 +17,7 @@ export const headerData = {
         { text: 'Remote Support', href: getPermalink('remote-support') },
       ],
     },
+    { text: 'Pricing', href: getPermalink('pricing') },
     { text: 'Service Area', href: getPermalink('service-area') },
     { text: 'About', href: getPermalink('about') },
     { text: 'Contact', href: getPermalink('contact') },
@@ -52,6 +53,7 @@ export const footerData = {
       title: 'Company',
       links: [
         { text: 'About', href: getPermalink('about') },
+        { text: 'Pricing', href: getPermalink('pricing') },
         { text: 'Service Area', href: getPermalink('service-area') },
         { text: 'Contact', href: getPermalink('contact') },
         { text: 'Privacy Policy', href: getPermalink('privacy') },

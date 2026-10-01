@@ -1,0 +1,421 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Pricing from '~/components/widgets/Pricing.astro';
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import Features2 from '~/components/widgets/Features2.astro';
+import FAQs from '~/components/widgets/FAQs.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import { Icon } from 'astro-icon/components';
+import { HOURLY_RATE, formatHours, formatPrice, priceFor, serviceBundles, serviceCatalog } from '~/data/services';
+
+const metadata = {
+  title: 'Pricing | San Diego IT Support Rates | Geeky Clean Technology',
+  description:
+    'Transparent pricing for Geeky Clean Technology: service packages, a full menu of setup and security services at $155/hr, a $100 diagnostic first hour, business IT and fractional CTO at $155–$175/hr, emergency response, and monthly concierge plans from $435/month.',
+};
+
+// Single source for the rate card so the table and cards stay in sync.
+const rateCard = [
+  { service: 'Diagnostic & troubleshooting visit (homes, seniors, individuals)', first: '$100', after: '$155/hr' },
+  { service: 'Catalog services (setup, security & training)', first: '$155/hr', after: '$155/hr' },
+  { service: 'Business implementation & technician time', first: '$155/hr', after: '$155/hr' },
+  { service: 'Business diagnostics, strategy & fractional CTO', first: '$175/hr', after: '$175/hr' },
+  { service: 'Emergency, after-hours & security incident response', first: '$250', after: '$200/hr' },
+];
+
+const plans = [
+  { name: 'Pay-As-You-Go', price: '—', hours: '—', effective: '$155/hr' },
+  { name: 'Essential', price: '$435/mo', hours: '3 hrs', effective: '$145/hr' },
+  { name: 'Executive', price: '$810/mo', hours: '6 hrs', effective: '$135/hr', popular: true },
+  { name: 'Premier', price: '$1,250/mo', hours: '10 hrs', effective: '$125/hr' },
+];
+---
+
+<Layout metadata={metadata}>
+  <Hero
+    id="hero"
+    tagline="PRICING"
+    title="Clear pricing. No surprises."
+    subtitle="Straightforward rates for on-site and remote IT support across San Diego. You will know the cost before we begin."
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Schedule IT Support',
+        href: '/contact',
+        class: 'shadow-[0_0_15px_rgba(34,211,238,0.5)] border-primary hover:shadow-[0_0_25px_rgba(34,211,238,0.8)]',
+      },
+      { text: 'View Packages', href: '#packages' },
+    ]}
+  >
+    <Fragment slot="content">
+      <div class="mt-8 flex flex-wrap justify-center gap-4 opacity-80 text-accent text-sm tracking-widest uppercase">
+        <span>On-location</span><span>•</span>
+        <span>Remote</span><span>•</span>
+        <span>NDA available</span><span>•</span>
+        <span>Warranty-backed</span>
+      </div>
+    </Fragment>
+  </Hero>
+
+  <!-- Lead packages -->
+  <WidgetWrapper id="packages" containerClass="max-w-7xl mx-auto">
+    <div class="text-center mb-10">
+      <p class="text-base text-secondary dark:text-blue-200 font-bold tracking-wide uppercase">Popular Packages</p>
+      <h2 class="text-3xl md:text-4xl font-bold font-heading mt-2 text-white">
+        Start with the help most people ask for.
+      </h2>
+      <p class="mt-4 text-lg text-muted max-w-3xl mx-auto">
+        Each package combines four services into one visit at a set price, so you save time and money.
+      </p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {
+        serviceBundles.map((bundle) => {
+          const listPrice = priceFor(bundle.hours);
+          return (
+            <div class="glass-card glass-card-hover p-6 md:p-8 flex flex-col">
+              <Icon name={bundle.icon} class="text-primary w-10 h-10 mb-4" />
+              <h3 class="text-2xl font-bold text-white">{bundle.title}</h3>
+              <p class="mt-3 text-gray-300 italic">&ldquo;{bundle.tagline}&rdquo;</p>
+              <p class="mt-3 text-muted">{bundle.forWho}</p>
+              <ul class="mt-5 space-y-2 text-gray-200">
+                {bundle.includes.map((item) => (
+                  <li class="flex items-start gap-2">
+                    <Icon name="tabler:check" class="w-5 h-5 mt-0.5 shrink-0 text-primary" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <div class="mt-auto pt-6">
+                <div class="text-4xl font-bold text-white">${bundle.price}</div>
+                <div class="text-sm text-muted">
+                  About {bundle.hours} hours of service · <span class="line-through">${listPrice}</span> if booked
+                  separately
+                </div>
+                <a
+                  href={`/contact?service=package&plan=${bundle.id}`}
+                  class="btn btn-primary w-full mt-5 shadow-[0_0_15px_rgba(34,211,238,0.3)]"
+                >
+                  Book {bundle.title}
+                </a>
+              </div>
+            </div>
+          );
+        })
+      }
+    </div>
+  </WidgetWrapper>
+
+  <!-- Service catalog -->
+  <WidgetWrapper id="services-menu" containerClass="max-w-5xl mx-auto">
+    <div class="text-center mb-8">
+      <p class="text-base text-secondary dark:text-blue-200 font-bold tracking-wide uppercase">Service Menu</p>
+      <h2 class="text-3xl md:text-4xl font-bold font-heading mt-2 text-white">Every service, every price.</h2>
+      <p class="mt-4 text-lg text-muted max-w-3xl mx-auto">
+        Each price is based on how long the job usually takes at ${HOURLY_RATE}/hour. Tap a category to see its
+        services.*
+      </p>
+    </div>
+    <div class="space-y-4">
+      {
+        serviceCatalog.map((area, index) => (
+          <details id={area.id} class="glass-card group" open={index === 0}>
+            <summary class="flex items-center gap-4 p-5 md:p-6 cursor-pointer list-none">
+              <Icon name={area.icon} class="text-primary w-8 h-8 shrink-0" />
+              <span class="flex-1 text-lg md:text-xl font-bold text-white">{area.title}</span>
+              <span class="text-sm text-muted whitespace-nowrap">{area.services.length} services</span>
+              <Icon
+                name="tabler:chevron-down"
+                class="w-5 h-5 text-muted transition-transform group-open:rotate-180 shrink-0"
+              />
+            </summary>
+            <ul class="px-5 md:px-6 pb-5 divide-y divide-white/10">
+              {area.services.map((service) => (
+                <li class="py-4 flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-6">
+                  <div class="flex-1">
+                    <h3 class="font-semibold text-gray-100">{service.title}</h3>
+                    <p class="text-sm text-muted mt-1">{service.description}</p>
+                  </div>
+                  <div class="sm:text-right shrink-0 sm:w-32">
+                    <div class="text-lg font-bold text-white">{formatPrice(service)}</div>
+                    <div class="text-xs text-muted">{formatHours(service.hours)}</div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </details>
+        ))
+      }
+    </div>
+    <p class="mt-6 text-sm text-muted text-center">
+      *Prices are rounded to the nearest dollar. See <a href="#pricing-notes" class="underline">pricing notes</a>.
+    </p>
+  </WidgetWrapper>
+
+  <!-- On-demand pricing -->
+  <Pricing
+    id="on-demand"
+    tagline="ON-DEMAND SUPPORT"
+    title="Pay only for the help you need."
+    subtitle="Hourly service for one-time issues, projects, and emergencies."
+    classes={{
+      panel: 'glass-card border-accent/20 hover:border-accent/50',
+    }}
+    prices={[
+      {
+        title: 'Diagnostic & Troubleshooting',
+        subtitle: 'Something is not working?',
+        price: 100,
+        period: 'first hour',
+        items: [
+          { description: '$100 diagnostic fee covers the first hour' },
+          { description: '$155/hour after the first hour' },
+          { description: 'On-site at your home or remote' },
+          { description: 'Patient, jargon-free help for seniors and families' },
+        ],
+        callToAction: {
+          text: 'Request Service',
+          href: '/contact?service=home-it-support',
+          variant: 'primary',
+          class: 'w-full shadow-[0_0_15px_rgba(34,211,238,0.3)]',
+        },
+      },
+      {
+        title: 'Business / Fractional CTO',
+        subtitle: 'Small business IT & strategy',
+        price: 155,
+        period: 'per hour',
+        items: [
+          { description: 'Implementation & technician time ($155/hr)' },
+          { description: 'Diagnostics, strategy & roadmapping ($175/hr)' },
+          { description: 'Cloud, email, networking, and cybersecurity' },
+          { description: 'Retainer plans available' },
+        ],
+        callToAction: {
+          text: 'Book Consultation',
+          href: '/contact?service=business-it-services',
+          variant: 'primary',
+          class: 'w-full shadow-[0_0_15px_rgba(34,211,238,0.3)]',
+        },
+        hasRibbon: true,
+        ribbonTitle: 'Business',
+      },
+      {
+        title: 'Emergency & After-Hours',
+        subtitle: 'Incident response',
+        price: 250,
+        period: 'first hour',
+        items: [
+          { description: '$200/hour after the first hour' },
+          { description: 'Active security incidents and critical system failures' },
+          { description: 'After-hours and urgent response' },
+          { description: 'Emergency retainer plans available' },
+        ],
+        callToAction: {
+          text: 'Call 619-289-9205',
+          href: 'tel:+16192899205',
+          variant: 'primary',
+          class: 'w-full shadow-[0_0_15px_rgba(239,68,68,0.4)]',
+        },
+        hasRibbon: true,
+        ribbonTitle: 'Urgent',
+        ribbonClass:
+          'bg-red-600 before:border-t-red-700 before:border-l-red-700 after:border-t-red-700 after:border-r-red-700',
+      },
+    ]}
+  />
+
+  <!-- Rate card -->
+  <WidgetWrapper id="rate-card" containerClass="max-w-5xl mx-auto pt-0 md:pt-0">
+    <div class="glass-card p-6 md:p-10">
+      <h2 class="text-xl md:text-2xl font-bold mb-6 text-center text-white">Standard Rate Card</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm md:text-base">
+          <thead>
+            <tr class="border-b border-white/10 text-muted uppercase tracking-wider text-xs">
+              <th scope="col" class="py-3 pr-4">Service</th>
+              <th scope="col" class="py-3 px-4 whitespace-nowrap">First hour</th>
+              <th scope="col" class="py-3 pl-4 whitespace-nowrap">After first hour</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              rateCard.map((row) => (
+                <tr class="border-b border-white/5">
+                  <th scope="row" class="py-3 pr-4 font-medium text-gray-200">
+                    {row.service}
+                  </th>
+                  <td class="py-3 px-4 text-white font-semibold whitespace-nowrap">{row.first}</td>
+                  <td class="py-3 pl-4 text-white font-semibold whitespace-nowrap">{row.after}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+      <p class="mt-6 text-sm text-muted text-center">
+        Hardware, software, licenses, subscriptions, and replacement parts are billed separately and approved by you
+        before purchase.
+      </p>
+    </div>
+  </WidgetWrapper>
+
+  <!-- Monthly plans summary -->
+  <WidgetWrapper id="monthly" containerClass="max-w-5xl mx-auto">
+    <div class="text-center mb-8">
+      <p class="text-base text-secondary dark:text-blue-200 font-bold tracking-wide uppercase">Monthly Concierge</p>
+      <h2 class="text-3xl md:text-4xl font-bold font-heading mt-2 text-white">Save with reserved monthly hours.</h2>
+      <p class="mt-4 text-lg text-muted max-w-3xl mx-auto">
+        Monthly Technology Concierge plans reserve support time, add priority scheduling and proactive care, and lower
+        your effective hourly rate.
+      </p>
+    </div>
+    <div class="glass-card p-6 md:p-10">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        {
+          plans.map((plan) => (
+            <div class="relative p-4 rounded-lg border border-white/10">
+              {plan.popular && (
+                <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary/20 text-primary text-[10px] uppercase font-bold tracking-widest py-1 px-3 rounded-full border border-primary/30">
+                  Popular
+                </div>
+              )}
+              <div class:list={['text-sm uppercase tracking-wider mb-2', plan.popular ? 'text-primary' : 'text-muted']}>
+                {plan.name}
+              </div>
+              <div class="text-3xl font-bold text-white">{plan.effective}</div>
+              <div class="text-xs text-muted mt-1">effective rate</div>
+              <div class="mt-3 text-sm text-gray-300">
+                {plan.price === '—' ? 'Billed hourly' : `${plan.price} · ${plan.hours} included`}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+      <div class="mt-8 text-center">
+        <a
+          href="/monthly-technology-concierge"
+          class="btn btn-primary shadow-[0_0_15px_rgba(34,211,238,0.5)] border-primary hover:shadow-[0_0_25px_rgba(34,211,238,0.8)]"
+          >Compare Monthly Plans</a
+        >
+      </div>
+    </div>
+  </WidgetWrapper>
+
+  <!-- What you can expect -->
+  <Features2
+    id="promise"
+    title="What every engagement includes"
+    tagline="OUR PRICING PROMISE"
+    columns={3}
+    classes={{
+      panel: 'glass-card glass-card-hover p-6 text-left',
+      icon: 'text-primary w-10 h-10 mb-4',
+    }}
+    items={[
+      {
+        title: 'Cost before work',
+        description: 'You know the rate and expected scope before we begin. Additional work is approved by you first.',
+        icon: 'tabler:receipt',
+      },
+      {
+        title: 'Confidential by default',
+        description: 'Your data stays private. NDAs are available for executives, professionals, and businesses.',
+        icon: 'tabler:lock',
+      },
+      {
+        title: 'Warranty-backed',
+        description:
+          'Every engagement is backed by our service warranty. Ask us for the terms that apply to your service.',
+        icon: 'tabler:shield-check',
+      },
+    ]}
+  />
+
+  <FAQs
+    id="faq"
+    title="Pricing FAQs"
+    classes={{ container: 'max-w-4xl mx-auto' }}
+    items={[
+      {
+        title: 'How does the $100 first hour work?',
+        description:
+          'When something is not working and the cause is unknown, we start with a diagnostic and troubleshooting visit. The first hour is $100 and covers finding the problem and starting the fix. Additional time is billed at $155 per hour, and we confirm the expected cost before going further.',
+      },
+      {
+        title: 'Does the $100 first hour apply to menu services and packages?',
+        description:
+          'No. The $100 first hour applies to diagnostic and troubleshooting visits. Services on the menu and packages are priced as listed, based on $155 per hour.',
+      },
+      {
+        title: 'What if a service takes longer than the listed time?',
+        description:
+          'Listed prices are based on how long a job usually takes. Services marked "from" can vary, such as recovering a hacked account or removing a virus. If more time is needed, we tell you and get your approval before continuing.',
+      },
+      {
+        title: 'Why are there two business rates?',
+        description:
+          'Diagnostics, strategy, and fractional CTO work are billed at $175/hour. Once the plan is set, implementation and standard technician labor are billed at $155/hour.',
+      },
+      {
+        title: 'Are parts, software, or licenses included?',
+        description:
+          'No. Rates cover professional service time. Hardware, software, subscriptions, licenses, and replacement parts are billed separately and approved by you before purchase.',
+      },
+      {
+        title: 'When does emergency pricing apply?',
+        description:
+          'Emergency pricing ($250 first hour, then $200/hour) applies to after-hours requests, active security incidents, and critical system failures that need immediate response.',
+      },
+      {
+        title: 'Do monthly plans include emergency response?',
+        description:
+          'No. Monthly Technology Concierge covers routine support and ongoing care. Emergency and after-hours response follows emergency pricing unless included in a written agreement.',
+      },
+      {
+        title: 'Do you offer retainers for businesses?',
+        description:
+          'Yes. Businesses can set up monthly retainers for managed IT, fractional CTO, and emergency response. Contact us for a quote based on your team size and needs.',
+      },
+    ]}
+  />
+
+  <CallToAction
+    id="contact"
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Schedule IT Support',
+        href: '/contact',
+        icon: 'tabler:calendar',
+        class: 'shadow-[0_0_15px_rgba(34,211,238,0.5)] border-primary hover:shadow-[0_0_25px_rgba(34,211,238,0.8)]',
+      },
+      {
+        text: 'Call 619-289-9205',
+        href: 'tel:+16192899205',
+        icon: 'tabler:phone',
+      },
+    ]}
+    title="Not sure which option fits?"
+    subtitle="Tell us what is going on and we will recommend the most cost-effective way to help—hourly, monthly, or a business retainer."
+  />
+  <!-- Pricing notes -->
+  <WidgetWrapper id="pricing-notes" containerClass="max-w-4xl mx-auto pt-0 md:pt-0">
+    <div class="text-sm text-muted space-y-2 border-t border-white/10 pt-6">
+      <h2 class="font-semibold text-gray-300 uppercase tracking-wider text-xs">Pricing notes</h2>
+      <p>
+        Service menu prices are calculated from the typical time each job takes at ${HOURLY_RATE}/hour and are rounded
+        to the nearest dollar.
+      </p>
+      <p>
+        Prices marked "from" are starting prices; additional time is billed at ${HOURLY_RATE}/hour with your approval.
+        Hardware, software, subscriptions, licenses, and replacement parts are not included.
+      </p>
+      <p>
+        The $100 first hour applies to diagnostic and troubleshooting visits. Package prices are fixed for the listed
+        services.
+      </p>
+    </div>
+  </WidgetWrapper>
+</Layout>

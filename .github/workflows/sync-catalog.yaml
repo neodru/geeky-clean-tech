@@ -1,0 +1,57 @@
+name: Sync catalog from Notion
+
+# Notion is the master copy of the service catalog. This workflow pulls it into
+# src/data/catalog.json and opens (or updates) a pull request when anything changed.
+# Requires the NOTION_TOKEN repository secret.
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Daily at 6:17 AM Pacific (13:17 UTC during daylight time)
+    - cron: '17 13 * * *'
+  repository_dispatch:
+    types: [notion-catalog-updated]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: sync-catalog
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    name: Sync
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Pull catalog from Notion
+        run: npm run sync:catalog
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+
+      - name: Open pull request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: notion-catalog-sync
+          delete-branch: true
+          add-paths: src/data/catalog.json
+          commit-message: 'chore: sync service catalog from Notion'
+          title: 'chore: sync service catalog from Notion'
+          body: |
+            Automated update of `src/data/catalog.json` from the Notion Service Catalog database.
+
+            Review the diff for price and wording changes, then merge to publish them on the website.

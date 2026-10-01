@@ -29,6 +29,8 @@ npm run dev        # http://localhost:4321
 | `src/navigation.ts`                    | Header and footer menus                                                           |
 | `src/data/services.ts`                 | Content for every service page (features, FAQs, cross-sell, SEO)                  |
 | `src/pages/[service].astro`            | Renders one page per entry in `services.ts`                                       |
+| `src/data/catalog.json`                | Service menu, packages, and prices — generated from Notion, do not edit by hand   |
+| `scripts/sync-catalog.mjs`             | Pulls the Notion Service Catalog into `catalog.json`                              |
 | `src/pages/*.astro`                    | Standalone pages: home, about, contact, services, service area, monthly concierge |
 | `src/pages/privacy.md`, `terms.md`     | Legal pages                                                                       |
 | `src/data/post/`                       | Blog posts (Markdown/MDX). The blog is disabled until the first post is added     |
@@ -41,6 +43,16 @@ npm run dev        # http://localhost:4321
 
 Add an entry to `services` in `src/data/services.ts` with a new `slug`, then link it from `src/navigation.ts`. The page is generated at `/<slug>`.
 
+### Changing prices or services
+
+Notion is the master copy of the service menu and packages shown on `/pricing`.
+
+1. Edit the **Service Catalog — Geeky Clean Technology** database in Notion. Only rows with **Active** checked are published.
+2. Run `NOTION_TOKEN=... npm run sync:catalog` locally, or run **Sync catalog from Notion** from the GitHub Actions tab (it also runs daily). The workflow opens a pull request with the changes.
+3. Merge the pull request to publish.
+
+The sync validates every row (known Area, hours in 15-minute steps, prices filled in, one hourly rate) and changes nothing if a row is wrong. A new Area in Notion must also be added to `AREAS` in `scripts/sync-catalog.mjs`.
+
 ### Turning the blog on
 
 1. Add posts to `src/data/post/`.
@@ -49,9 +61,10 @@ Add an entry to `services` in `src/data/services.ts` with a new `slug`, then lin
 
 ## Configuration
 
-| Variable                       | Where                               | Purpose                                                                                                               |
-| ------------------------------ | ----------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| `PUBLIC_CONTACT_FORM_ENDPOINT` | Cloudflare Pages build env / `.env` | URL the contact form POSTs to (Formspree, Web3Forms, Make/Zapier webhook, ...). Unset = form falls back to `mailto:`. |
+| Variable                       | Where                               | Purpose                                                                                                                      |
+| ------------------------------ | ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `PUBLIC_CONTACT_FORM_ENDPOINT` | Cloudflare Pages build env / `.env` | URL the contact form POSTs to (Formspree, Web3Forms, Make/Zapier webhook, ...). Unset = form falls back to `mailto:`.        |
+| `NOTION_TOKEN`                 | GitHub repository secret / shell    | Notion integration secret used by `npm run sync:catalog`. The integration must be connected to the Service Catalog database. |
 
 See `.env.example`. Variables are read at **build** time, so redeploy after changing them.
 
