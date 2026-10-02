@@ -1,8 +1,6 @@
 # Cloudflare Pages redirects. Template demo pages that were live and indexed
 # before launch; send visitors (and search engines) somewhere useful.
 
-/pricing                                        /monthly-technology-concierge  301
-/pricing/                                       /monthly-technology-concierge  301
 /homes/*                                        /  301
 /landing/*                                      /  301
 /decapcms/*                                     /  301
