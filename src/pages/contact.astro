@@ -131,7 +131,7 @@ const { services: serviceOptions, packages: packageOptions } = contactServiceOpt
             <option value="" disabled selected>Select a service</option>
             {
               serviceOptions.map((o) => (
-                <option value={o.value} data-service={o.slug}>
+                <option value={o.value} data-service={o.slug} data-plans={o.plans?.join(' ')}>
                   {o.value}
                 </option>
               ))
@@ -284,7 +284,7 @@ const { services: serviceOptions, packages: packageOptions } = contactServiceOpt
       for (const o of options) o.defaultSelected = o === match;
       match.selected = true;
       // A plan that isn't a package (e.g. Monthly Concierge "executive") belongs to this option only.
-      if (plan && !match.dataset.plan) match.dataset.plan = plan;
+      if (plan && !match.dataset.plan && match.dataset.plans?.split(' ').includes(plan)) match.dataset.plan = plan;
     }
 
     private syncPlan(form: HTMLFormElement) {

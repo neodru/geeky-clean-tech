@@ -11,7 +11,7 @@
  * - TURNSTILE_SECRET_KEY  (secret, optional) Enables the Turnstile check.
  */
 
-import { allowedContactServices } from '../../src/data/contactServices';
+import { allowedContactServices, planForService } from '../../src/data/contactServices';
 import { PLAN_ID_RE } from '../../src/data/planId.js';
 
 interface Env {
@@ -67,6 +67,8 @@ export function validate(data: FormData): Validation {
   if (!SERVICES.includes(lead.service)) return { ok: false, error: 'Please choose a service.' };
   // Ignore a malformed plan rather than rejecting the lead over a hidden field.
   if (lead.plan && !PLAN_ID_RE.test(lead.plan)) lead.plan = '';
+  // Keep only a plan that belongs to the chosen service.
+  lead.plan = planForService(lead.service, lead.plan);
   if (!lead.message || lead.message.length > MAX_MESSAGE)
     return { ok: false, error: `Please describe how we can help (up to ${MAX_MESSAGE} characters).` };
 

@@ -8,6 +8,8 @@ export interface ContactServiceOption {
   value: string;
   // Matches ?service=<slug> links elsewhere on the site.
   slug: string;
+  // Plans this service accepts from ?plan= links (none for most services).
+  plans?: string[];
 }
 
 export interface ContactPackageOption {
@@ -26,7 +28,8 @@ const SERVICES: ContactServiceOption[] = [
   { value: 'Network Support', slug: 'network-support' },
   { value: 'Computer Repair', slug: 'computer-repair' },
   { value: 'Remote Support', slug: 'remote-support' },
-  { value: 'Monthly Technology Concierge', slug: 'monthly-concierge' },
+  // Tiers linked from src/pages/monthly-technology-concierge.astro.
+  { value: 'Monthly Technology Concierge', slug: 'monthly-concierge', plans: ['essential', 'executive', 'premier'] },
 ];
 
 export const OTHER_SERVICE = 'Other / Not sure';
@@ -42,6 +45,16 @@ export function contactServiceOptions(): { services: ContactServiceOption[]; pac
       plan: b.id,
     })),
   };
+}
+
+// The plan a lead may record for a service: a package's own id, a listed
+// tier, or nothing. Anything else (e.g. Home IT Support + "executive") is dropped.
+export function planForService(service: string, plan: string): string {
+  if (!plan) return '';
+  const { services, packages } = contactServiceOptions();
+  const pkg = packages.find((p) => p.value === service);
+  if (pkg) return pkg.plan === plan ? plan : '';
+  return services.find((s) => s.value === service)?.plans?.includes(plan) ? plan : '';
 }
 
 export function allowedContactServices(): string[] {
