@@ -49,6 +49,7 @@ const BUNDLE_ICONS = {
   'stop-the-scammers': 'tabler:shield-x',
   'new-phone-made-easy': 'tabler:device-mobile-heart',
   'never-locked-out': 'tabler:lock-open',
+  'wi-fi-that-just-works': 'tabler:wifi',
 };
 const DEFAULT_BUNDLE_ICON = 'tabler:package';
 

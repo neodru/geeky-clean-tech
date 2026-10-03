@@ -630,6 +630,21 @@
       ],
       "hours": 4,
       "price": 575
+    },
+    {
+      "id": "wi-fi-that-just-works",
+      "title": "Wi-Fi That Just Works",
+      "tagline": "The internet keeps cutting out, the printer won't connect, and I'm not sure my Wi-Fi is safe.",
+      "forWho": "For homes with spotty Wi-Fi, dead zones, or devices that won't stay connected.",
+      "icon": "tabler:wifi",
+      "includes": [
+        "Wi-Fi & Home Network Fix",
+        "Printer & Accessory Setup (Mac or Windows)",
+        "Safe Browser Setup",
+        "Phone Security Hardening"
+      ],
+      "hours": 4,
+      "price": 575
     }
   ]
 }
