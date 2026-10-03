@@ -9,11 +9,11 @@ const metadata = {
     'Schedule on-site or remote IT support in San Diego. Call, text, or email Geeky Clean Technology for home, senior, business, and cybersecurity help.',
 };
 
-// Any service that accepts a form POST and answers 2xx works here (Formspree,
-// Web3Forms, a Make/Zapier webhook, or our own function). Without it the form
-// falls back to opening the visitor's email app.
-const endpoint = import.meta.env.PUBLIC_CONTACT_FORM_ENDPOINT;
-const mailtoAction = 'mailto:support@geekycleantechnology.com?subject=Geeky%20Clean%20Technology%20Inquiry';
+// Submissions go to the Pages Function in functions/api/contact.ts, which
+// writes them to Notion. The override is for testing against another endpoint.
+const endpoint = import.meta.env.PUBLIC_CONTACT_FORM_ENDPOINT || '/api/contact';
+// Turnstile bot check; only rendered when a site key is configured.
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 ---
 
 <Layout metadata={metadata}>
@@ -29,26 +29,23 @@ const mailtoAction = 'mailto:support@geekycleantechnology.com?subject=Geeky%20Cl
 
   <section id="form" class="relative max-w-3xl mx-auto px-4 sm:px-6 py-12 md:py-16">
     <gct-contact-form>
-      <form
-        action={endpoint ?? mailtoAction}
-        method="POST"
-        enctype={endpoint ? undefined : 'text/plain'}
-        data-endpoint={endpoint ? '' : undefined}
-        class="glass-card p-6 sm:p-8 space-y-6"
-      >
+      <form action={endpoint} method="POST" class="glass-card p-6 sm:p-8 space-y-6">
         <div>
           <h2 class="text-2xl font-heading text-white mb-2">Request support</h2>
           <p class="text-muted text-sm">
-            {
-              endpoint
-                ? 'Tell us what is going on and we will get back to you, typically the same business day.'
-                : 'This will open your email app with your message pre-filled. Please make sure the fields are completed before sending.'
-            }
+            Tell us what is going on and we will get back to you, typically the same business day.
           </p>
         </div>
 
-        <input type="hidden" name="_subject" value="New website inquiry — Geeky Clean Technology" />
-        <input type="hidden" name="source" value="website-contact-form" />
+        <!-- Shown after a plain (JavaScript-disabled) submission redirects back here. -->
+        <p id="sent" class="hidden target:block rounded-lg px-4 py-3 text-sm bg-green-500/10 text-green-300">
+          Thanks! Your request is in. We typically respond the same business day.
+        </p>
+        <p id="send-error" class="hidden target:block rounded-lg px-4 py-3 text-sm bg-red-500/10 text-red-300">
+          Sorry, your message could not be sent. Please call or text 619-289-9205, or email
+          support@geekycleantechnology.com.
+        </p>
+
         <!-- Honeypot: hidden from people, filled in by bots. -->
         <div class="hidden" aria-hidden="true">
           <label for="_gotcha">Leave this field empty</label>
@@ -148,12 +145,12 @@ const mailtoAction = 'mailto:support@geekycleantechnology.com?subject=Geeky%20Cl
             placeholder="Describe the issue, device, or project..."></textarea>
         </div>
 
+        {turnstileSiteKey && <div data-turnstile data-sitekey={turnstileSiteKey} />}
+
         <p class="text-sm text-muted">
-          {
-            endpoint
-              ? 'Prefer to talk? Call or text '
-              : 'Submitting opens your default email client. If that does not work, you can also call or text '
-          }<a href="tel:+16192899205" class="text-primary underline underline-offset-2">619-289-9205</a>.
+          Prefer to talk? Call or text <a href="tel:+16192899205" class="text-primary underline underline-offset-2"
+            >619-289-9205</a
+          >.
         </p>
 
         <button type="submit" class="btn btn-primary w-full">Request IT Support</button>
@@ -192,15 +189,52 @@ const mailtoAction = 'mailto:support@geekycleantechnology.com?subject=Geeky%20Cl
   const ERROR_MESSAGE =
     'Sorry, your message could not be sent. Please call or text 619-289-9205, or email support@geekycleantechnology.com.';
 
+  interface Turnstile {
+    render(container: HTMLElement, options: { sitekey: string }): string;
+    reset(widgetId: string): void;
+  }
+
+  declare global {
+    interface Window {
+      turnstile?: Turnstile;
+    }
+  }
+
+  let turnstileScript: Promise<Turnstile> | undefined;
+
+  // Explicit rendering, so the widget also appears after ClientRouter navigations.
+  function loadTurnstile(): Promise<Turnstile> {
+    turnstileScript ??= new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+      script.async = true;
+      script.onload = () => (window.turnstile ? resolve(window.turnstile) : reject(new Error('Turnstile missing')));
+      script.onerror = () => reject(new Error('Turnstile failed to load'));
+      document.head.appendChild(script);
+    });
+    return turnstileScript;
+  }
+
   class GctContactForm extends HTMLElement {
+    private turnstileId?: string;
+
     connectedCallback() {
       const form = this.querySelector('form');
-      // No endpoint configured: let the browser handle the mailto fallback.
-      if (!form || !form.hasAttribute('data-endpoint')) return;
+      if (!form) return;
       form.addEventListener('submit', (e) => {
         e.preventDefault();
         this.submit(form);
       });
+
+      const widget = this.querySelector<HTMLElement>('[data-turnstile]');
+      if (widget?.dataset.sitekey) {
+        const sitekey = widget.dataset.sitekey;
+        loadTurnstile()
+          .then((turnstile) => {
+            this.turnstileId = turnstile.render(widget, { sitekey });
+          })
+          .catch((err) => console.error(err));
+      }
     }
 
     private async submit(form: HTMLFormElement) {
@@ -226,9 +260,14 @@ const mailtoAction = 'mailto:support@geekycleantechnology.com?subject=Geeky%20Cl
           headers: { Accept: 'application/json' },
           body: data,
         });
-        if (!res.ok) throw new Error(`Contact form endpoint returned ${res.status}`);
-        form.reset();
-        this.showStatus(form, 'success', SUCCESS_MESSAGE);
+        if (res.ok) {
+          form.reset();
+          this.showStatus(form, 'success', SUCCESS_MESSAGE);
+        } else {
+          // Validation problems (422) come back with a message worth showing.
+          const body = (await res.json().catch(() => ({}))) as { error?: string };
+          this.showStatus(form, 'error', res.status === 422 && body.error ? body.error : ERROR_MESSAGE);
+        }
       } catch (err) {
         console.error(err);
         this.showStatus(form, 'error', ERROR_MESSAGE);
@@ -237,6 +276,8 @@ const mailtoAction = 'mailto:support@geekycleantechnology.com?subject=Geeky%20Cl
           button.disabled = false;
           button.textContent = label;
         }
+        // Turnstile tokens are single-use.
+        if (this.turnstileId) window.turnstile?.reset(this.turnstileId);
       }
     }
 
