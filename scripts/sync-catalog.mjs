@@ -17,6 +17,7 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import prettier from 'prettier';
+import { PLAN_ID_MAX, PLAN_ID_RE } from '../src/data/planId.js';
 
 const DATA_SOURCE_ID = process.env.NOTION_CATALOG_DATA_SOURCE_ID || '5f8dca75-ab8b-473b-942f-7acec366c028';
 const NOTION_VERSION = '2025-09-03';
@@ -152,6 +153,11 @@ export function buildCatalog(pages) {
       if (!includes.length) errors.push(`${where}: packages need Includes (separate services with ";")`);
       if (!tagline) errors.push(`${where}: packages need a Tagline`);
       const id = slugify(title);
+      if (!PLAN_ID_RE.test(id)) {
+        errors.push(
+          `${where}: package name is too long for a booking link (max ${PLAN_ID_MAX} characters once simplified)`
+        );
+      }
       bundles.push({
         id,
         title,

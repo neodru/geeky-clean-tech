@@ -12,6 +12,7 @@
  */
 
 import { allowedContactServices } from '../../src/data/contactServices';
+import { PLAN_ID_RE } from '../../src/data/planId.js';
 
 interface Env {
   NOTION_TOKEN?: string;
@@ -27,8 +28,6 @@ interface PagesContext {
 const AUDIENCES = ['Home / Personal', 'Senior / Family', 'Business'];
 // Same list the contact form's dropdown is built from, packages included.
 const SERVICES = allowedContactServices();
-// Optional plan id from ?plan= links (e.g. "executive", "stop-the-scammers").
-const PLAN_RE = /^[a-z0-9-]{1,40}$/;
 
 const MAX_MESSAGE = 5000;
 // Notion caps each rich_text segment at 2000 characters.
@@ -67,7 +66,7 @@ export function validate(data: FormData): Validation {
   if (!AUDIENCES.includes(lead.audience)) return { ok: false, error: 'Please choose who this is for.' };
   if (!SERVICES.includes(lead.service)) return { ok: false, error: 'Please choose a service.' };
   // Ignore a malformed plan rather than rejecting the lead over a hidden field.
-  if (lead.plan && !PLAN_RE.test(lead.plan)) lead.plan = '';
+  if (lead.plan && !PLAN_ID_RE.test(lead.plan)) lead.plan = '';
   if (!lead.message || lead.message.length > MAX_MESSAGE)
     return { ok: false, error: `Please describe how we can help (up to ${MAX_MESSAGE} characters).` };
 

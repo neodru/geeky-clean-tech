@@ -22,7 +22,9 @@ const STOPWORDS = new Set(
   (
     'a an and are at be but by can could do does doing for from get getting got has have help how i im ' +
     'in into is it its keep keeps make me my need needs of on or our please so some that the their them ' +
-    'this to too up us want wants was we what when why will with won wont you your'
+    'this to too up us want wants was we what when why will with won wont you your ' +
+    // "not working", "doesn't work anymore": describe a problem, never which service.
+    'work works working worked not doesnt dont didnt isnt wasnt anymore just'
   ).split(' ')
 );
 
@@ -166,6 +168,23 @@ export function stem(word: string): string {
   return word;
 }
 
+// Query words are stemmed before lookup ("freezing" → "freez"), so index the
+// synonyms under the stem of each common inflection of their key: plural, past
+// tense, -ing, a dropped final e ("freeze" → "freezing") and a doubled final
+// consonant ("scam" → "scammed").
+const STEMMED_SYNONYMS: Map<string, string[]> = (() => {
+  const map = new Map<string, string[]>();
+  for (const [key, alts] of Object.entries(SYNONYMS)) {
+    const forms = [key, `${key}s`, `${key}es`, `${key}d`, `${key}ed`, `${key}ing`];
+    if (key.endsWith('e')) forms.push(`${key.slice(0, -1)}ing`);
+    if (/[^aeiou][aeiou][bdgmnprt]$/.test(key)) forms.push(`${key}${key.at(-1)}ed`, `${key}${key.at(-1)}ing`);
+    for (const stemmed of new Set(forms.map(stem))) {
+      map.set(stemmed, [...new Set([...(map.get(stemmed) ?? []), ...alts])]);
+    }
+  }
+  return map;
+})();
+
 function normalize(text: string): string {
   return (
     text
@@ -295,7 +314,7 @@ export function search({ entries, rarity }: SearchIndex, query: string, limit = 
     let matched = 0;
     for (const term of terms) {
       let synonym = 0;
-      for (const alt of SYNONYMS[term] ?? []) {
+      for (const alt of STEMMED_SYNONYMS.get(term) ?? []) {
         if (stem(alt) !== term) synonym = Math.max(synonym, termScore(stem(alt), entry, rarity));
       }
       const score = termScore(term, entry, rarity) + SYNONYM_WEIGHT * synonym;

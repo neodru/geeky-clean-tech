@@ -204,6 +204,8 @@ const { services: serviceOptions, packages: packageOptions } = contactServiceOpt
 </Layout>
 
 <script>
+  import { PLAN_ID_RE } from '~/data/planId.js';
+
   const SUCCESS_MESSAGE = 'Thanks! Your request is in. We typically respond the same business day.';
   const ERROR_MESSAGE =
     'Sorry, your message could not be sent. Please call or text 619-289-9205, or email support@geekycleantechnology.com.';
@@ -267,7 +269,7 @@ const { services: serviceOptions, packages: packageOptions } = contactServiceOpt
     // Pre-select the service (and record the plan) chosen on the page that linked here.
     private prefillFromUrl(form: HTMLFormElement) {
       const params = new URLSearchParams(window.location.search);
-      const slug = (key: string) => (/^[a-z0-9-]{1,40}$/.test(params.get(key) ?? '') ? params.get(key) : null);
+      const slug = (key: string) => (PLAN_ID_RE.test(params.get(key) ?? '') ? params.get(key) : null);
       const service = slug('service');
       const plan = slug('plan');
       if (!service) return;
