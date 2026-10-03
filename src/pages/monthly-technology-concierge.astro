@@ -6,6 +6,7 @@ import Pricing from '~/components/widgets/Pricing.astro';
 import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
 import FAQs from '~/components/widgets/FAQs.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
+import ServiceFinder from '~/components/widgets/ServiceFinder.astro';
 
 const metadata = {
   title: 'Monthly IT Support & Technology Concierge | San Diego | Geeky Clean Technology',
@@ -35,6 +36,10 @@ const metadata = {
         text: 'View Monthly Plans',
         href: '#plans',
         class: 'shadow-[0_0_15px_rgba(34,211,238,0.5)] border-primary hover:shadow-[0_0_25px_rgba(34,211,238,0.8)]',
+      },
+      {
+        text: 'Look Up a Service',
+        href: '#service-finder',
       },
       {
         text: 'Schedule a Consultation',
@@ -206,6 +211,11 @@ const metadata = {
       </div>
     </div>
   </WidgetWrapper>
+
+  <ServiceFinder
+    title="What can your monthly hours cover?"
+    subtitle="Search our service catalog to see what each service includes, how long it usually takes, and what it costs at the standard $155/hr rate."
+  />
 
   <FAQs
     id="faq"
