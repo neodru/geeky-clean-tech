@@ -241,6 +241,13 @@ const { services: serviceOptions, packages: packageOptions } = contactServiceOpt
       const form = this.querySelector('form');
       if (!form) return;
       this.prefillFromUrl(form);
+      // The plan always follows the selected option, so changing the service
+      // after arriving from a package or plan link can't send a stale plan.
+      const syncPlan = () => this.syncPlan(form);
+      syncPlan();
+      form.querySelector('select[name="service"]')?.addEventListener('change', syncPlan);
+      // reset fires before fields are restored; sync once they are.
+      form.addEventListener('reset', () => setTimeout(syncPlan));
       form.addEventListener('submit', (e) => {
         e.preventDefault();
         this.submit(form);
@@ -274,9 +281,14 @@ const { services: serviceOptions, packages: packageOptions } = contactServiceOpt
       // Make it the default too, so form.reset() after sending keeps the same service.
       for (const o of options) o.defaultSelected = o === match;
       match.selected = true;
+      // A plan that isn't a package (e.g. Monthly Concierge "executive") belongs to this option only.
+      if (plan && !match.dataset.plan) match.dataset.plan = plan;
+    }
 
+    private syncPlan(form: HTMLFormElement) {
+      const select = form.querySelector<HTMLSelectElement>('select[name="service"]');
       const planField = form.querySelector<HTMLInputElement>('[data-plan-field]');
-      if (planField && plan) planField.value = planField.defaultValue = plan;
+      if (planField) planField.value = select?.selectedOptions[0]?.dataset.plan ?? '';
     }
 
     private async submit(form: HTMLFormElement) {
