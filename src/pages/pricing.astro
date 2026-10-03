@@ -6,19 +6,23 @@ import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
 import Features2 from '~/components/widgets/Features2.astro';
 import FAQs from '~/components/widgets/FAQs.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
+import ServiceSearch from '~/components/widgets/ServiceSearch.astro';
 import { Icon } from 'astro-icon/components';
 import { HOURLY_RATE, formatHours, formatPrice, priceFor, serviceBundles, serviceCatalog } from '~/data/services';
 
 const metadata = {
   title: 'Pricing | San Diego IT Support Rates | Geeky Clean Technology',
-  description:
-    'Transparent pricing for Geeky Clean Technology: service packages, a full menu of setup and security services at $155/hr, a $100 diagnostic first hour, business IT and fractional CTO at $155–$175/hr, emergency response, and monthly concierge plans from $435/month.',
+  description: `Transparent pricing for Geeky Clean Technology: service packages, a full menu of setup and security services at $${HOURLY_RATE}/hr, a $100 diagnostic first hour, business IT and fractional CTO at $155–$175/hr, emergency response, and monthly concierge plans from $435/month.`,
 };
 
 // Single source for the rate card so the table and cards stay in sync.
 const rateCard = [
   { service: 'Diagnostic & troubleshooting visit (homes, seniors, individuals)', first: '$100', after: '$155/hr' },
-  { service: 'Catalog services (setup, security & training)', first: '$155/hr', after: '$155/hr' },
+  {
+    service: 'Catalog services (setup, security & training)',
+    first: `$${HOURLY_RATE}/hr`,
+    after: `$${HOURLY_RATE}/hr`,
+  },
   { service: 'Business implementation & technician time', first: '$155/hr', after: '$155/hr' },
   { service: 'Business diagnostics, strategy & fractional CTO', first: '$175/hr', after: '$175/hr' },
   { service: 'Emergency, after-hours & security incident response', first: '$250', after: '$200/hr' },
@@ -58,6 +62,9 @@ const plans = [
     </Fragment>
   </Hero>
 
+  <!-- Service lookup -->
+  <ServiceSearch />
+
   <!-- Lead packages -->
   <WidgetWrapper id="packages" containerClass="max-w-7xl mx-auto">
     <div class="text-center mb-10">
@@ -69,7 +76,7 @@ const plans = [
         Each package combines four services into one visit at a set price, so you save time and money.
       </p>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
       {
         serviceBundles.map((bundle) => {
           const listPrice = priceFor(bundle.hours);
@@ -124,7 +131,9 @@ const plans = [
             <summary class="flex items-center gap-4 p-5 md:p-6 cursor-pointer list-none">
               <Icon name={area.icon} class="text-primary w-8 h-8 shrink-0" />
               <span class="flex-1 text-lg md:text-xl font-bold text-white">{area.title}</span>
-              <span class="text-sm text-muted whitespace-nowrap">{area.services.length} services</span>
+              <span class="text-sm text-muted whitespace-nowrap">
+                {area.services.length} {area.services.length === 1 ? 'service' : 'services'}
+              </span>
               <Icon
                 name="tabler:chevron-down"
                 class="w-5 h-5 text-muted transition-transform group-open:rotate-180 shrink-0"
@@ -345,8 +354,7 @@ const plans = [
       },
       {
         title: 'Does the $100 first hour apply to menu services and packages?',
-        description:
-          'No. The $100 first hour applies to diagnostic and troubleshooting visits. Services on the menu and packages are priced as listed, based on $155 per hour.',
+        description: `No. The $100 first hour applies to diagnostic and troubleshooting visits. Services on the menu and packages are priced as listed, based on $${HOURLY_RATE} per hour.`,
       },
       {
         title: 'What if a service takes longer than the listed time?',

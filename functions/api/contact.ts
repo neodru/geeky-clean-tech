@@ -11,6 +11,9 @@
  * - TURNSTILE_SECRET_KEY  (secret, optional) Enables the Turnstile check.
  */
 
+import { allowedContactServices, planForService } from '../../src/data/contactServices';
+import { PLAN_ID_RE } from '../../src/data/planId.js';
+
 interface Env {
   NOTION_TOKEN?: string;
   NOTION_DATABASE_ID?: string;
@@ -23,17 +26,8 @@ interface PagesContext {
 }
 
 const AUDIENCES = ['Home / Personal', 'Senior / Family', 'Business'];
-const SERVICES = [
-  'Home IT Support',
-  'Senior Tech Support',
-  'Business IT Services',
-  'Cybersecurity',
-  'Data Recovery',
-  'Network Support',
-  'Computer Repair',
-  'Remote Support',
-  'Other / Not sure',
-];
+// Same list the contact form's dropdown is built from, packages included.
+const SERVICES = allowedContactServices();
 
 const MAX_MESSAGE = 5000;
 // Notion caps each rich_text segment at 2000 characters.
@@ -46,6 +40,7 @@ export interface Lead {
   phone: string;
   audience: string;
   service: string;
+  plan: string;
   message: string;
 }
 
@@ -60,6 +55,7 @@ export function validate(data: FormData): Validation {
     phone: field(data, 'phone'),
     audience: field(data, 'audience'),
     service: field(data, 'service'),
+    plan: field(data, 'plan'),
     message: field(data, 'message'),
   };
 
@@ -69,6 +65,10 @@ export function validate(data: FormData): Validation {
   if (lead.phone.length > 40) return { ok: false, error: 'Please check your phone number.' };
   if (!AUDIENCES.includes(lead.audience)) return { ok: false, error: 'Please choose who this is for.' };
   if (!SERVICES.includes(lead.service)) return { ok: false, error: 'Please choose a service.' };
+  // Ignore a malformed plan rather than rejecting the lead over a hidden field.
+  if (lead.plan && !PLAN_ID_RE.test(lead.plan)) lead.plan = '';
+  // Keep only a plan that belongs to the chosen service.
+  lead.plan = planForService(lead.service, lead.plan);
   if (!lead.message || lead.message.length > MAX_MESSAGE)
     return { ok: false, error: `Please describe how we can help (up to ${MAX_MESSAGE} characters).` };
 
@@ -93,7 +93,8 @@ export function notionPage(databaseId: string, lead: Lead) {
       Audience: { select: { name: lead.audience } },
       Email: { email: lead.email },
       Phone: { phone_number: lead.phone || null },
-      Message: { rich_text: richText(lead.message) },
+      // The plan rides in the message so it needs no extra Notion column.
+      Message: { rich_text: richText(lead.plan ? `${lead.message}\n\nPlan: ${lead.plan}` : lead.message) },
       Source: { select: { name: 'Website form' } },
     },
   };
