@@ -35,6 +35,7 @@ npm run dev        # http://localhost:4321
 | `src/pages/*.astro`                    | Standalone pages: home, about, contact, services, service area, monthly concierge |
 | `src/pages/privacy.md`, `terms.md`     | Legal pages                                                                       |
 | `src/data/post/`                       | Blog posts (Markdown/MDX). The blog is disabled until the first post is added     |
+| `functions/api/contact.ts`             | Contact form handler (Cloudflare Pages Function → Notion)                         |
 | `src/components/`, `src/layouts/`      | UI building blocks (from AstroWind, restyled)                                     |
 | `src/assets/`                          | Images, favicons, global styles                                                   |
 | `public/_redirects`, `public/_headers` | Cloudflare Pages redirects and cache headers                                      |
@@ -60,14 +61,29 @@ The sync validates every row (known Area, hours in 15-minute steps, prices fille
 2. Set `apps.blog.isEnabled: true` in `src/config.yaml`.
 3. Remove the blog rules from `public/_redirects`.
 
+## Contact form
+
+`/contact` posts to the Cloudflare Pages Function `functions/api/contact.ts`, which validates the submission and creates a row in the Notion [Website Leads](https://www.notion.so/e61123ba4ee848b9ad0983d34405bff1) database (Dashboard → Sales CRM). Honeypot and optional Cloudflare Turnstile block bots; the function rejects posts from other origins.
+
 ## Configuration
 
-| Variable                       | Where                               | Purpose                                                                                                                      |
-| ------------------------------ | ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| `PUBLIC_CONTACT_FORM_ENDPOINT` | Cloudflare Pages build env / `.env` | URL the contact form POSTs to (Formspree, Web3Forms, Make/Zapier webhook, ...). Unset = form falls back to `mailto:`.        |
-| `NOTION_TOKEN`                 | GitHub repository secret / shell    | Notion integration secret used by `npm run sync:catalog`. The integration must be connected to the Service Catalog database. |
+Site and contact form: set in Cloudflare Pages → Settings → Variables and secrets, for Production and Preview.
 
-See `.env.example`. Variables are read at **build** time, so redeploy after changing them.
+| Variable                       | Kind               | Purpose                                                                                            |
+| ------------------------------ | ------------------ | -------------------------------------------------------------------------------------------------- |
+| `NOTION_TOKEN`                 | Secret (runtime)   | Notion internal integration token; the integration must be connected to the Website Leads database |
+| `NOTION_DATABASE_ID`           | Variable (runtime) | Website Leads database ID (`e61123ba4ee848b9ad0983d34405bff1`)                                     |
+| `TURNSTILE_SECRET_KEY`         | Secret (runtime)   | Optional. Enables the server-side Turnstile check                                                  |
+| `PUBLIC_TURNSTILE_SITE_KEY`    | Variable (build)   | Optional. Renders the Turnstile widget; set together with `TURNSTILE_SECRET_KEY`                   |
+| `PUBLIC_CONTACT_FORM_ENDPOINT` | Variable (build)   | Optional. Overrides `/api/contact` (testing only)                                                  |
+
+`PUBLIC_*` variables are baked in at **build** time, so redeploy after changing them. See `.env.example`.
+
+Catalog sync: set as a GitHub repository secret (or in your shell for local runs).
+
+| Variable       | Kind                     | Purpose                                                                                                                      |
+| -------------- | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------- |
+| `NOTION_TOKEN` | GitHub repository secret | Notion integration secret used by `npm run sync:catalog`. The integration must be connected to the Service Catalog database. |
 
 ## Deployment
 
