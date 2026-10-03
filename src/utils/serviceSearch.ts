@@ -53,7 +53,7 @@ const SYNONYMS: Record<string, string[]> = {
   password: ['password', 'passkey'],
   login: ['password', 'account', 'sign'],
   forgot: ['manager', 'recover', 'regain'],
-  remember: ['password'],
+  remember: ['manager', 'recover'],
   locked: ['recover', 'recovery', 'password'],
   photo: ['photo', 'picture', 'library'],
   picture: ['photo', 'library'],
@@ -189,6 +189,8 @@ function normalize(text: string): string {
   return (
     text
       .toLowerCase()
+      // Join contractions first ("can't"/"can’t" → "cant") so the phrase rules below match them.
+      .replace(/['’‘`]/g, '')
       .replace(/\bset\s+up\b/g, 'setup')
       .replace(/\bwi[\s-]?fi\b/g, 'wifi')
       .replace(/\bdead\s+zones?\b/g, 'deadzone')
