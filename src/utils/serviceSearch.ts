@@ -131,7 +131,18 @@ const SYNONYMS: Record<string, string[]> = {
   browser: ['browser'],
   chrome: ['browser'],
   safari: ['browser', 'safari'],
-  internet: ['browser'],
+  internet: ['wifi', 'network', 'browser'],
+  wifi: ['wifi', 'network', 'router'],
+  wireless: ['wifi', 'network'],
+  router: ['router', 'wifi', 'network'],
+  modem: ['modem', 'router', 'network'],
+  mesh: ['wifi', 'router', 'network'],
+  signal: ['wifi', 'network'],
+  deadzone: ['dead', 'zone', 'wifi'],
+  connection: ['wifi', 'network', 'reconnect'],
+  disconnect: ['wifi', 'dropout', 'network'],
+  network: ['network', 'wifi'],
+  online: ['wifi', 'network'],
   leak: ['breach', 'leak', 'exposed'],
   breach: ['breach', 'leak'],
   win10: ['10', 'upgrade'],
@@ -156,19 +167,28 @@ export function stem(word: string): string {
 }
 
 function normalize(text: string): string {
-  return text
-    .toLowerCase()
-    .replace(/\bset\s+up\b/g, 'setup')
-    .replace(/\b(log|sign)\s+in\b/g, 'login')
-    .replace(/\bwindows\s*10\b/g, 'windows win10')
-    .replace(/\bwindows\s*11\b/g, 'windows win11')
-    .replace(
-      /\b(bigger|larger|big|large)\s+(text|font|letters|print)\b|\b(text|font|letters|print)\s+(bigger|larger|size)\b|\bhard\s+to\s+(read|see|hear)\b|\bcan\s*t\s+(read|see|hear)\b/g,
-      'accessibility'
-    )
-    .replace(/\bpop[\s-]?ups?\b/g, 'popup')
-    .replace(/[^a-z0-9]+/g, ' ')
-    .trim();
+  return (
+    text
+      .toLowerCase()
+      .replace(/\bset\s+up\b/g, 'setup')
+      .replace(/\bwi[\s-]?fi\b/g, 'wifi')
+      .replace(/\bdead\s+zones?\b/g, 'deadzone')
+      // "can't get online", "no internet", "internet is down" are connection problems, not accounts.
+      .replace(
+        /\b(get|go|stay|getting|going)\s+online\b|\bno\s+internet\b|\binternet\s+(is\s+)?down\b|\bcan\s*t\s+connect\b/g,
+        'wifi'
+      )
+      .replace(/\b(log|sign)\s+in\b/g, 'login')
+      .replace(/\bwindows\s*10\b/g, 'windows win10')
+      .replace(/\bwindows\s*11\b/g, 'windows win11')
+      .replace(
+        /\b(bigger|larger|big|large)\s+(text|font|letters|print)\b|\b(text|font|letters|print)\s+(bigger|larger|size)\b|\bhard\s+to\s+(read|see|hear)\b|\bcan\s*t\s+(read|see|hear)\b/g,
+        'accessibility'
+      )
+      .replace(/\bpop[\s-]?ups?\b/g, 'popup')
+      .replace(/[^a-z0-9]+/g, ' ')
+      .trim()
+  );
 }
 
 function tokenize(text: string): string[] {

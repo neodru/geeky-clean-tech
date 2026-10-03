@@ -131,7 +131,9 @@ const plans = [
             <summary class="flex items-center gap-4 p-5 md:p-6 cursor-pointer list-none">
               <Icon name={area.icon} class="text-primary w-8 h-8 shrink-0" />
               <span class="flex-1 text-lg md:text-xl font-bold text-white">{area.title}</span>
-              <span class="text-sm text-muted whitespace-nowrap">{area.services.length} services</span>
+              <span class="text-sm text-muted whitespace-nowrap">
+                {area.services.length} {area.services.length === 1 ? 'service' : 'services'}
+              </span>
               <Icon
                 name="tabler:chevron-down"
                 class="w-5 h-5 text-muted transition-transform group-open:rotate-180 shrink-0"

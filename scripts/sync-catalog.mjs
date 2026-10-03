@@ -40,6 +40,7 @@ const AREAS = [
   { id: 'macos', title: 'Apple macOS Setup & Configuration', icon: 'tabler:device-laptop' },
   { id: 'windows', title: 'Windows Setup & Configuration', icon: 'tabler:brand-windows' },
   { id: 'cloud', title: 'Cloud Account Configuration', icon: 'tabler:cloud-lock' },
+  { id: 'network', title: 'Home Network & Wi-Fi', icon: 'tabler:wifi' },
 ];
 const PACKAGE_AREA = 'Packages';
 

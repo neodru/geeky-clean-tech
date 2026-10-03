@@ -567,6 +567,22 @@
           "delivery": ["On-site", "Remote"]
         }
       ]
+    },
+    {
+      "id": "network",
+      "title": "Home Network & Wi-Fi",
+      "icon": "tabler:wifi",
+      "services": [
+        {
+          "sku": 60,
+          "title": "Wi-Fi & Home Network Fix",
+          "description": "Fix dropouts, slow speeds, and dead zones. We check your router and modem, update firmware, secure your Wi-Fi password, and get every device reconnected.",
+          "hours": 1.5,
+          "price": 233,
+          "pricing": "from",
+          "delivery": ["On-site"]
+        }
+      ]
     }
   ],
   "bundles": [
