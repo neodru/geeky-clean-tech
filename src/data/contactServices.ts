@@ -2,7 +2,7 @@
 // (the dropdown) and functions/api/contact.ts (the server-side allowlist), so a
 // choice the form offers is always one the server accepts. Keep this file free
 // of "~/" aliases and Astro imports: the Pages Function bundles it directly.
-import catalog from './catalog.json' with { type: 'json' };
+import catalog from './catalog.json';
 
 export interface ContactServiceOption {
   value: string;

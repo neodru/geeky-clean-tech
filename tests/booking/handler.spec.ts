@@ -1,7 +1,26 @@
 import { test, expect } from '@playwright/test';
-import { onRequestPost } from '../../functions/api/contact';
+import { buildSync } from 'esbuild';
+import { mkdtempSync, rmSync } from 'node:fs';
+import { createRequire } from 'node:module';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { onRequestGet } from '../../functions/api/booking-test-target';
 import { syntheticLead } from './helpers';
+
+// Bundle JSON as Pages does, without requiring modern import attributes in
+// application code that Cloudflare's older Functions compiler cannot parse.
+const bundleDir = mkdtempSync(join(tmpdir(), 'gct-booking-handler-'));
+const bundlePath = join(bundleDir, 'contact.cjs');
+buildSync({
+  entryPoints: [fileURLToPath(new URL('../../functions/api/contact.ts', import.meta.url))],
+  outfile: bundlePath,
+  bundle: true,
+  platform: 'node',
+  format: 'cjs',
+});
+const { onRequestPost } = createRequire(import.meta.url)(bundlePath) as typeof import('../../functions/api/contact');
+test.afterAll(() => rmSync(bundleDir, { recursive: true, force: true }));
 
 // Exercise the actual Pages Function with only the external Notion call mocked.
 // These checks do not establish persistence in a real Notion database.
