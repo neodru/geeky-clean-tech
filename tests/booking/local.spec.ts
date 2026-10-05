@@ -1,6 +1,15 @@
 import { test, expect } from '@playwright/test';
 import { chooseBooking, expectSuccess, fillLead, syntheticLead } from './helpers';
 
+test.beforeEach(async ({ page }) => {
+  // UI-only tests must never deliver synthetic leads. Per-test API mocks are
+  // registered later and take precedence; every other POST is blocked.
+  await page.route('**/*', async (route) => {
+    if (route.request().method() === 'POST') return route.abort('blockedbyclient');
+    return route.continue();
+  });
+});
+
 test('plain-language search returns relevant keyboard-selectable results', async ({ page }) => {
   await page.goto('/pricing');
   const input = page.getByLabel('Describe what you need help with');
@@ -19,7 +28,7 @@ test('plain-language search returns relevant keyboard-selectable results', async
   }
   await expect(link).toBeFocused();
   await page.keyboard.press('Enter');
-  await expect(page).toHaveURL(/\/contact\?service=/);
+  await expect(page).toHaveURL(/\/contact\/?\?service=/);
   await expect(page.getByLabel('Service needed')).not.toHaveValue('');
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
 });

@@ -21,7 +21,8 @@
     "fix:eslint": "eslint --fix .",
     "fix:prettier": "prettier -w .",
     "test:booking": "playwright test --project=desktop --project=mobile",
-    "test:booking:integration": "playwright test --project=preview-desktop --project=preview-mobile"
+    "test:booking:integration": "playwright test --project=preview-desktop --project=preview-mobile",
+    "test:booking:preview": "playwright test --config playwright.preview.config.ts"
   },
   "dependencies": {
     "@astro-community/astro-embed-twitter": "^0.5.11",

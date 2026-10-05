@@ -53,7 +53,7 @@ Notion is the master copy of the service menu and packages shown on `/pricing`.
 2. Run `NOTION_TOKEN=... npm run sync:catalog` locally, or run **Sync catalog from Notion** from the GitHub Actions tab (it also runs daily). The workflow opens a pull request with the changes.
 3. Merge the pull request to publish.
 
-The sync validates every row (known Area, hours in 15-minute steps, prices filled in, one hourly rate) and changes nothing if a row is wrong. A new Area in Notion must also be added to `AREAS` in `scripts/sync-catalog.mjs`.
+The sync validates every row (known Area, hours in 15-minute steps, prices filled in, one hourly rate, globally unique positive service SKUs) and changes nothing if a row is wrong. A new Area in Notion must also be added to `AREAS` in `scripts/sync-catalog.mjs`.
 
 ### Turning the blog on
 
@@ -107,6 +107,16 @@ and network errors, retries, and stale-plan clearing. Browser submissions use
 mocked API responses; separate checks run the actual Pages Function with mocked
 Notion calls. Neither establishes real Notion persistence. Mobile emulation does
 not establish Safari or physical-device compatibility.
+
+### Preview UI checks
+
+Set `E2E_PREVIEW_URL` to a Cloudflare preview URL and run
+`npm run test:booking:preview` to reuse the desktop/mobile UI scenarios on the
+hosted build. These checks intercept form submissions and block every unmatched
+POST, so they cannot create Notion leads. They verify search, keyboard access,
+selection, validation, and success/error rendering with mocked responses.
+When `HTTPS_PROXY` is configured, the preview browser uses it.
+Open the report with `npx playwright show-report playwright-report/preview-ui`.
 
 ### Real preview-to-Notion checks
 

@@ -36,7 +36,7 @@ export async function chooseBooking(page: Page, kind: 'service' | 'package') {
   const link = card.getByRole('link', { name: `Book this ${kind}` });
   const href = await link.getAttribute('href');
   await link.click();
-  await expect(page).toHaveURL(new RegExp('/contact\\?'));
+  await expect(page).toHaveURL(/\/contact\/?\?/);
   const params = new URL(href!, 'http://localhost').searchParams;
   const service = page.getByLabel('Service needed');
   await expect(service).toHaveValue(kind === 'service' ? 'Wi-Fi & Home Network Fix' : 'Package: Wi-Fi That Just Works');
