@@ -92,3 +92,63 @@ Cloudflare Pages builds `main` with `npm run build` and publishes `dist/`. Every
 ## License
 
 Site content and branding © Geeky Clean Technology. Template code is MIT-licensed; see [LICENSE.md](./LICENSE.md).
+
+## Booking verification
+
+Install browser dependencies once with `npx playwright install --with-deps chromium`.
+Run `npm run test:booking` for desktop Chromium and a mobile viewport with touch
+emulation. The command builds the site and starts a local production preview.
+In proxy-only Node 24 environments, enable inherited proxy support with
+`NODE_USE_ENV_PROXY=1 npm run test:booking`.
+GitHub Actions also runs this suite on PRs and pushes to `main`, retaining failure
+evidence for seven days. It covers plain-language search, keyboard selection, exact service/package
+prefill, submitted fields, success feedback, invalid inputs, recoverable server
+and network errors, retries, and stale-plan clearing. Browser submissions use
+mocked API responses; separate checks run the actual Pages Function with mocked
+Notion calls. Neither establishes real Notion persistence. Mobile emulation does
+not establish Safari or physical-device compatibility.
+
+### Real preview-to-Notion checks
+
+Create a **dedicated test database**, with the same properties as Website Leads:
+Name (title), Lead Status, Service, Audience, Source (select), Email (email), Phone
+(phone), and Message (rich text). Connect the preview's Notion integration and a
+read integration used by the tests. Keep the production database out of this flow.
+
+On a Cloudflare Pages **preview** deployment containing these changes, configure:
+
+- `NOTION_TOKEN`: secret with write access to the test database.
+- `NOTION_DATABASE_ID`: the test database ID.
+- `E2E_NOTION_TEST_DATABASE_ID`: the same test database ID. This enables the
+  read-only `/api/booking-test-target` preflight on preview hostnames only.
+- Leave `PUBLIC_CONTACT_FORM_ENDPOINT` unset so the form uses `/api/contact`.
+- For bot verification, use Cloudflare's official test keys on the dedicated
+  preview: `PUBLIC_TURNSTILE_SITE_KEY=1x00000000000000000000AA` and
+  `TURNSTILE_SECRET_KEY=1x0000000000000000000000000000000AA`.
+  Alternatively leave both unset on the dedicated test preview. Production bot
+  verification is never changed or bypassed. Redeploy after build-variable changes.
+
+Set these environment variables in the shell that runs the tests (do not commit
+secrets):
+
+| Variable                      | Purpose                                                                     |
+| ----------------------------- | --------------------------------------------------------------------------- |
+| `E2E_PREVIEW_URL`             | HTTPS preview origin, such as `https://<deployment>.<project>.pages.dev`    |
+| `E2E_NOTION_TEST_DATABASE_ID` | Dedicated test database ID; production Website Leads is explicitly rejected |
+| `E2E_NOTION_TOKEN`            | Secret with read access to that database                                    |
+
+Run `npm run test:booking:integration`. Missing configuration skips these tests.
+The preflight must confirm that the preview's actual write target matches the
+expected test database before any submission. Each desktop/mobile service and
+package test uses a unique synthetic name and `example.invalid` email, then
+checks for exactly one matching Notion record and all submitted fields. Plans
+are stored in Message as `Plan: <id>`, matching the existing handler. A second
+query checks for duplicates 1.5 seconds after the initial match; this is a bounded
+observation, not a guarantee against indefinitely delayed writes. Test records
+remain in the dedicated database for inspection; remove them there when finished.
+
+Open a report with `npx playwright show-report playwright-report/local` or
+`npx playwright show-report playwright-report/integration`. Local failures retain
+screenshots and Playwright traces in `test-results/`; traces include request data.
+Integration traces are disabled to avoid retaining Notion authorization headers;
+failure screenshots remain available. Reports and results are ignored by Git.
