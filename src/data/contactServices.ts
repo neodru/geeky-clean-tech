@@ -36,7 +36,12 @@ export const OTHER_SERVICE = 'Other / Not sure';
 
 export function contactServiceOptions(): { services: ContactServiceOption[]; packages: ContactPackageOption[] } {
   return {
-    services: SERVICES,
+    services: [
+      ...SERVICES,
+      ...catalog.areas.flatMap((area) =>
+        area.services.map((service) => ({ value: service.title, slug: `catalog-${service.sku}` }))
+      ),
+    ],
     // Packages come from the Notion-synced catalog. The stored value has no
     // price, so a price change in Notion doesn't create a new lead category.
     packages: catalog.bundles.map((b) => ({

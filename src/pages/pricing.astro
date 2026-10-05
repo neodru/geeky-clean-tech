@@ -149,6 +149,12 @@ const plans = [
                   <div class="sm:text-right shrink-0 sm:w-32">
                     <div class="text-lg font-bold text-white">{formatPrice(service)}</div>
                     <div class="text-xs text-muted">{formatHours(service.hours)}</div>
+                    <a
+                      href={`/contact?service=catalog-${service.sku}`}
+                      class="inline-block mt-2 text-sm text-primary underline underline-offset-2"
+                    >
+                      Book this service
+                    </a>
                   </div>
                 </li>
               ))}

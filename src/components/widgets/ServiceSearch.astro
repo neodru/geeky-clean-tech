@@ -28,7 +28,7 @@ const items: SearchItem[] = [
       area: area.title,
       duration: formatHours(s.hours),
       price: formatPrice(s),
-      href: `#${area.id}`,
+      href: `/contact?service=catalog-${s.sku}`,
     }))
   ),
 ];
@@ -127,12 +127,6 @@ const examples = ['My computer is slow', 'Scam calls', 'New iPhone', 'Hacked ema
           input.focus();
         })
       );
-      // "See it in the menu" links jump to a collapsed category; open it.
-      this.addEventListener('click', (e) => {
-        const link = (e.target as HTMLElement).closest<HTMLAnchorElement>('a[href^="#"]');
-        const target = link && document.getElementById(link.hash.slice(1));
-        if (target instanceof HTMLDetailsElement) target.open = true;
-      });
     }
 
     private render(query: string, results: SearchResult[]) {
@@ -182,7 +176,7 @@ const examples = ['My computer is slow', 'Scam calls', 'New iPhone', 'Hacked ema
       const link = el(
         'a',
         'inline-block mt-2 text-sm text-primary underline underline-offset-2',
-        item.kind === 'package' ? 'Book this package' : 'See it in the menu'
+        item.kind === 'package' ? 'Book this package' : 'Book this service'
       );
       link.href = item.href;
       side.append(link);

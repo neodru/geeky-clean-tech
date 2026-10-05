@@ -122,6 +122,7 @@ export function buildCatalog(pages) {
   );
   const bundles = [];
   const rates = new Set();
+  const serviceSkus = new Set();
 
   const rows = pages
     .map((page) => ({ page, p: page.properties ?? {} }))
@@ -175,6 +176,16 @@ export function buildCatalog(pages) {
       errors.push(`${where}: Type must be "Service" or "Package" (got ${type})`);
       continue;
     }
+    // Booking links use catalog-<SKU>; every active service needs a stable,
+    // unique identifier across categories to avoid selecting another service.
+    const serviceSku = sku(p['SKU']);
+    if (!Number.isSafeInteger(serviceSku) || serviceSku <= 0) {
+      errors.push(`${where}: SKU must be a positive safe integer (got ${serviceSku})`);
+    } else if (serviceSkus.has(serviceSku)) {
+      errors.push(`${where}: duplicate service SKU ${serviceSku}`);
+    } else {
+      serviceSkus.add(serviceSku);
+    }
     const target = areas.get(area);
     if (!target) {
       const hint = area === PACKAGE_AREA ? 'set Type to "Package"' : 'add it to AREAS in scripts/sync-catalog.mjs';
@@ -192,7 +203,7 @@ export function buildCatalog(pages) {
     if (target.services.some((s) => s.title === title)) errors.push(`${where}: duplicate service in ${area}`);
 
     target.services.push({
-      sku: sku(p['SKU']),
+      sku: serviceSku,
       title,
       description,
       hours,
