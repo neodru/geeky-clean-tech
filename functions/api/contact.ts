@@ -89,7 +89,9 @@ export function notionPage(databaseId: string, lead: Lead) {
     properties: {
       Name: { title: richText(lead.name) },
       'Lead Status': { select: { name: 'New' } },
-      Service: { select: { name: lead.service } },
+      // Notion select option names cannot contain commas. Keep the original
+      // form value for validation and plan matching; normalize only the write.
+      Service: { select: { name: lead.service.replaceAll(',', '') } },
       Audience: { select: { name: lead.audience } },
       Email: { email: lead.email },
       Phone: { phone_number: lead.phone || null },

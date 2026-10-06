@@ -13,13 +13,21 @@ import { syntheticLead } from './helpers';
 const bundleDir = mkdtempSync(join(tmpdir(), 'gct-booking-handler-'));
 const bundlePath = join(bundleDir, 'contact.cjs');
 buildSync({
-  entryPoints: [fileURLToPath(new URL('../../functions/api/contact.ts', import.meta.url))],
+  stdin: {
+    contents:
+      "export * from './functions/api/contact.ts'; export { allowedContactServices } from './src/data/contactServices.ts';",
+    resolveDir: fileURLToPath(new URL('../../', import.meta.url)),
+    loader: 'ts',
+  },
   outfile: bundlePath,
   bundle: true,
   platform: 'node',
   format: 'cjs',
 });
-const { onRequestPost } = createRequire(import.meta.url)(bundlePath) as typeof import('../../functions/api/contact');
+const { onRequestPost, validate, notionPage, allowedContactServices } = createRequire(import.meta.url)(
+  bundlePath
+) as typeof import('../../functions/api/contact') &
+  Pick<typeof import('../../src/data/contactServices'), 'allowedContactServices'>;
 test.afterAll(() => rmSync(bundleDir, { recursive: true, force: true }));
 
 // Exercise the actual Pages Function with only the external Notion call mocked.
@@ -27,9 +35,14 @@ test.afterAll(() => rmSync(bundleDir, { recursive: true, force: true }));
 for (const selection of [
   { service: 'Wi-Fi & Home Network Fix', plan: '' },
   { service: 'Package: Wi-Fi That Just Works', plan: 'wi-fi-that-just-works' },
+  {
+    service: 'Package: New Phone, Made Easy',
+    plan: 'new-phone-made-easy',
+    notionService: 'Package: New Phone Made Easy',
+  },
 ]) {
-  test(`Pages Function writes complete ${selection.plan ? 'package' : 'service'} payload once`, async () => {
-    const lead = { ...syntheticLead(), ...selection };
+  test(`Pages Function writes complete ${selection.service} payload once`, async () => {
+    const lead = { ...syntheticLead(), service: selection.service, plan: selection.plan };
     const form = new FormData();
     for (const [key, value] of Object.entries(lead)) form.set(key, value);
     const originalFetch = globalThis.fetch;
@@ -59,7 +72,7 @@ for (const selection of [
       expect(properties.Email.email).toBe(lead.email);
       expect(properties.Phone.phone_number).toBe(lead.phone);
       expect(properties.Audience.select.name).toBe(lead.audience);
-      expect(properties.Service.select.name).toBe(lead.service);
+      expect(properties.Service.select.name).toBe(selection.notionService ?? lead.service);
       expect(text(properties.Message.rich_text)).toBe(
         lead.plan ? `${lead.message}\n\nPlan: ${lead.plan}` : lead.message
       );
@@ -68,6 +81,22 @@ for (const selection of [
     }
   });
 }
+
+test('every offered service produces valid Notion select names after form validation', () => {
+  for (const service of allowedContactServices()) {
+    const form = new FormData();
+    for (const [key, value] of Object.entries({ ...syntheticLead(), service })) form.set(key, value);
+    const result = validate(form);
+    expect(result.ok, `Form choice must be accepted: ${service}`).toBe(true);
+    if (!result.ok) throw new Error(result.error);
+    for (const value of Object.values(notionPage('synthetic-test-database', result.lead).properties)) {
+      if ('select' in value) {
+        expect(value.select.name).not.toContain(',');
+        expect(value.select.name.trim()).not.toBe('');
+      }
+    }
+  }
+});
 
 test('server rejects invalid inputs and cross-origin requests without writing', async () => {
   const originalFetch = globalThis.fetch;

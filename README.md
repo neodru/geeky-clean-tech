@@ -79,11 +79,26 @@ Site and contact form: set in Cloudflare Pages → Settings → Variables and se
 
 `PUBLIC_*` variables are baked in at **build** time, so redeploy after changing them. See `.env.example`.
 
+Cloudflare Pages production builds (`CF_PAGES_BRANCH=main`) reject official
+Turnstile test site keys. Configure a real widget site key and its matching runtime
+secret in Production; test keys belong only in the dedicated test Preview.
+This guard does not require Turnstile when both keys are intentionally unset.
+If the production branch changes, update the guard in `src/utils/turnstile.ts`.
+
+Notion select names cannot contain commas. The handler removes commas from the
+stored Service name while retaining the form's original label and package plan.
+
 Catalog sync: set as a GitHub repository secret (or in your shell for local runs).
 
 | Variable       | Kind                     | Purpose                                                                                                                      |
 | -------------- | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------- |
 | `NOTION_TOKEN` | GitHub repository secret | Notion integration secret used by `npm run sync:catalog`. The integration must be connected to the Service Catalog database. |
+
+Cloudflare secrets do not configure GitHub Actions. Create `NOTION_TOKEN` under
+GitHub repository Settings → Secrets and variables → Actions, using a read-only
+integration connected to the Service Catalog. Enable “Allow GitHub Actions to
+create and approve pull requests” under Settings → Actions → General so the sync
+can open an update PR, then manually run **Sync catalog from Notion**.
 
 ## Deployment
 
