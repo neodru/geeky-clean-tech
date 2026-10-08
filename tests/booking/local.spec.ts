@@ -73,7 +73,13 @@ test('required fields and invalid email prevent submission', async ({ page }) =>
   expect(submissions).toBe(0);
 });
 
-for (const failure of ['503', '422', 'network']) {
+// Server messages are shown only when the visitor can act on them.
+const SERVER_MESSAGES: Record<string, string> = {
+  '403': 'Please complete the verification and try again.',
+  '422': 'Please check your phone number.',
+};
+
+for (const failure of ['503', '422', '403', 'network']) {
   test(`${failure} failure preserves data and permits retry`, async ({ page }) => {
     await chooseBooking(page, 'package');
     const lead = syntheticLead();
@@ -83,13 +89,11 @@ for (const failure of ['503', '422', 'network']) {
       attempts++;
       if (attempts > 1) return route.fulfill({ json: { ok: true } });
       if (failure === 'network') return route.abort('failed');
-      return route.fulfill({ status: Number(failure), json: { error: 'Please check your phone number.' } });
+      return route.fulfill({ status: Number(failure), json: { error: SERVER_MESSAGES[failure] ?? 'Unavailable.' } });
     });
     const submit = page.getByRole('button', { name: 'Request IT Support', exact: true });
     await submit.click();
-    await expect(page.locator('[data-form-status]')).toContainText(
-      failure === '422' ? 'Please check your phone number.' : 'could not be sent'
-    );
+    await expect(page.locator('[data-form-status]')).toContainText(SERVER_MESSAGES[failure] ?? 'could not be sent');
     await expect(submit).toBeEnabled();
     await expect(page.getByRole('textbox', { name: 'Name', exact: true })).toHaveValue(lead.name);
     await expect(page.getByLabel('How can we help?')).toHaveValue(lead.message);
