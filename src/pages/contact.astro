@@ -322,9 +322,11 @@ const { services: serviceOptions, packages: packageOptions } = contactServiceOpt
           form.reset();
           this.showStatus(form, 'success', SUCCESS_MESSAGE);
         } else {
-          // Validation problems (422) come back with a message worth showing.
+          // Validation problems (422) and failed Turnstile checks (403) come back
+          // with a message worth showing; retrying fixes them.
           const body = (await res.json().catch(() => ({}))) as { error?: string };
-          this.showStatus(form, 'error', res.status === 422 && body.error ? body.error : ERROR_MESSAGE);
+          const actionable = res.status === 403 || res.status === 422;
+          this.showStatus(form, 'error', actionable && body.error ? body.error : ERROR_MESSAGE);
         }
       } catch (err) {
         console.error(err);
