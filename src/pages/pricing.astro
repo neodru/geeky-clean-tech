@@ -12,19 +12,24 @@ import { HOURLY_RATE, formatHours, formatPrice, priceFor, serviceBundles, servic
 
 const metadata = {
   title: 'Pricing | San Diego IT Support Rates | Geeky Clean Technology',
-  description: `Transparent pricing for Geeky Clean Technology: service packages, a full menu of setup and security services at $${HOURLY_RATE}/hr, a $100 diagnostic first hour, business IT and fractional CTO at $155–$175/hr, emergency response, and monthly concierge plans from $435/month.`,
+  description: `Transparent pricing for Geeky Clean Technology: service packages, a full menu of setup and security services at $${HOURLY_RATE}/hr, an $80 home diagnostic credited toward your first hour of repair, a $175 business initial visit that includes the first hour, business IT at $155/hr, fractional CTO at $175/hr, emergency response, and monthly concierge plans from $435/month.`,
 };
 
 // Single source for the rate card so the table and cards stay in sync.
 const rateCard = [
-  { service: 'Diagnostic & troubleshooting visit (homes, seniors, individuals)', first: '$100', after: '$155/hr' },
+  {
+    service: 'Diagnostic & troubleshooting visit (homes, seniors, individuals)',
+    first: '$80 diagnostic, credited toward first hour of repair',
+    after: '$155/hr',
+  },
+  { service: 'Business initial visit (diagnostic + first hour)', first: '$175', after: '$155/hr' },
   {
     service: 'Catalog services (setup, security & training)',
     first: `$${HOURLY_RATE}/hr`,
     after: `$${HOURLY_RATE}/hr`,
   },
   { service: 'Business implementation & technician time', first: '$155/hr', after: '$155/hr' },
-  { service: 'Business diagnostics, strategy & fractional CTO', first: '$175/hr', after: '$175/hr' },
+  { service: 'Business strategy & fractional CTO', first: '$175/hr', after: '$175/hr' },
   { service: 'Emergency, after-hours & security incident response', first: '$250', after: '$200/hr' },
 ];
 
@@ -181,10 +186,10 @@ const plans = [
       {
         title: 'Diagnostic & Troubleshooting',
         subtitle: 'Something is not working?',
-        price: 100,
-        period: 'first hour',
+        price: 80,
+        period: 'diagnostic',
         items: [
-          { description: '$100 diagnostic fee covers the first hour' },
+          { description: '$80 diagnostic fee, credited toward the first hour of repair' },
           { description: '$155/hour after the first hour' },
           { description: 'On-site at your home or remote' },
           { description: 'Patient, jargon-free help for seniors and families' },
@@ -203,7 +208,8 @@ const plans = [
         period: 'per hour',
         items: [
           { description: 'Implementation & technician time ($155/hr)' },
-          { description: 'Diagnostics, strategy & roadmapping ($175/hr)' },
+          { description: '$175 initial visit covers the diagnostic and the first hour' },
+          { description: 'Strategy & roadmapping ($175/hr)' },
           { description: 'Cloud, email, networking, and cybersecurity' },
           { description: 'Retainer plans available' },
         ],
@@ -354,13 +360,13 @@ const plans = [
     classes={{ container: 'max-w-4xl mx-auto' }}
     items={[
       {
-        title: 'How does the $100 first hour work?',
+        title: 'How does the $80 diagnostic work?',
         description:
-          'When something is not working and the cause is unknown, we start with a diagnostic and troubleshooting visit. The first hour is $100 and covers finding the problem and starting the fix. Additional time is billed at $155 per hour, and we confirm the expected cost before going further.',
+          'When something is not working and the cause is unknown, we start with a diagnostic and troubleshooting visit. The diagnostic fee is $80 for homes, seniors and individuals, and it is credited toward the first hour of repair. Additional time is billed at $155 per hour, and we confirm the expected cost before going further. Business clients start with a $175 initial visit that covers the diagnostic and the first hour, the same for remote and on-site.',
       },
       {
-        title: 'Does the $100 first hour apply to menu services and packages?',
-        description: `No. The $100 first hour applies to diagnostic and troubleshooting visits. Services on the menu and packages are priced as listed, based on $${HOURLY_RATE} per hour.`,
+        title: 'Does the diagnostic fee apply to menu services and packages?',
+        description: `No. The diagnostic fee and initial visit apply to diagnostic and troubleshooting visits. Services on the menu and packages are priced as listed, based on $${HOURLY_RATE} per hour.`,
       },
       {
         title: 'What if a service takes longer than the listed time?',
@@ -370,7 +376,7 @@ const plans = [
       {
         title: 'Why are there two business rates?',
         description:
-          'Diagnostics, strategy, and fractional CTO work are billed at $175/hour. Once the plan is set, implementation and standard technician labor are billed at $155/hour.',
+          'Strategy and fractional CTO work are billed at $175/hour. Business diagnostics start with the $175 initial visit, which includes the first hour, and implementation and standard technician labor are billed at $155/hour.',
       },
       {
         title: 'Are parts, software, or licenses included?',
@@ -427,8 +433,8 @@ const plans = [
         Hardware, software, subscriptions, licenses, and replacement parts are not included.
       </p>
       <p>
-        The $100 first hour applies to diagnostic and troubleshooting visits. Package prices are fixed for the listed
-        services.
+        The diagnostic fee and business initial visit apply to diagnostic and troubleshooting visits. Package prices are
+        fixed for the listed services.
       </p>
     </div>
   </WidgetWrapper>

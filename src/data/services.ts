@@ -90,7 +90,7 @@ export const services: Service[] = [
       {
         title: 'How is home IT support priced?',
         description:
-          'Diagnostic and troubleshooting visits start at $100 for the first hour, then $155 per hour. Setup, security, and training services are priced individually on our pricing page. You will know the cost before we begin.',
+          'Home diagnostic visits are $80, credited toward the first hour of repair, then $155 per hour. Business initial visits are $175 and include the first hour. Setup, security, and training services are priced individually on our pricing page. You will know the cost before we begin.',
       },
       {
         title: 'Can you help set up a home office?',
