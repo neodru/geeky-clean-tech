@@ -1,53 +1,52 @@
 ---
-title: 'Terms and Conditions'
+title: 'Terms of Service'
 layout: '~/layouts/MarkdownLayout.astro'
 ---
 
-_Last updated_: September 29, 2026
+_Last updated_: November 12, 2026
 
-Please read these terms and conditions carefully before using Our Service.
+These Terms of Service apply to IT services performed by Geeky Clean Technology ("GCT", "we", "us") and to use of this website. By approving a quote or work order (by signature, or by replying "Approved" by email or text), scheduling service, or paying an invoice, you accept the Service Terms below. Clients who have signed a Master Services Agreement with GCT are governed by that agreement first; these terms apply only where it is silent.
 
-## Interpretation and Definitions
+## Service Terms
 
-### Interpretation
+### Fees
 
-The words of which the initial letter is capitalized have meanings defined under the following conditions. The following definitions shall have the same meaning regardless of whether they appear in singular or in plural.
+- **Initial visit (business clients):** $175, non-refundable. It covers the diagnostic visit and the first hour of service. The fee is the same for remote and on-site visits and is not credited toward other work.
+- **Diagnostic fee (residential clients):** $80, non-refundable. It does not cover repair time. It is credited toward the first hour of repair (for hourly repairs) or toward the line-item repair cost.
+- **Labor:** $155 per hour after the first hour, prorated to the nearest 15 minutes.
+- **Parts:** parts sourced by GCT include a 10% procurement fee.
+- **After-hours, security or emergency response:** $250 for the first hour and $200 per hour after that.
+- Estimates may change after further inspection. We will tell you before any additional work is performed. Sales tax is added where required.
 
-### Definitions
+### Payment
 
-For the purposes of these Terms and Conditions:
+Business clients: payment is due Net 15 from the invoice date. Residential clients: payment is due on completion of service. Balances more than 30 days past due accrue a finance charge of 1.5% per month (18% per year) until paid in full.
 
-- **Affiliate** means an entity that controls, is controlled by or is under common control with a party, where "control" means ownership of 50% or more of the shares, equity interest or other securities entitled to vote for election of directors or other managing authority.
+### Authorization and approvals
 
-- **Country** refers to: California, United States
+You authorize GCT to diagnose and repair the devices and accounts described on your quote or work order, and to access them remotely or in person to do so. If we cannot reach you to approve additional repairs, we try by phone, text and email. With no response within 5 business days, work pauses at the authorized scope. Devices left more than 30 days without contact or payment are considered abandoned and may be recycled, resold or disposed of to recover costs.
 
-- **Company** (referred to as either "the Company", "We", "Us" or "Our" in this Agreement) refers to Geeky Clean Technology, San Diego, CA.
+### Data backup and passwords
 
-- **Device** means any device that can access the Service such as a computer, a cellphone or a digital tablet.
+You are responsible for backing up your data before service. GCT is not liable for data loss during repair. If we need your passwords to do the work, we store them securely, use them only for your work, and recommend you change them afterward. Data recovery is provided on a best-effort basis with no guarantee of success. Additional fees may apply for encrypted drives, clean-room handling or large data volumes. Recovered data is kept for 7 days after completion, then securely deleted.
 
-- **Service** refers to the Website.
+### Warranty
 
-- **Terms and Conditions** (also referred as "Terms") mean these Terms and Conditions that form the entire agreement between You and the Company regarding the use of the Service. This Terms and Conditions agreement is a Demo.
+GCT provides a 30-day limited warranty on parts and services we perform. It does not cover new or unrelated issues, misuse, physical or liquid damage, or tampering.
 
-- **Third-party Social Media Service** means any services or content (including data, information, products or services) provided by a third-party that may be displayed, included or made available by the Service.
+### Limitation of liability
 
-- **Website** refers to Geeky Clean Technology, accessible from [https://geekycleantechnology.com](https://geekycleantechnology.com)
+GCT's liability is limited to the cost of the services performed. It excludes data loss, lost revenue and business interruption, except for damages caused by GCT's gross negligence or willful misconduct. Nothing in these terms limits liability that the law does not allow to be limited.
 
-- **You** means the individual accessing or using the Service, or the company, or other legal entity on behalf of which such individual is accessing or using the Service, as applicable.
+### Governing law and disputes
 
-## Acknowledgment
+California law governs these terms. Disputes are first addressed through good-faith negotiation (15 days), then mediation in San Diego County. Unresolved disputes are resolved in the state or federal courts of San Diego County, California, or in small claims court where eligible.
 
-These are the Terms and Conditions governing the use of this Service and the agreement that operates between You and the Company. These Terms and Conditions set out the rights and obligations of all users regarding the use of the Service.
+## Using This Website
 
-Your access to and use of the Service is conditioned on Your acceptance of and compliance with these Terms and Conditions. These Terms and Conditions apply to all visitors, users and others who access or use the Service.
+The Service Terms above cover our IT services. The following apply to your use of this website, geekycleantechnology.com, including its Privacy Policy.
 
-By accessing or using the Service You agree to be bound by these Terms and Conditions. If You disagree with any part of these Terms and Conditions then You may not access the Service.
-
-You represent that you are over the age of 18\. The Company does not permit those under 18 to use the Service.
-
-Your access to and use of the Service is also conditioned on Your acceptance of and compliance with the Privacy Policy of the Company. Our Privacy Policy describes Our policies and procedures on the collection, use and disclosure of Your personal information when You use the Application or the Website and tells You about Your privacy rights and how the law protects You. Please read Our Privacy Policy carefully before using Our Service.
-
-## Links to Other Websites
+### Links to Other Websites
 
 Our Service may contain links to third-party web sites or services that are not owned or controlled by the Company.
 
@@ -55,21 +54,13 @@ The Company has no control over, and assumes no responsibility for, the content,
 
 We strongly advise You to read the terms and conditions and privacy policies of any third-party web sites or services that You visit.
 
-## Termination
+### Termination
 
 We may terminate or suspend Your access immediately, without prior notice or liability, for any reason whatsoever, including without limitation if You breach these Terms and Conditions.
 
 Upon termination, Your right to use the Service will cease immediately.
 
-## Limitation of Liability
-
-Notwithstanding any damages that You might incur, the entire liability of the Company and any of its suppliers under any provision of this Terms and Your exclusive remedy for all of the foregoing shall be limited to the amount actually paid by You through the Service or 100 USD if You haven't purchased anything through the Service.
-
-To the maximum extent permitted by applicable law, in no event shall the Company or its suppliers be liable for any special, incidental, indirect, or consequential damages whatsoever (including, but not limited to, damages for loss of profits, loss of data or other information, for business interruption, for personal injury, loss of privacy arising out of or in any way related to the use of or inability to use the Service, third-party software and/or third-party hardware used with the Service, or otherwise in connection with any provision of this Terms), even if the Company or any supplier has been advised of the possibility of such damages and even if the remedy fails of its essential purpose.
-
-Some states do not allow the exclusion of implied warranties or limitation of liability for incidental or consequential damages, which means that some of the above limitations may not apply. In these states, each party's liability will be limited to the greatest extent permitted by law.
-
-## "AS IS" and "AS AVAILABLE" Disclaimer
+### "AS IS" and "AS AVAILABLE" Disclaimer
 
 The Service is provided to You "AS IS" and "AS AVAILABLE" and with all faults and defects without warranty of any kind. To the maximum extent permitted under applicable law, the Company, on its own behalf and on behalf of its Affiliates and its and their respective licensors and service providers, expressly disclaims all warranties, whether express, implied, statutory or otherwise, with respect to the Service, including all implied warranties of merchantability, fitness for a particular purpose, title and non-infringement, and warranties that may arise out of course of dealing, course of performance, usage or trade practice. Without limitation to the foregoing, the Company provides no warranty or undertaking, and makes no representation of any kind that the Service will meet Your requirements, achieve any intended results, be compatible or work with any other software, applications, systems or services, operate without interruption, meet any performance or reliability standards or be error free or that any errors or defects can or will be corrected.
 
@@ -77,45 +68,35 @@ Without limiting the foregoing, neither the Company nor any of the company's pro
 
 Some jurisdictions do not allow the exclusion of certain types of warranties or limitations on applicable statutory rights of a consumer, so some or all of the above exclusions and limitations may not apply to You. But in such a case the exclusions and limitations set forth in this section shall be applied to the greatest extent enforceable under applicable law.
 
-## Governing Law
-
-The laws of the Country, excluding its conflicts of law rules, shall govern this Terms and Your use of the Service. Your use of the Application may also be subject to other local, state, national, or international laws.
-
-## Disputes Resolution
-
-If You have any concern or dispute about the Service, You agree to first try to resolve the dispute informally by contacting the Company.
-
-## For European Union (EU) Users
+### For European Union (EU) Users
 
 If You are a European Union consumer, you will benefit from any mandatory provisions of the law of the country in which you are resident in.
 
-## United States Legal Compliance
+### United States Legal Compliance
 
 You represent and warrant that (i) You are not located in a country that is subject to the United States government embargo, or that has been designated by the United States government as a "terrorist supporting" country, and (ii) You are not listed on any United States government list of prohibited or restricted parties.
 
-## Severability and Waiver
+### Severability and Waiver
 
-### Severability
+#### Severability
 
 If any provision of these Terms is held to be unenforceable or invalid, such provision will be changed and interpreted to accomplish the objectives of such provision to the greatest extent possible under applicable law and the remaining provisions will continue in full force and effect.
 
-### Waiver
+#### Waiver
 
 Except as provided herein, the failure to exercise a right or to require performance of an obligation under these Terms shall not effect a party's ability to exercise such right or require such performance at any time thereafter nor shall the waiver of a breach constitute a waiver of any subsequent breach.
 
-## Translation Interpretation
+### Translation Interpretation
 
 These Terms and Conditions may have been translated if We have made them available to You on our Service. You agree that the original English text shall prevail in the case of a dispute.
 
-## Changes to These Terms and Conditions
+## Changes to These Terms
 
-We reserve the right, at Our sole discretion, to modify or replace these Terms at any time. If a revision is material We will make reasonable efforts to provide at least 30 days' notice prior to any new terms taking effect. What constitutes a material change will be determined at Our sole discretion.
-
-By continuing to access or use Our Service after those revisions become effective, You agree to be bound by the revised terms. If You do not agree to the new terms, in whole or in part, please stop using the website and the Service.
+We may update these terms from time to time. Terms accepted on an approved quote, work order or paid invoice are the version in effect on the date of that approval, shown by the "Last updated" date above. Material changes to website terms take effect 30 days after notice.
 
 ## Contact Us
 
-If you have any questions about these Terms and Conditions, You can contact us:
+Geeky Clean Technology, 4556 Park Blvd #2, San Diego, CA 92116.
 
 - By email: [support@geekycleantechnology.com](mailto:support@geekycleantechnology.com)
 - By phone or text: [619-289-9205](tel:+16192899205)
